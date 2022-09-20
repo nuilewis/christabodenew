@@ -17,25 +17,28 @@ class VideoCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(kDefaultPadding2x),
               gradient: LinearGradient(
                 colors: [Colors.transparent, kDark40],
+              //  stops: [0.3, 0.9 ],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-              )),
+              ),),
           child: Stack(
             children: [
               Positioned(
-                left: 0,
-                bottom: 0,
+                left: kDefaultPadding,
+                bottom: kDefaultPadding,
                 child: Text(
                   "Video title",
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 16),
                 ),
               ),
-              IconButton(
-                onPressed: () {},
-                icon: SvgPicture.asset(
-                  "assets/svg/play_icon.svg",
-                  height: kDefaultPadding2x,
-                  color: Colors.white,
+              Center(
+                child: IconButton(
+                  onPressed: () {},
+                  icon: SvgPicture.asset(
+                    "assets/svg/play_icon.svg",
+                    height: kDefaultPadding2x,
+                    color: Colors.white,
+                  ),
                 ),
               )
             ],

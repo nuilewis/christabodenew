@@ -26,26 +26,31 @@ class _DevotionalCardState extends State<DevotionalCard> {
     return ClipRRect(
       borderRadius: BorderRadius.circular(kDefaultPadding2x),
       child: Container(
-        padding: const EdgeInsets.all(kDefaultPadding2x),
+        height: 150,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(kDefaultPadding2x),
-            color: widget.isPrayerCard! ? kFuchsia80 : kBlue40),
+            color: widget.isPrayerCard! ? kBlue20:  kFuchsiaLight),
         child: Stack(
+        //  fit: StackFit.expand,
           children: [
+            SizedBox(width: double.infinity),
             Positioned(
               bottom: -20,
               right: -20,
               child: SvgPicture.asset(
                 widget.isPrayerCard!
                     ? "assets/svg/prayer_icon.svg"
-                    : "assets/svg/devotional_icon.svg",
-                color: Colors.white.withOpacity(.1),
+                    : "assets/svg/read_icon.svg",
+                    
+                color: Colors.white.withOpacity(.4),
+                height: 150,
               ),
             ),
             Positioned(
-              top: 0,
-              left: 0,
+              top: kDefaultPadding,
+              left: kDefaultPadding,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
@@ -58,17 +63,19 @@ class _DevotionalCardState extends State<DevotionalCard> {
                   const SizedBox(height: kDefaultPadding / 2),
                   Text(widget.excerpt,
                       style: Theme.of(context).textTheme.bodyText2),
-                  Positioned(
-                    bottom: 0,
-                    right: 0,
+               
+                ],
+              ),
+            )
+            ,
+               Positioned(
+                    bottom: kDefaultPadding,
+                    right: kDefaultPadding,
                     child: IconButton(
                       onPressed: widget.onPressed,
                       icon: SvgPicture.asset("assets/svg/forward_icon.svg"),
                     ),
                   )
-                ],
-              ),
-            )
           ],
         ),
       ),

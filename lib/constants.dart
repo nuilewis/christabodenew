@@ -37,14 +37,14 @@ const double kDefaultPadding = 16.0;
 const double kDefaultPadding2x = 32.0;
 
 ///----TextStyles----///
-const TextStyle kHeading = TextStyle(fontWeight: FontWeight.bold, fontSize: 28);
+const TextStyle kHeading = TextStyle(fontWeight: FontWeight.w600, fontSize: 28);
 const TextStyle kHeadingLight =
     TextStyle(fontWeight: FontWeight.normal, fontSize: 28);
 const TextStyle kBody = TextStyle(fontWeight: FontWeight.normal, fontSize: 14);
 const TextStyle kBodyBold =
-    TextStyle(fontWeight: FontWeight.bold, fontSize: 14);
+    TextStyle(fontWeight: FontWeight.w600, fontSize: 14);
 const TextStyle kButtonText =
-    TextStyle(fontWeight: FontWeight.bold, fontSize: 16);
+    TextStyle(fontWeight: FontWeight.w600, fontSize: 16);
 const TextStyle kFootNote =
     TextStyle(fontWeight: FontWeight.normal, fontSize: 11);
 

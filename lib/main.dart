@@ -1,3 +1,4 @@
+import 'package:christabodenew/screens/devotional_screen/devotional_screen.dart';
 import 'package:christabodenew/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
       home: const HomeScreen(),
       routes: {
         HomeScreen.id: (context) => const HomeScreen(),
+        DevotionalScreen.id :(context) => DevotionalScreen(),
       },
     );
   }
