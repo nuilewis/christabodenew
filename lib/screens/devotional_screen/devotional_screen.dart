@@ -32,7 +32,7 @@ class DevotionalScreen extends StatelessWidget {
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           flexibleSpace: FlexibleSpaceBar(
             centerTitle: true,
-            titlePadding: EdgeInsets.all(kDefaultPadding),
+            titlePadding: const EdgeInsets.all(kDefaultPadding),
             expandedTitleScale: 1,
             title: Center(
               
@@ -45,7 +45,7 @@ class DevotionalScreen extends StatelessWidget {
               ),
             ),
             background: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   image: DecorationImage(
                 fit: BoxFit.cover,
                 image: AssetImage("assets/images/road_image.jpg"),
@@ -59,11 +59,11 @@ class DevotionalScreen extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
                 color: kBlue20,
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(kDefaultPadding2x),
                   topRight: Radius.circular(kDefaultPadding2x),
                 )),
-            padding: EdgeInsets.only(
+            padding: const EdgeInsets.only(
                 left: kDefaultPadding,
                 right: kDefaultPadding,
                 top: kDefaultPadding),
@@ -114,17 +114,17 @@ class DevotionalScreen extends StatelessWidget {
                     "Scripure reading, Scripure reading, Scripure reading, Scripure reading, Scripure reading ",
                     textAlign: TextAlign.left,
                     style: Theme.of(context).textTheme.bodyText1),
-                SizedBox(
+                const SizedBox(
                   height: kDefaultPadding,
                 ),
-                Align(
+                const Align(
                     alignment: Alignment.centerRight,
                     child: Text("Scripture reference")),
 
-                SizedBox(
+                const SizedBox(
                   height: kDefaultPadding2x,
                 ),
-                Text(
+                const Text(
                   "Message Body",
                   textAlign: TextAlign.left,
                 ),
@@ -133,7 +133,7 @@ class DevotionalScreen extends StatelessWidget {
                   height: 800,
                   width: double.infinity,
                   color: kFuchsia,
-                  child: Text("hey guys"),
+                  child: const Text("hey guys"),
                 )
               ],
             ),

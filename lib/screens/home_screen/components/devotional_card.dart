@@ -33,7 +33,7 @@ class _DevotionalCardState extends State<DevotionalCard> {
         child: Stack(
         //  fit: StackFit.expand,
           children: [
-            SizedBox(width: double.infinity),
+            const SizedBox(width: double.infinity),
             Positioned(
               bottom: -20,
               right: -20,

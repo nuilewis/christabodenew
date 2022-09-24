@@ -1,4 +1,6 @@
 import 'package:christabodenew/screens/devotional_screen/devotional_screen.dart';
+import 'package:christabodenew/screens/events_screen/events_screen.dart';
+import 'package:christabodenew/screens/prayer_screen/prayer_screen.dart';
 import 'package:christabodenew/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +24,9 @@ class MyApp extends StatelessWidget {
       home: const HomeScreen(),
       routes: {
         HomeScreen.id: (context) => const HomeScreen(),
-        DevotionalScreen.id :(context) => DevotionalScreen(),
+        DevotionalScreen.id :(context) => const DevotionalScreen(),
+        PrayerScreen.id: (context) => const PrayerScreen(),
+        EventsScreen.id:(context) => const EventsScreen(),
       },
     );
   }

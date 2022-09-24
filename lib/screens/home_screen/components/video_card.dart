@@ -15,6 +15,7 @@ class VideoCard extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(kDefaultPadding2x),
+              image: const DecorationImage(image: AssetImage("assets/images/road_image.jpg"), fit: BoxFit.cover),
               gradient: LinearGradient(
                 colors: [Colors.transparent, kDark40],
               //  stops: [0.3, 0.9 ],
