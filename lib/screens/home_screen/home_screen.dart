@@ -1,15 +1,19 @@
 import 'package:christabodenew/constants.dart';
+import 'package:christabodenew/models/devotional_model.dart';
 import 'package:christabodenew/screens/home_screen/components/devotional_card.dart';
 import 'package:christabodenew/screens/home_screen/components/video_card.dart';
 import 'package:flutter/material.dart';
 
+import '../../models/prayer_model.dart';
 import '../devotional_screen/devotional_screen.dart';
+import 'components/prayer_card.dart';
 
 class HomeScreen extends StatelessWidget {
   static const id = "home_screen";
   static Route route() {
     return MaterialPageRoute(builder: (context) => const HomeScreen());
   }
+
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
@@ -36,10 +40,19 @@ class HomeScreen extends StatelessWidget {
                         .headline2!
                         .copyWith(fontSize: 24),
                   ),
-                                    const SizedBox(height: kDefaultPadding),
-          
+                  const SizedBox(height: kDefaultPadding),
                   DevotionalCard(
-                      title: "Message", excerpt: "Excerp", onPressed: () {
+                      devotional: DevotionalMessage(
+                        author: "author",
+                        messageContent: "messsageContent",
+                        messageTitle: "message title",
+                        confessionOfFaith: "confession of faith",
+                        endDate: DateTime.now(),
+                        scripture: "scirpture",
+                        scriptureReference: "scripture ref",
+                        startDate: DateTime.now(),
+                      ),
+                      onPressed: () {
                         Navigator.pushNamed(context, DevotionalScreen.id);
                       }),
                   const SizedBox(height: kDefaultPadding2x),
@@ -51,14 +64,17 @@ class HomeScreen extends StatelessWidget {
                         .copyWith(fontSize: 24),
                   ),
                   const SizedBox(height: kDefaultPadding),
-                  DevotionalCard(
-                    title: "prayer",
-                    excerpt: "Excerpt",
-                    isPrayerCard: true,
+                  PrayerCard(
+                    prayer: Prayer(
+                      date: DateTime.now(),
+                      prayerMessage: 'prayer Message',
+                      prayerTitle: 'prayer title',
+                      scripture: 'scripture',
+                      scriptureReference: 'scripture ref',
+                    ),
                     onPressed: () {},
                   ),
-                                    const SizedBox(height: kDefaultPadding2x),
-          
+                  const SizedBox(height: kDefaultPadding2x),
                   Text(
                     "Videos",
                     style: Theme.of(context)
@@ -66,11 +82,9 @@ class HomeScreen extends StatelessWidget {
                         .headline2!
                         .copyWith(fontSize: 24),
                   ),
-                                    const SizedBox(height: kDefaultPadding),
-          
+                  const SizedBox(height: kDefaultPadding),
                   const VideoCard(),
-                                    const SizedBox(height: kDefaultPadding2x),
-          
+                  const SizedBox(height: kDefaultPadding2x),
                   Text(
                     "Messages",
                     style: Theme.of(context)
@@ -80,9 +94,12 @@ class HomeScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: kDefaultPadding),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal:kDefaultPadding2x+8, vertical: kDefaultPadding+8),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: kDefaultPadding2x + 8,
+                        vertical: kDefaultPadding + 8),
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(kDefaultPadding+8),
+                        borderRadius:
+                            BorderRadius.circular(kDefaultPadding + 8),
                         color: kBlue60),
                     child: Text(
                       "Category",

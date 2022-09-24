@@ -1,24 +1,23 @@
-import 'package:christabodenew/models/devotional_model.dart';
-import 'package:christabodenew/models/prayer_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../constants.dart';
+import '../../../models/prayer_model.dart';
 
-class DevotionalCard extends StatefulWidget {
-  final DevotionalMessage devotional;
+class PrayerCard extends StatefulWidget {
+  final Prayer prayer;
   final VoidCallback onPressed;
-  const DevotionalCard({
+  const PrayerCard({
     Key? key,
-   required this.devotional,
+   required this.prayer,
     required this.onPressed,
   }) : super(key: key);
 
   @override
-  State<DevotionalCard> createState() => _DevotionalCardState();
+  State<PrayerCard> createState() => _PrayerCardState();
 }
 
-class _DevotionalCardState extends State<DevotionalCard> {
+class _PrayerCardState extends State<PrayerCard> {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
@@ -27,7 +26,7 @@ class _DevotionalCardState extends State<DevotionalCard> {
         height: 150,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(kDefaultPadding2x),
-            color: kFuchsiaLight),
+            color: kBlue20),
         child: Stack(
         //  fit: StackFit.expand,
           children: [
@@ -36,7 +35,9 @@ class _DevotionalCardState extends State<DevotionalCard> {
               bottom: -20,
               right: -20,
               child: SvgPicture.asset(
-                 "assets/svg/read_icon.svg",
+                
+                     "assets/svg/prayer_icon.svg"
+                    ,
                     
                 color: Colors.white.withOpacity(.4),
                 height: 150,
@@ -50,14 +51,14 @@ class _DevotionalCardState extends State<DevotionalCard> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    widget.devotional.messageTitle,
+                    widget.prayer.prayerTitle,
                     style: Theme.of(context)
                         .textTheme
                         .bodyText1!
                         .copyWith(fontSize: 24),
                   ),
                   const SizedBox(height: kDefaultPadding / 2),
-                  Text(widget.devotional.messageExcerpt?? widget.devotional.messageContent.substring(0, 20),
+                  Text(widget.prayer.prayerExcerpt?? widget.prayer.prayerMessage.substring(0,20),
                       style: Theme.of(context).textTheme.bodyText2),
                
                 ],
@@ -78,6 +79,3 @@ class _DevotionalCardState extends State<DevotionalCard> {
     );
   }
 }
-
-
-
