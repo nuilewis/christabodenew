@@ -1,8 +1,6 @@
 import 'package:christabodenew/constants.dart';
 import 'package:christabodenew/screens/global_components/app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import 'components/message_list_item.dart';
 
@@ -17,20 +15,20 @@ class MessagesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(),
+      appBar: const CustomAppBar(),
       body: SafeArea(
           child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
         child: Column(
+          crossAxisAlignment:CrossAxisAlignment.start,
           children: [
-            const Text("Salvation"),
+            Text("Salvation", style: Theme.of(context).textTheme.headline2,),
             const SizedBox(
               height: kDefaultPadding2x,
             ),
             MessageListItem(
               messageTitle: "message Title",
-              messageExcerpt: """Lorem ipsum dolor sit amet, 
-          consectetur adipiscing elit. Etiam eu turp""",
+              messageExcerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turp",
               onPressed: () {},
             ),
           ],

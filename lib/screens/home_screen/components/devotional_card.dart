@@ -1,5 +1,4 @@
 import 'package:christabodenew/models/devotional_model.dart';
-import 'package:christabodenew/models/prayer_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -27,14 +26,14 @@ class _DevotionalCardState extends State<DevotionalCard> {
         height: 150,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(kDefaultPadding2x),
-            color: kFuchsiaLight),
+            color: kFuchsia40),
         child: Stack(
         //  fit: StackFit.expand,
           children: [
             const SizedBox(width: double.infinity),
             Positioned(
-              bottom: -20,
-              right: -20,
+              bottom: -21,
+              right: -21,
               child: SvgPicture.asset(
                  "assets/svg/read_icon.svg",
                     
@@ -57,7 +56,7 @@ class _DevotionalCardState extends State<DevotionalCard> {
                         .copyWith(fontSize: 24),
                   ),
                   const SizedBox(height: kDefaultPadding / 2),
-                  Text(widget.devotional.messageExcerpt?? widget.devotional.messageContent.substring(0, 20),
+                  Text(widget.devotional.messageExcerpt?? "Message excerpt",
                       style: Theme.of(context).textTheme.bodyText2),
                
                 ],
@@ -69,7 +68,7 @@ class _DevotionalCardState extends State<DevotionalCard> {
                     right: kDefaultPadding,
                     child: IconButton(
                       onPressed: widget.onPressed,
-                      icon: SvgPicture.asset("assets/svg/forward_icon.svg"),
+                      icon: SvgPicture.asset("assets/svg/forward_icon.svg", color: Theme.of(context).iconTheme.color,),
                     ),
                   )
           ],

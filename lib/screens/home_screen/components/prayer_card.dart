@@ -9,7 +9,7 @@ class PrayerCard extends StatefulWidget {
   final VoidCallback onPressed;
   const PrayerCard({
     Key? key,
-   required this.prayer,
+    required this.prayer,
     required this.onPressed,
   }) : super(key: key);
 
@@ -26,19 +26,16 @@ class _PrayerCardState extends State<PrayerCard> {
         height: 150,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(kDefaultPadding2x),
-            color: kBlue20),
+            color: kBlue40),
         child: Stack(
-        //  fit: StackFit.expand,
+          //  fit: StackFit.expand,
           children: [
             const SizedBox(width: double.infinity),
             Positioned(
               bottom: -20,
               right: -20,
               child: SvgPicture.asset(
-                
-                     "assets/svg/prayer_icon.svg"
-                    ,
-                    
+                "assets/svg/prayer_icon.svg",
                 color: Colors.white.withOpacity(.4),
                 height: 150,
               ),
@@ -58,21 +55,19 @@ class _PrayerCardState extends State<PrayerCard> {
                         .copyWith(fontSize: 24),
                   ),
                   const SizedBox(height: kDefaultPadding / 2),
-                  Text(widget.prayer.prayerExcerpt?? widget.prayer.prayerMessage.substring(0,20),
+                  Text(widget.prayer.prayerExcerpt ?? "Message excerpt",
                       style: Theme.of(context).textTheme.bodyText2),
-               
                 ],
               ),
+            ),
+            Positioned(
+              bottom: kDefaultPadding,
+              right: kDefaultPadding,
+              child: IconButton(
+                onPressed: widget.onPressed,
+                icon: SvgPicture.asset("assets/svg/forward_icon.svg", color: Theme.of(context).iconTheme.color),
+              ),
             )
-            ,
-               Positioned(
-                    bottom: kDefaultPadding,
-                    right: kDefaultPadding,
-                    child: IconButton(
-                      onPressed: widget.onPressed,
-                      icon: SvgPicture.asset("assets/svg/forward_icon.svg"),
-                    ),
-                  )
           ],
         ),
       ),

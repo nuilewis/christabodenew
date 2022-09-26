@@ -7,7 +7,6 @@ import 'devotional_screen/devotional_screen.dart';
 import 'prayer_screen/prayer_screen.dart';
 import 'events_screen/events_screen.dart';
 
-
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({Key? key}) : super(key: key);
 
@@ -17,11 +16,18 @@ class BottomNavBar extends StatefulWidget {
 
 class _BottomNavBarState extends State<BottomNavBar> {
   final List<Widget> pages = [
-    const HomeScreen(key: PageStorageKey(HomeScreen.id),),
-    const DevotionalScreen(key: PageStorageKey(DevotionalScreen.id),),
-    const PrayerScreen(key: PageStorageKey(PrayerScreen.id),),
+    const HomeScreen(
+      key: PageStorageKey(HomeScreen.id),
+    ),
+    const DevotionalScreen(
+      isCalledFromNavBar: true,
+      key: PageStorageKey(DevotionalScreen.id),
+    ),
+    const PrayerScreen(
+      isCalledFromNavBar: true,
+      key: PageStorageKey(PrayerScreen.id),
+    ),
     const EventsScreen(key: PageStorageKey(EventsScreen.id)),
-    
   ];
 
   final PageStorageBucket bucket = PageStorageBucket();
@@ -30,6 +36,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   Widget _bottomNavBar(int selectedIndex) {
     return BottomNavigationBar(
+      
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         type: BottomNavigationBarType.fixed,
         // landscapeLayout: BottomNavigationBarLandscapeLayout.spread,
@@ -40,51 +47,63 @@ class _BottomNavBarState extends State<BottomNavBar> {
         },
         elevation: 0,
         enableFeedback: true,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
+        unselectedFontSize: 12,
+        selectedFontSize: 12,
+        selectedItemColor: kBlue,
         currentIndex: selectedIndex,
         items: [
           BottomNavigationBarItem(
             label: "Home",
-            icon: SvgPicture.asset("assets/svg/home_icon.svg",
-                height: 23, color: Theme.of(context).iconTheme.color),
+            icon: SvgPicture.asset(
+              "assets/svg/home_icon.svg",
+              //height: 23,
+              color: Theme.of(context).iconTheme.color,
+            ),
             activeIcon: SvgPicture.asset(
               "assets/svg/home_icon.svg",
               color: kBlue,
-              height: 23,
+             // height: 23,
             ),
           ),
           BottomNavigationBarItem(
             label: "Devotional",
-            icon: SvgPicture.asset("assets/svg/read_icon.svg",
-                height: 23, color: Theme.of(context).iconTheme.color),
+            icon: SvgPicture.asset(
+              "assets/svg/read_icon.svg",
+           //   height: 23,
+              color: Theme.of(context).iconTheme.color,
+            ),
             activeIcon: SvgPicture.asset(
               "assets/svg/read_icon.svg",
               color: kBlue,
-              height: 23,
+            //  height: 23,
             ),
           ),
           BottomNavigationBarItem(
             label: "Prayer",
             icon: SvgPicture.asset("assets/svg/prayer_icon.svg",
-                height: 23, color: Theme.of(context).iconTheme.color),
+                  height: 26,
+                color: Theme.of(context).iconTheme.color),
             activeIcon: SvgPicture.asset(
               "assets/svg/prayer_icon.svg",
               color: kBlue,
-              height: 23,
+                height: 26,
             ),
           ),
           BottomNavigationBarItem(
             label: "Events",
-            icon: SvgPicture.asset("assets/svg/notification_icon.svg",
-                height: 23, color: Theme.of(context).iconTheme.color),
+            icon: SvgPicture.asset(
+              "assets/svg/notification_icon.svg",
+              //      height: 23,
+              color: Theme.of(context).iconTheme.color,
+            ),
             activeIcon: SvgPicture.asset(
               "assets/svg/notification_icon.svg",
               color: kBlue,
-              height: 23,
+              //  height: 23,
             ),
           ),
-       
         ]);
   }
 

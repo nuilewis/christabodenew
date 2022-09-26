@@ -4,11 +4,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class DevotionalScreen extends StatelessWidget {
   static const id = "devotional_screen";
+  final bool isCalledFromNavBar;
   static Route route() {
     return MaterialPageRoute(builder: (context) => const DevotionalScreen());
   }
 
-  const DevotionalScreen({Key? key}) : super(key: key);
+  const DevotionalScreen({Key? key, this.isCalledFromNavBar=false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class DevotionalScreen extends StatelessWidget {
       body: CustomScrollView(slivers: [
         SliverAppBar(
           collapsedHeight: 150,
-          leading: IconButton(
+          leading: isCalledFromNavBar ?SizedBox():IconButton(
             onPressed: () {
               Navigator.pop(context);
             },
@@ -40,7 +41,7 @@ class DevotionalScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(top: kDefaultPadding2x),
                 child: Text(
                 "You have been called as a chose one to show the power of ahh", textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headline1!.copyWith(color: Colors.white),
+                style: Theme.of(context).textTheme.headline1!.copyWith(color: Colors.white, fontSize: 24),
           ),
               ),
             ),
@@ -58,7 +59,7 @@ class DevotionalScreen extends StatelessWidget {
         SliverToBoxAdapter(
           child: Container(
             decoration: BoxDecoration(
-                color: kBlue20,
+                
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(kDefaultPadding2x),
                   topRight: Radius.circular(kDefaultPadding2x),
@@ -110,6 +111,7 @@ class DevotionalScreen extends StatelessWidget {
                     )
                   ],
                 ),
+                SizedBox(height: kDefaultPadding,),
                 Text(
                     "Scripure reading, Scripure reading, Scripure reading, Scripure reading, Scripure reading ",
                     textAlign: TextAlign.left,
@@ -129,12 +131,12 @@ class DevotionalScreen extends StatelessWidget {
                   textAlign: TextAlign.left,
                 ),
 
-                Container(
-                  height: 800,
-                  width: double.infinity,
-                  color: kFuchsia,
-                  child: const Text("hey guys"),
-                )
+                // Container(
+                //   height: 800,
+                //   width: double.infinity,
+                //   color: kFuchsia,
+                //   child: const Text("hey guys"),
+                // )
               ],
             ),
           ),

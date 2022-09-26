@@ -7,6 +7,7 @@ import 'constants.dart';
 
 ThemeData lightThemeData(BuildContext context) {
   return ThemeData(
+    useMaterial3: true,
       appBarTheme: appBarTheme,
       primaryColor: kBlue,
       primaryColorLight: kLightBlue,
@@ -24,11 +25,11 @@ ThemeData lightThemeData(BuildContext context) {
         ),
       ),
       fontFamily: 'Poppins',
-      textTheme: const TextTheme(
-        bodyText1: kBodyBold,
-        bodyText2: kBody,
-        headline1: kHeading,
-        headline2: kHeadingLight,
+      textTheme:  TextTheme(
+        bodyText1: kBodyBold.copyWith(color: kDark),
+        bodyText2: kBody.copyWith(color: kDark),
+        headline1: kHeading.copyWith(color: kDark),
+        headline2: kHeadingLight.copyWith(color: kDark),
       ),
       //colorScheme: ColorScheme.light().copyWith(secondary: cLightGrey),
       colorScheme: const ColorScheme.light().copyWith(secondary: kFuchsiaLight),
@@ -43,7 +44,7 @@ ThemeData darkThemeData(BuildContext context) {
       primaryColor: kBlue,
       primaryColorLight: kLightBlue,
       primaryColorDark: kBlueDark,
-      scaffoldBackgroundColor: Colors.black,
+      scaffoldBackgroundColor: Color.fromARGB(255, 28, 28, 28),
       brightness: Brightness.dark,
       backgroundColor: kDark,
       iconTheme: const IconThemeData(color: Colors.white),
@@ -64,7 +65,7 @@ ThemeData darkThemeData(BuildContext context) {
       ),
       //colorScheme: ColorScheme.light().copyWith(secondary: cLightGrey),
       colorScheme: const ColorScheme.dark().copyWith(secondary: kFuchsia),
-      cardColor: kDark20);
+      cardColor: KCardColorDarkTheme);
 }
 
 AppBarTheme appBarTheme = const AppBarTheme(

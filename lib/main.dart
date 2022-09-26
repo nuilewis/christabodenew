@@ -1,5 +1,7 @@
+import 'package:christabodenew/screens/bottom_nav_bar.dart';
 import 'package:christabodenew/screens/devotional_screen/devotional_screen.dart';
 import 'package:christabodenew/screens/events_screen/events_screen.dart';
+import 'package:christabodenew/screens/messages_screen/messages_screen.dart';
 import 'package:christabodenew/screens/prayer_screen/prayer_screen.dart';
 import 'package:christabodenew/theme.dart';
 import 'package:flutter/material.dart';
@@ -20,13 +22,14 @@ class MyApp extends StatelessWidget {
       title: 'Christ Abode Ministries',
       theme: lightThemeData(context),
       darkTheme: darkThemeData(context),
-      themeMode: ThemeMode.system,
-      home: const HomeScreen(),
+      themeMode: ThemeMode.dark,
+      home: const BottomNavBar(),
       routes: {
         HomeScreen.id: (context) => const HomeScreen(),
         DevotionalScreen.id :(context) => const DevotionalScreen(),
         PrayerScreen.id: (context) => const PrayerScreen(),
         EventsScreen.id:(context) => const EventsScreen(),
+        MessagesScreen.id: (context) => const MessagesScreen(),
       },
     );
   }

@@ -1,4 +1,3 @@
-import 'package:christabodenew/screens/home_screen/components/devotional_card.dart';
 
 class Prayer {
   final String prayerTitle;

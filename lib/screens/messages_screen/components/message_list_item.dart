@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -19,37 +17,27 @@ class MessageListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 120,
+      padding: const EdgeInsets.only(
+          left: kDefaultPadding,
+          right: kDefaultPadding / 2,
+          top: kDefaultPadding,
+          bottom: 4),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(kDefaultPadding2x),
           color: Theme.of(context).cardColor),
-      child: Stack(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         //  fit: StackFit.expand,
         children: [
-          const SizedBox(width: double.infinity),
-          Positioned(
-            top: kDefaultPadding,
-            left: kDefaultPadding,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  messageTitle,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText1!
-                      .copyWith(fontSize: 24),
-                ),
-                const SizedBox(height: kDefaultPadding / 2),
-                Text(messageExcerpt,
-                    style: Theme.of(context).textTheme.bodyText2),
-              ],
-            ),
+          Text(
+            messageTitle,
+            style:
+                Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 18),
           ),
-          Positioned(
-            bottom: kDefaultPadding,
-            right: kDefaultPadding,
+          const SizedBox(height: kDefaultPadding / 2),
+          Text(messageExcerpt, maxLines: 2, style: Theme.of(context).textTheme.bodyText2),
+          Align(
+            alignment: Alignment.centerRight,
             child: IconButton(
               onPressed: onPressed,
               icon: SvgPicture.asset(

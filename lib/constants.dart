@@ -19,10 +19,16 @@ Color kDark60 = const Color(0xFF2D2D2D).withOpacity(.6);
 Color kDark40 = const Color(0xFF2D2D2D).withOpacity(.4);
 Color kDark20 = const Color(0xFF2D2D2D).withOpacity(.2);
 
+const Color KCardColorDarkTheme = Color.fromARGB(255, 53, 53, 53);
+
 ///------Fuchsia-------///
 const Color kFuchsiaLight = Color(0xFFFFC1D8);
 const Color kFuchsia = Color(0xFFFC4684);
-const Color kFuchsia80 = Color(0xFFFF7DA9);
+Color kFuchsia80 = const Color(0xFFFC4684).withOpacity(.8);
+Color kFuchsia60 = const Color(0xFFFC4684).withOpacity(.6);
+Color kFuchsia40 = const Color(0xFFFC4684).withOpacity(.4);
+Color kFuchsia20 = const Color(0xFFFC4684).withOpacity(.2);
+//const Color kFuchsia80 = Color(0xFFFF7DA9);
 
 ///-------Greens------///
 const Color kGreenLight = Color(0xFFBAF2E4);
