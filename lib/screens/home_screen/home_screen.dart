@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 
 import '../../models/prayer_model.dart';
 import '../devotional_screen/devotional_screen.dart';
+import '../events_screen/components/event_card.dart';
 import 'components/prayer_card.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -84,7 +85,21 @@ class HomeScreen extends StatelessWidget {
                         .copyWith(fontSize: 24),
                   ),
                   const SizedBox(height: kDefaultPadding),
+                  
                   const VideoCard(),
+                  const SizedBox(height: kDefaultPadding2x),
+                   Text(
+                    "Upcoming Events",
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline2!
+                        .copyWith(fontSize: 24),
+                  ),
+                  const SizedBox(height: kDefaultPadding),
+                     const EventCard(
+                      eventName: "Feast of Ingathering",
+                      eventDate: "25/10/2022",
+                     ),
                   const SizedBox(height: kDefaultPadding2x),
                   Text(
                     "Messages",
@@ -94,33 +109,44 @@ class HomeScreen extends StatelessWidget {
                         .copyWith(fontSize: 24),
                   ),
                   const SizedBox(height: kDefaultPadding),
-                  InkWell(
-                    borderRadius: BorderRadius.circular(kDefaultPadding+8),
-                    onTap: (){
-                      Navigator.pushNamed(context, MessagesScreen.id);
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: kDefaultPadding2x + 8,
-                          vertical: kDefaultPadding + 8),
-                      decoration: BoxDecoration(
-                          borderRadius:
-                              BorderRadius.circular(kDefaultPadding+8),
-                          color: kBlue60),
-                      child: Text(
-                        "Category",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyText1!
-                            .copyWith(fontSize: 18),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: kDefaultPadding),
+                  MessagesCategoryItem(),
+                  const SizedBox(height: kDefaultPadding2x),
                 ],
               ),
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class MessagesCategoryItem extends StatelessWidget {
+  const MessagesCategoryItem({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      borderRadius: BorderRadius.circular(kDefaultPadding+8),
+      onTap: (){
+        Navigator.pushNamed(context, MessagesScreen.id);
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(
+            horizontal: kDefaultPadding2x + 8,
+            vertical: kDefaultPadding + 8),
+        decoration: BoxDecoration(
+            borderRadius:
+                BorderRadius.circular(kDefaultPadding+8),
+            color: kBlue60),
+        child: Text(
+          "Category",
+          style: Theme.of(context)
+              .textTheme
+              .bodyText1!
+              .copyWith(fontSize: 18),
         ),
       ),
     );
