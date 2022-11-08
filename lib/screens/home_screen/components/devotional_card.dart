@@ -5,7 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../../constants.dart';
 
 class DevotionalCard extends StatefulWidget {
-  final DevotionalMessage devotional;
+  final Devotional devotional;
   final VoidCallback onPressed;
   const DevotionalCard({
     Key? key,

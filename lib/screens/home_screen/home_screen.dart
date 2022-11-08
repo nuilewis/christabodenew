@@ -44,7 +44,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: kDefaultPadding),
                   DevotionalCard(
-                      devotional: DevotionalMessage(
+                      devotional: Devotional(
                         author: "author",
                         messageContent: "messsageContent",
                         messageTitle: "message title",

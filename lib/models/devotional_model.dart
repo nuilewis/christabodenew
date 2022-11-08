@@ -1,5 +1,5 @@
 
-class DevotionalMessage {
+class Devotional {
   final String messageTitle;
   final String? messageExcerpt;
   final String scripture;
@@ -11,7 +11,7 @@ class DevotionalMessage {
 
   final DateTime endDate;
 
-  DevotionalMessage(
+  Devotional(
       {required this.messageTitle,
       this.messageExcerpt,
       required this.scripture,
@@ -22,7 +22,7 @@ class DevotionalMessage {
       required this.startDate,
       required this.endDate});
 
-  DevotionalMessage copyWith({
+  Devotional copyWith({
     String? messageTitle,
     String? messageExcerpt,
     String? scripture,
@@ -33,7 +33,7 @@ class DevotionalMessage {
     DateTime? startDate,
     DateTime? endDate,
   }) {
-    return DevotionalMessage(
+    return Devotional(
         messageTitle: messageTitle ?? this.messageTitle,
         scripture: scripture ?? this.scripture,
         scriptureReference: scriptureReference ?? this.scriptureReference,
