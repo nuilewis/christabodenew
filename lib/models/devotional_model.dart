@@ -1,47 +1,59 @@
+import 'package:equatable/equatable.dart';
 
-class Devotional {
-  final String messageTitle;
-  final String? messageExcerpt;
+class Devotional extends Equatable {
+  final String title;
+  final String? excerpt;
   final String scripture;
   final String scriptureReference;
   final String confessionOfFaith;
-  final String messageContent;
+  final String content;
   final String author;
   final DateTime startDate;
 
   final DateTime endDate;
 
-  Devotional(
-      {required this.messageTitle,
-      this.messageExcerpt,
+  const Devotional(
+      {required this.title,
+      this.excerpt,
       required this.scripture,
       required this.scriptureReference,
       required this.confessionOfFaith,
       required this.author,
-      required this.messageContent,
+      required this.content,
       required this.startDate,
       required this.endDate});
 
   Devotional copyWith({
-    String? messageTitle,
-    String? messageExcerpt,
+    String? title,
+    String? excerpt,
     String? scripture,
     String? author,
     String? scriptureReference,
     String? confessionOfFaith,
-    String? messageContent,
+    String? content,
     DateTime? startDate,
     DateTime? endDate,
   }) {
     return Devotional(
-        messageTitle: messageTitle ?? this.messageTitle,
+        title: title ?? this.title,
         scripture: scripture ?? this.scripture,
         scriptureReference: scriptureReference ?? this.scriptureReference,
         confessionOfFaith: confessionOfFaith ?? this.confessionOfFaith,
-        messageContent: messageContent ?? this.messageContent,
-        author: author?? this.author,
+        content: content ?? this.content,
+        author: author ?? this.author,
         startDate: startDate ?? this.startDate,
         endDate: endDate ?? this.endDate);
   }
 
+  @override
+  List<Object> get props => [
+        title,
+        scripture,
+        scriptureReference,
+        confessionOfFaith,
+        content,
+        author,
+        startDate,
+        endDate
+      ];
 }

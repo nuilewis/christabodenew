@@ -1,6 +1,7 @@
-import 'package:christabodenew/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import '../../core/constants.dart';
 
 class DevotionalScreen extends StatelessWidget {
   static const id = "devotional_screen";
@@ -17,7 +18,7 @@ class DevotionalScreen extends StatelessWidget {
       body: CustomScrollView(slivers: [
         SliverAppBar(
           collapsedHeight: 150,
-          leading: isCalledFromNavBar ?SizedBox():IconButton(
+          leading: isCalledFromNavBar ?const SizedBox():IconButton(
             onPressed: () {
               Navigator.pop(context);
             },
@@ -58,9 +59,9 @@ class DevotionalScreen extends StatelessWidget {
         ),
         SliverToBoxAdapter(
           child: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 
-                borderRadius: const BorderRadius.only(
+                borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(kDefaultPadding2x),
                   topRight: Radius.circular(kDefaultPadding2x),
                 )),
@@ -111,7 +112,7 @@ class DevotionalScreen extends StatelessWidget {
                     )
                   ],
                 ),
-                SizedBox(height: kDefaultPadding,),
+                const SizedBox(height: kDefaultPadding,),
                 Text(
                     "Scripure reading, Scripure reading, Scripure reading, Scripure reading, Scripure reading ",
                     textAlign: TextAlign.left,

@@ -1,28 +1,33 @@
-class Message {
+import 'package:equatable/equatable.dart';
+
+class Message extends Equatable {
   final String? category;
-  final String messageTitle;
-  final String messageContent;
+  final String title;
+  final String content;
   final String author;
   final DateTime? date;
 
-  Message(
+  const Message(
       {this.category,
-      required this.messageTitle,
-      required this.messageContent,
+      required this.title,
+      required this.content,
       required this.author,
       this.date});
 
   Message copyWith({
     String? category,
-    String? messageTitle,
-    String? messageContent,
+    String? title,
+    String? content,
     String? author,
     DateTime? date,
   }) {
     return Message(
         author: author ?? this.author,
-        messageTitle: messageTitle ?? this.messageTitle,
-        messageContent: messageContent ?? this.messageContent,
+        title: title ?? this.title,
+        content: content ?? this.content,
         category: category ?? this.category);
   }
+
+  @override
+  List<Object?> get props => [author, title, content, category];
 }

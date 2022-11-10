@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
-import '../../../constants.dart';
+import '../../../core/constants.dart';
 
 class MessageListItem extends StatelessWidget {
   final String messageTitle;

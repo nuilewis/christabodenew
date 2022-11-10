@@ -19,7 +19,7 @@ Color kDark60 = const Color(0xFF2D2D2D).withOpacity(.6);
 Color kDark40 = const Color(0xFF2D2D2D).withOpacity(.4);
 Color kDark20 = const Color(0xFF2D2D2D).withOpacity(.2);
 
-const Color KCardColorDarkTheme = Color.fromARGB(255, 53, 53, 53);
+const Color kCardColorDarkTheme = Color.fromARGB(255, 53, 53, 53);
 
 ///------Fuchsia-------///
 const Color kFuchsiaLight = Color(0xFFFFC1D8);

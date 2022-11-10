@@ -1,10 +1,10 @@
-import 'package:christabodenew/constants.dart';
 import 'package:christabodenew/models/devotional_model.dart';
 import 'package:christabodenew/screens/home_screen/components/devotional_card.dart';
 import 'package:christabodenew/screens/home_screen/components/video_card.dart';
 import 'package:christabodenew/screens/messages_screen/messages_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../../core/constants.dart';
 import '../../models/prayer_model.dart';
 import '../devotional_screen/devotional_screen.dart';
 import '../events_screen/components/event_card.dart';
@@ -46,8 +46,8 @@ class HomeScreen extends StatelessWidget {
                   DevotionalCard(
                       devotional: Devotional(
                         author: "author",
-                        messageContent: "messsageContent",
-                        messageTitle: "message title",
+                        content: "messsageContent",
+                        title: "message title",
                         confessionOfFaith: "confession of faith",
                         endDate: DateTime.now(),
                         scripture: "scirpture",
@@ -69,8 +69,8 @@ class HomeScreen extends StatelessWidget {
                   PrayerCard(
                     prayer: Prayer(
                       date: DateTime.now(),
-                      prayerMessage: 'prayer Message',
-                      prayerTitle: 'prayer title',
+                      message: 'prayer Message',
+                      title: 'prayer title',
                       scripture: 'scripture',
                       scriptureReference: 'scripture ref',
                     ),
@@ -85,10 +85,9 @@ class HomeScreen extends StatelessWidget {
                         .copyWith(fontSize: 24),
                   ),
                   const SizedBox(height: kDefaultPadding),
-                  
                   const VideoCard(),
                   const SizedBox(height: kDefaultPadding2x),
-                   Text(
+                  Text(
                     "Upcoming Events",
                     style: Theme.of(context)
                         .textTheme
@@ -96,10 +95,10 @@ class HomeScreen extends StatelessWidget {
                         .copyWith(fontSize: 24),
                   ),
                   const SizedBox(height: kDefaultPadding),
-                     const EventCard(
-                      eventName: "Feast of Ingathering",
-                      eventDate: "25/10/2022",
-                     ),
+                  const EventCard(
+                    eventName: "Feast of Ingathering",
+                    eventDate: "25/10/2022",
+                  ),
                   const SizedBox(height: kDefaultPadding2x),
                   Text(
                     "Messages",
@@ -109,7 +108,7 @@ class HomeScreen extends StatelessWidget {
                         .copyWith(fontSize: 24),
                   ),
                   const SizedBox(height: kDefaultPadding),
-                  MessagesCategoryItem(),
+                  const MessagesCategoryItem(),
                   const SizedBox(height: kDefaultPadding2x),
                 ],
               ),
@@ -129,24 +128,19 @@ class MessagesCategoryItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      borderRadius: BorderRadius.circular(kDefaultPadding+8),
-      onTap: (){
+      borderRadius: BorderRadius.circular(kDefaultPadding + 8),
+      onTap: () {
         Navigator.pushNamed(context, MessagesScreen.id);
       },
       child: Container(
         padding: const EdgeInsets.symmetric(
-            horizontal: kDefaultPadding2x + 8,
-            vertical: kDefaultPadding + 8),
+            horizontal: kDefaultPadding2x + 8, vertical: kDefaultPadding + 8),
         decoration: BoxDecoration(
-            borderRadius:
-                BorderRadius.circular(kDefaultPadding+8),
+            borderRadius: BorderRadius.circular(kDefaultPadding + 8),
             color: kBlue60),
         child: Text(
           "Category",
-          style: Theme.of(context)
-              .textTheme
-              .bodyText1!
-              .copyWith(fontSize: 18),
+          style: Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 18),
         ),
       ),
     );

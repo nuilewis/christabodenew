@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../constants.dart';
+import '../../../core/constants.dart';
 import '../../../models/prayer_model.dart';
 
 class PrayerCard extends StatefulWidget {
@@ -48,14 +48,14 @@ class _PrayerCardState extends State<PrayerCard> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    widget.prayer.prayerTitle,
+                    widget.prayer.title,
                     style: Theme.of(context)
                         .textTheme
                         .bodyText1!
                         .copyWith(fontSize: 24),
                   ),
                   const SizedBox(height: kDefaultPadding / 2),
-                  Text(widget.prayer.prayerExcerpt ?? "Message excerpt",
+                  Text(widget.prayer.excerpt ?? "Message excerpt",
                       style: Theme.of(context).textTheme.bodyText2),
                 ],
               ),
@@ -65,7 +65,8 @@ class _PrayerCardState extends State<PrayerCard> {
               right: kDefaultPadding,
               child: IconButton(
                 onPressed: widget.onPressed,
-                icon: SvgPicture.asset("assets/svg/forward_icon.svg", color: Theme.of(context).iconTheme.color),
+                icon: SvgPicture.asset("assets/svg/forward_icon.svg",
+                    color: Theme.of(context).iconTheme.color),
               ),
             )
           ],

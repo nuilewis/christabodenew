@@ -1,8 +1,8 @@
-import 'package:christabodenew/constants.dart';
 import 'package:christabodenew/screens/home_screen/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../core/constants.dart';
 import 'devotional_screen/devotional_screen.dart';
 import 'prayer_screen/prayer_screen.dart';
 import 'events_screen/events_screen.dart';

@@ -5,90 +5,87 @@ import 'package:flutter/material.dart';
 
 import '../core/errors/failure.dart';
 
-enum DevotionalStatus { initial, submitting, success, error }
+enum DevotionalState { initial, submitting, success, error }
 
 class DevotionalProvider extends ChangeNotifier {
   final DevotionalRepository devotionalRepository;
-  DevotionalStatus status = DevotionalStatus.initial;
+  DevotionalState state = DevotionalState.initial;
   String errorMessage = "";
   Devotional? todaysDevotional;
 
-  DevotionalProvider({required this.devotionalRepository});
+  DevotionalProvider(this.devotionalRepository);
 
   Future<void> getCurrentDevotional() async {
-    if (status == DevotionalStatus.submitting) return;
-
+    if (state == DevotionalState.submitting) return;
+    state = DevotionalState.submitting;
+    notifyListeners();
     Either<Failure, Devotional> response =
         await devotionalRepository.getCurrentDevotional();
 
     response.fold((failure) {
       errorMessage = failure.errorMessage ??
-          "An error occured while getting today's Devotional";
-      status = DevotionalStatus.error;
-
-      notifyListeners();
+          "An error occurred while getting today's Devotional";
+      state = DevotionalState.error;
     }, (devotional) {
       todaysDevotional = devotional;
-      status = DevotionalStatus.success;
-
-      notifyListeners();
+      state = DevotionalState.success;
     });
+
+    notifyListeners();
   }
 
   Future<void> getNextDevotional() async {
-    if (status == DevotionalStatus.submitting) return;
+    if (state == DevotionalState.submitting) return;
+    state = DevotionalState.submitting;
+    notifyListeners();
     Either<Failure, Devotional> response =
         await devotionalRepository.getNextDevotional();
 
     response.fold((failure) {
       errorMessage = failure.errorMessage ??
-          "An error occured while getting today's Devotional";
-      status = DevotionalStatus.error;
-      notifyListeners();
+          "An error occurred while getting today's Devotional";
+      state = DevotionalState.error;
     }, (devotional) {
       todaysDevotional = devotional;
-      status = DevotionalStatus.success;
-      notifyListeners();
+      state = DevotionalState.success;
     });
+    notifyListeners();
   }
 
   Future<void> getPreviousDevotional() async {
-    if (status == DevotionalStatus.submitting) return;
+    if (state == DevotionalState.submitting) return;
+    state = DevotionalState.submitting;
+    notifyListeners();
 
     Either<Failure, Devotional> response =
         await devotionalRepository.getPreviousDevotional();
 
     response.fold((failure) {
       errorMessage = failure.errorMessage ??
-          "An error occured while getting today's Devotional";
-      status = DevotionalStatus.error;
-
-      notifyListeners();
+          "An error occurred while getting today's Devotional";
+      state = DevotionalState.error;
     }, (devotional) {
       todaysDevotional = devotional;
-      status = DevotionalStatus.success;
-
-      notifyListeners();
+      state = DevotionalState.success;
     });
+    notifyListeners();
   }
 
   Future<void> getDevotional() async {
-    if (status == DevotionalStatus.submitting) return;
-
+    if (state == DevotionalState.submitting) return;
+    state = DevotionalState.submitting;
+    notifyListeners();
     Either<Failure, Devotional> response =
         await devotionalRepository.getDevotional();
 
     response.fold((failure) {
       errorMessage = failure.errorMessage ??
-          "An error occured while getting today's Devotional";
-      status = DevotionalStatus.error;
-
-      notifyListeners();
+          "An error occurred while getting today's Devotional";
+      state = DevotionalState.error;
     }, (devotional) {
       todaysDevotional = devotional;
-      status = DevotionalStatus.success;
-
-      notifyListeners();
+      state = DevotionalState.success;
     });
+    notifyListeners();
   }
 }

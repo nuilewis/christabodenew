@@ -1,7 +1,7 @@
-import 'package:christabodenew/constants.dart';
 import 'package:christabodenew/screens/global_components/app_bar.dart';
 import 'package:flutter/material.dart';
 
+import '../../core/constants.dart';
 import 'components/message_list_item.dart';
 
 class MessagesScreen extends StatelessWidget {

@@ -1,25 +1,30 @@
-class Event {
-  final String eventName;
-  final String eventDescription;
+import 'package:equatable/equatable.dart';
+
+class Event extends Equatable {
+  final String name;
+  final String description;
   final DateTime startDate;
   final DateTime? endDate;
 
-  Event(
-      {required this.eventName,
-      required this.eventDescription,
+  const Event(
+      {required this.name,
+      required this.description,
       required this.startDate,
       this.endDate});
 
   Event copyWith({
-    String? eventName,
-    String? eventDescription,
+    String? name,
+    String? description,
     DateTime? startDate,
     DateTime? endDate,
   }) {
     return Event(
-        eventName: eventName ?? this.eventName,
-        eventDescription: eventDescription ?? this.eventDescription,
+        name: name ?? this.name,
+        description: description ?? this.description,
         startDate: startDate ?? this.startDate,
         endDate: endDate ?? this.endDate);
   }
+
+  @override
+  List<Object?> get props => [name, description, startDate, endDate];
 }

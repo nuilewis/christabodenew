@@ -2,14 +2,14 @@ import 'package:christabodenew/models/devotional_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../constants.dart';
+import '../../../core/constants.dart';
 
 class DevotionalCard extends StatefulWidget {
   final Devotional devotional;
   final VoidCallback onPressed;
   const DevotionalCard({
     Key? key,
-   required this.devotional,
+    required this.devotional,
     required this.onPressed,
   }) : super(key: key);
 
@@ -28,15 +28,14 @@ class _DevotionalCardState extends State<DevotionalCard> {
             borderRadius: BorderRadius.circular(kDefaultPadding2x),
             color: kFuchsia40),
         child: Stack(
-        //  fit: StackFit.expand,
+          //  fit: StackFit.expand,
           children: [
             const SizedBox(width: double.infinity),
             Positioned(
               bottom: -21,
               right: -21,
               child: SvgPicture.asset(
-                 "assets/svg/read_icon.svg",
-                    
+                "assets/svg/read_icon.svg",
                 color: Colors.white.withOpacity(.4),
                 height: 150,
               ),
@@ -49,34 +48,32 @@ class _DevotionalCardState extends State<DevotionalCard> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    widget.devotional.messageTitle,
+                    widget.devotional.title,
                     style: Theme.of(context)
                         .textTheme
                         .bodyText1!
                         .copyWith(fontSize: 24),
                   ),
                   const SizedBox(height: kDefaultPadding / 2),
-                  Text(widget.devotional.messageExcerpt?? "Message excerpt",
+                  Text(widget.devotional.excerpt ?? "Message excerpt",
                       style: Theme.of(context).textTheme.bodyText2),
-               
                 ],
               ),
+            ),
+            Positioned(
+              bottom: kDefaultPadding,
+              right: kDefaultPadding,
+              child: IconButton(
+                onPressed: widget.onPressed,
+                icon: SvgPicture.asset(
+                  "assets/svg/forward_icon.svg",
+                  color: Theme.of(context).iconTheme.color,
+                ),
+              ),
             )
-            ,
-               Positioned(
-                    bottom: kDefaultPadding,
-                    right: kDefaultPadding,
-                    child: IconButton(
-                      onPressed: widget.onPressed,
-                      icon: SvgPicture.asset("assets/svg/forward_icon.svg", color: Theme.of(context).iconTheme.color,),
-                    ),
-                  )
           ],
         ),
       ),
     );
   }
 }
-
-
-
