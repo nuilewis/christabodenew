@@ -45,6 +45,17 @@ class Devotional extends Equatable {
         endDate: endDate ?? this.endDate);
   }
 
+  static Devotional empty = Devotional(
+      title: "title",
+      scripture: "scripture",
+      scriptureReference: "scriptureReference",
+      confessionOfFaith: "confessionOfFaith",
+      author: "author",
+      content: "content",
+      startDate: DateTime.now(),
+      endDate: DateTime.now());
+  bool get isEmpty => this == Devotional.empty;
+  bool get isNotEmpty => this != Devotional.empty;
   @override
   List<Object> get props => [
         title,

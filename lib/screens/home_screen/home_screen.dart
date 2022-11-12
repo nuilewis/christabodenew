@@ -69,7 +69,7 @@ class HomeScreen extends StatelessWidget {
                   PrayerCard(
                     prayer: Prayer(
                       date: DateTime.now(),
-                      message: 'prayer Message',
+                      content: 'prayer Message',
                       title: 'prayer title',
                       scripture: 'scripture',
                       scriptureReference: 'scripture ref',

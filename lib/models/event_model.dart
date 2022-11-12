@@ -25,6 +25,11 @@ class Event extends Equatable {
         endDate: endDate ?? this.endDate);
   }
 
+  static Event empty = Event(
+      name: "name", description: "description", startDate: DateTime.now());
+  bool get isEmpty => this == Event.empty;
+  bool get isNotEmpty => this != Event.empty;
+
   @override
   List<Object?> get props => [name, description, startDate, endDate];
 }

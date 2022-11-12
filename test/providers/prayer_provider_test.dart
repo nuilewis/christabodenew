@@ -17,7 +17,7 @@ void main() {
       title: "prayerTitle",
       scripture: "scripture",
       scriptureReference: "scriptureReference",
-      message: "prayerMessage",
+      content: "prayerMessage",
       date: DateTime.now());
 
   setUp(() {
@@ -29,6 +29,7 @@ void main() {
     expect(prayerProvider.state, PrayerState.initial);
     expect(prayerProvider.errorMessage, "");
     expect(prayerProvider.todaysPrayer, null);
+    expect(prayerProvider.allPrayers, []);
   });
 
   group("Test [getPrayer]", () {
@@ -36,7 +37,7 @@ void main() {
         "Should return a [Prayer] obj and set the state to success when [getPrayer] is called successfully from the repository",
         () async {
       //arrange
-      when(mockPrayerRepository.getPrayer())
+      when(mockPrayerRepository.getPrayers())
           .thenAnswer((_) async => Right(returnedPrayer));
 
       //act
@@ -46,7 +47,7 @@ void main() {
       expect(prayerProvider.todaysPrayer, returnedPrayer);
       expect(prayerProvider.state, PrayerState.success);
 
-      verify(mockPrayerRepository.getPrayer()).called(1);
+      verify(mockPrayerRepository.getPrayers()).called(1);
       verifyNoMoreInteractions(mockPrayerRepository);
     });
 
@@ -54,7 +55,7 @@ void main() {
         "Should return a [Failure] obj and set the state to success when [getPrayer] is called un successfully from the repository",
         () async {
       //arrange
-      when(mockPrayerRepository.getPrayer()).thenAnswer((_) async =>
+      when(mockPrayerRepository.getPrayers()).thenAnswer((_) async =>
           Future.value(const Left(Failure(errorMessage: "error message"))));
 
       //act
@@ -66,7 +67,7 @@ void main() {
       expect(prayerProvider.todaysPrayer, null);
       expect(prayerProvider.errorMessage, "error message");
 
-      verify(mockPrayerRepository.getPrayer()).called(1);
+      verify(mockPrayerRepository.getPrayers()).called(1);
       verifyNoMoreInteractions(mockPrayerRepository);
     });
   });

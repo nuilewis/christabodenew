@@ -5,7 +5,7 @@ class Prayer extends Equatable {
   final String? excerpt;
   final String scripture;
   final String scriptureReference;
-  final String message;
+  final String content;
   final DateTime date;
 
   const Prayer(
@@ -13,7 +13,7 @@ class Prayer extends Equatable {
       this.excerpt,
       required this.scripture,
       required this.scriptureReference,
-      required this.message,
+      required this.content,
       required this.date});
 
   Prayer copyWith({
@@ -21,18 +21,26 @@ class Prayer extends Equatable {
     String? excerpt,
     String? scripture,
     String? scriptureReference,
-    String? message,
+    String? content,
     DateTime? date,
   }) {
     return Prayer(
         title: title ?? this.title,
         scripture: scripture ?? this.scripture,
         scriptureReference: scriptureReference ?? this.scriptureReference,
-        message: message ?? this.message,
+        content: content ?? this.content,
         date: date ?? this.date);
   }
 
+  static Prayer empty = Prayer(
+      title: "",
+      scripture: "scripture",
+      scriptureReference: "scriptureReference",
+      content: "content",
+      date: DateTime.now());
+  bool get isEmpty => this == Prayer.empty;
+  bool get isNotEmpty => this != Prayer.empty;
   @override
   List<Object?> get props =>
-      [title, excerpt, message, scripture, scriptureReference, date];
+      [title, excerpt, content, scripture, scriptureReference, date];
 }

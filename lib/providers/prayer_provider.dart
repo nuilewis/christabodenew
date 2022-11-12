@@ -12,6 +12,7 @@ class PrayerProvider extends ChangeNotifier {
   PrayerState state = PrayerState.initial;
   String errorMessage = "";
   Prayer? todaysPrayer;
+  List<Prayer> allPrayers = [];
 
   PrayerProvider({required this.prayerRepository});
 
@@ -79,13 +80,14 @@ class PrayerProvider extends ChangeNotifier {
     state = PrayerState.submitting;
     notifyListeners();
 
-    Either<Failure, Prayer> response = await prayerRepository.getPrayer();
+    Either<Failure, Prayer> response = await prayerRepository.getPrayers();
     response.fold((failure) {
       errorMessage = failure.errorMessage ??
           "An error occurred while getting today's prayer";
       state = PrayerState.error;
     }, (prayer) {
       todaysPrayer = prayer;
+      //allPrayers = prayer;
       state = PrayerState.success;
     });
     notifyListeners();

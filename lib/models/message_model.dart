@@ -28,6 +28,11 @@ class Message extends Equatable {
         category: category ?? this.category);
   }
 
+  static const Message empty =
+      Message(title: "title", content: "content", author: "author");
+  bool get isEmpty => this == Message.empty;
+  bool get isNotEmpty => this != Message.empty;
+
   @override
   List<Object?> get props => [author, title, content, category];
 }
