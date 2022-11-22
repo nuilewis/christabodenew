@@ -44,8 +44,8 @@ void main() {
     test(
         "Should return a [Failure] obj and set the state to success when [getMessages] is called un successfully from the repository",
         () async {
-      when(mockMessagesRepository.getMessage()).thenAnswer(
-          (_) async => const Left(Failure(errorMessage: "error message")));
+      when(mockMessagesRepository.getMessage()).thenAnswer((_) async =>
+          const Left(FirebaseFailure(errorMessage: "error message")));
 
       //act
       await messagesProvider.getMessage();

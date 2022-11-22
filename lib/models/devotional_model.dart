@@ -5,8 +5,8 @@ class Devotional extends Equatable {
   final String? excerpt;
   final String scripture;
   final String scriptureReference;
-  final String confessionOfFaith;
   final String content;
+  final String confessionOfFaith;
   final String author;
   final DateTime startDate;
 

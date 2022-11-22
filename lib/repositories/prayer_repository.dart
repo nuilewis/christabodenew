@@ -2,6 +2,7 @@ import 'package:christabodenew/services/prayer/prayer_hive_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 
+import '../core/connection_checker/connection_checker.dart';
 import '../core/errors/failure.dart';
 import '../models/prayer_model.dart';
 import '../services/prayer/prayer_firestore_service.dart';
@@ -16,46 +17,56 @@ abstract class PrayerRepository {
 class PrayerRepositoryImplementation implements PrayerRepository {
   final PrayerFireStoreService prayerFirestoreService;
   final PrayerHiveService prayerHiveService;
+  final ConnectionChecker connectionChecker;
   PrayerRepositoryImplementation({
     required this.prayerHiveService,
     required this.prayerFirestoreService,
+    required this.connectionChecker,
   });
   @override
   Future<Either<Failure, Prayer>> getPrayers() async {
     List<Prayer> prayerList = [];
     Prayer prayer = Prayer.empty;
 
-    ///Todo: consider removing this network checker, because firebase already has an offline functionality
-    ///and the network checker will just prevent firebase from working properly
-    ///cs it will intercept that theres no network and throw an error, event though firebase could still get the
-    ///document offline.
+    /// try to get from offline
+    /// if offline is empty, then check for network connectivity, if network is not there, throw a network error
+    /// if network is there, then try to get from offline.
 
-    ///Also do i save each prayer as a separate entry, or as a giant map of all entries in one document??
-    ///May be useful to do so in order to show a list of the complete prayers, and also reduce reads
-    ///but it may be too large for one document, and same thing with the messages, would.
-    ///Saving each message in its own document would not be terrible idea, but again, we're trying to be efficient
-    ///a list of maps for the messages and prayers makes sense right??
-    try {
-      DocumentSnapshot documentSnapshot =
-          await prayerFirestoreService.getPrayer();
+    ///Todo: try to get prayer offline, if its, empty then  retry online.
+    //prayerList = await prayerHiveService.getPrayer();
+    if (prayerList.isEmpty) {
+      if (await connectionChecker.isConnected) {
+        try {
+          QuerySnapshot querySnapshot =
+              await prayerFirestoreService.getPrayers();
 
-      if (documentSnapshot.exists) {
-        Map<String, dynamic> documentData =
-            documentSnapshot.data() as Map<String, dynamic>;
-        String excerpt = documentData["content"].toString();
+          if (querySnapshot.docs.isNotEmpty) {
+            for (var element in querySnapshot.docs) {
+              Map<String, dynamic> documentData =
+                  element.data() as Map<String, dynamic>;
+              String excerpt =
+                  documentData["content"].toString().substring(0, 20);
+              prayer = Prayer(
+                title: documentData["title"],
+                scripture: documentData["scripture"],
+                scriptureReference: documentData["scriptureRef"],
+                content: documentData["content"],
+                date: documentData["start"],
+                excerpt: excerpt,
+              );
 
-        prayer = Prayer(
-          title: documentData["title"],
-          scripture: documentData["scripture"],
-          scriptureReference: documentData["scriptureRef"],
-          content: documentData["content"],
-          date: documentData["startDate"],
-          excerpt: excerpt,
-        );
+              prayerList.add(prayer);
+            }
+          }
+          return Right(prayer);
+        } on FirebaseException catch (e) {
+          return Left(FirebaseFailure(errorMessage: e.message, code: e.code));
+        }
+      } else {
+        return const Left(NetworkFailure());
       }
-      return Right(prayer);
-    } on FirebaseException catch (e) {
-      return Left(Failure(errorMessage: e.message, code: e.code));
+    } else {
+      return const Left(FirebaseFailure(errorMessage: "Failed to get prayer"));
     }
   }
 

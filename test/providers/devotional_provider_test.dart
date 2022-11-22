@@ -59,7 +59,8 @@ void main() {
         () async {
       //arrange
       when(mockDevotionalRepository.getDevotional()).thenAnswer((_) async =>
-          Future.value(const Left(Failure(errorMessage: "error message"))));
+          Future.value(
+              const Left(FirebaseFailure(errorMessage: "error message"))));
 
       //act
 
@@ -98,8 +99,8 @@ void main() {
         () async {
       //arrange
       when(mockDevotionalRepository.getCurrentDevotional()).thenAnswer(
-          (_) async =>
-              Future.value(const Left(Failure(errorMessage: "error message"))));
+          (_) async => Future.value(
+              const Left(FirebaseFailure(errorMessage: "error message"))));
 
       //act
 
@@ -138,7 +139,8 @@ void main() {
         () async {
       //arrange
       when(mockDevotionalRepository.getNextDevotional()).thenAnswer((_) async =>
-          Future.value(const Left(Failure(errorMessage: "error message"))));
+          Future.value(
+              const Left(FirebaseFailure(errorMessage: "error message"))));
 
       //act
 
@@ -177,8 +179,8 @@ void main() {
         () async {
       //arrange
       when(mockDevotionalRepository.getPreviousDevotional()).thenAnswer(
-          (_) async =>
-              Future.value(const Left(Failure(errorMessage: "error message"))));
+          (_) async => Future.value(
+              const Left(FirebaseFailure(errorMessage: "error message"))));
 
       //act
 

@@ -40,6 +40,22 @@ class Prayer extends Equatable {
       date: DateTime.now());
   bool get isEmpty => this == Prayer.empty;
   bool get isNotEmpty => this != Prayer.empty;
+
+  static final List<Prayer> demoData = [
+    Prayer(
+        title: "prayer 1",
+        scripture: "scripture",
+        scriptureReference: "scriptureReference",
+        content: "content",
+        date: DateTime.now()),
+    Prayer(
+        title: "prayer 2",
+        scripture: "scripture",
+        scriptureReference: "scriptureReference",
+        content: "content",
+        date: DateTime.now()),
+  ];
+
   @override
   List<Object?> get props =>
       [title, excerpt, content, scripture, scriptureReference, date];

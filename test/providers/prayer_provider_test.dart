@@ -56,7 +56,8 @@ void main() {
         () async {
       //arrange
       when(mockPrayerRepository.getPrayers()).thenAnswer((_) async =>
-          Future.value(const Left(Failure(errorMessage: "error message"))));
+          Future.value(
+              const Left(FirebaseFailure(errorMessage: "error message"))));
 
       //act
 
@@ -95,7 +96,8 @@ void main() {
         () async {
       //arrange
       when(mockPrayerRepository.getCurrentPrayer()).thenAnswer((_) async =>
-          Future.value(const Left(Failure(errorMessage: "error message"))));
+          Future.value(
+              const Left(FirebaseFailure(errorMessage: "error message"))));
 
       //act
 
@@ -134,7 +136,8 @@ void main() {
         () async {
       //arrange
       when(mockPrayerRepository.getNextPrayer()).thenAnswer((_) async =>
-          Future.value(const Left(Failure(errorMessage: "error message"))));
+          Future.value(
+              const Left(FirebaseFailure(errorMessage: "error message"))));
 
       //act
 
@@ -173,7 +176,8 @@ void main() {
         () async {
       //arrange
       when(mockPrayerRepository.getPreviousPrayer()).thenAnswer((_) async =>
-          Future.value(const Left(Failure(errorMessage: "error message"))));
+          Future.value(
+              const Left(FirebaseFailure(errorMessage: "error message"))));
 
       //act
 

@@ -5,6 +5,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i5;
 
+import 'package:christabodenew/core/connection_checker/connection_checker.dart'
+    as _i6;
 import 'package:christabodenew/services/prayer/prayer_firestore_service.dart'
     as _i4;
 import 'package:christabodenew/services/prayer/prayer_hive_service.dart' as _i3;
@@ -33,9 +35,9 @@ class _FakeFirebaseFirestore_0 extends _i1.SmartFake
         );
 }
 
-class _FakeDocumentSnapshot_1<T extends Object?> extends _i1.SmartFake
-    implements _i2.DocumentSnapshot<T> {
-  _FakeDocumentSnapshot_1(
+class _FakeQuerySnapshot_1<T extends Object?> extends _i1.SmartFake
+    implements _i2.QuerySnapshot<T> {
+  _FakeQuerySnapshot_1(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -67,27 +69,38 @@ class MockPrayerFireStoreService extends _i1.Mock
         ),
       ) as _i2.FirebaseFirestore);
   @override
-  _i5.Future<_i2.DocumentSnapshot<Object?>> getPrayers() => (super.noSuchMethod(
+  _i5.Future<_i2.QuerySnapshot<Object?>> getPrayers() => (super.noSuchMethod(
         Invocation.method(
           #getPrayers,
           [],
         ),
-        returnValue: _i5.Future<_i2.DocumentSnapshot<Object?>>.value(
-            _FakeDocumentSnapshot_1<Object?>(
+        returnValue: _i5.Future<_i2.QuerySnapshot<Object?>>.value(
+            _FakeQuerySnapshot_1<Object?>(
           this,
           Invocation.method(
             #getPrayers,
             [],
           ),
         )),
-        returnValueForMissingStub:
-            _i5.Future<_i2.DocumentSnapshot<Object?>>.value(
-                _FakeDocumentSnapshot_1<Object?>(
+        returnValueForMissingStub: _i5.Future<_i2.QuerySnapshot<Object?>>.value(
+            _FakeQuerySnapshot_1<Object?>(
           this,
           Invocation.method(
             #getPrayers,
             [],
           ),
         )),
-      ) as _i5.Future<_i2.DocumentSnapshot<Object?>>);
+      ) as _i5.Future<_i2.QuerySnapshot<Object?>>);
+}
+
+/// A class which mocks [ConnectionChecker].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockConnectionChecker extends _i1.Mock implements _i6.ConnectionChecker {
+  @override
+  _i5.Future<bool> get isConnected => (super.noSuchMethod(
+        Invocation.getter(#isConnected),
+        returnValue: _i5.Future<bool>.value(false),
+        returnValueForMissingStub: _i5.Future<bool>.value(false),
+      ) as _i5.Future<bool>);
 }
