@@ -1,11 +1,11 @@
 import 'package:christabodenew/services/firestore_base_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class PrayerFireStoreService extends FirestoreService {
-  Future<QuerySnapshot> getPrayers() async {
+class DevotionalFirestoreService extends FirestoreService {
+  Future<QuerySnapshot> getDevotionals() async {
     try {
       QuerySnapshot<Map<String, dynamic>> result =
-          await firestore.collection("prayer").get();
+          await firestore.collection("devotional").get();
       return result;
     } on FirebaseException {
       rethrow;

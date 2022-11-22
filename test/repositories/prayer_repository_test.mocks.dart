@@ -3,12 +3,13 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i5;
+import 'dart:async' as _i4;
 
 import 'package:christabodenew/core/connection_checker/connection_checker.dart'
-    as _i6;
+    as _i7;
+import 'package:christabodenew/models/prayer_model.dart' as _i5;
 import 'package:christabodenew/services/prayer/prayer_firestore_service.dart'
-    as _i4;
+    as _i6;
 import 'package:christabodenew/services/prayer/prayer_hive_service.dart' as _i3;
 import 'package:cloud_firestore/cloud_firestore.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
@@ -49,32 +50,43 @@ class _FakeQuerySnapshot_1<T extends Object?> extends _i1.SmartFake
 /// A class which mocks [PrayerHiveService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockPrayerHiveService extends _i1.Mock implements _i3.PrayerHiveService {}
+class MockPrayerHiveService extends _i1.Mock implements _i3.PrayerHiveService {
+  @override
+  _i4.Future<List<_i5.Prayer>> getData() => (super.noSuchMethod(
+        Invocation.method(
+          #getData,
+          [],
+        ),
+        returnValue: _i4.Future<List<_i5.Prayer>>.value(<_i5.Prayer>[]),
+        returnValueForMissingStub:
+            _i4.Future<List<_i5.Prayer>>.value(<_i5.Prayer>[]),
+      ) as _i4.Future<List<_i5.Prayer>>);
+}
 
 /// A class which mocks [PrayerFireStoreService].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockPrayerFireStoreService extends _i1.Mock
-    implements _i4.PrayerFireStoreService {
+    implements _i6.PrayerFireStoreService {
   @override
-  _i2.FirebaseFirestore get fireStore => (super.noSuchMethod(
-        Invocation.getter(#fireStore),
+  _i2.FirebaseFirestore get firestore => (super.noSuchMethod(
+        Invocation.getter(#firestore),
         returnValue: _FakeFirebaseFirestore_0(
           this,
-          Invocation.getter(#fireStore),
+          Invocation.getter(#firestore),
         ),
         returnValueForMissingStub: _FakeFirebaseFirestore_0(
           this,
-          Invocation.getter(#fireStore),
+          Invocation.getter(#firestore),
         ),
       ) as _i2.FirebaseFirestore);
   @override
-  _i5.Future<_i2.QuerySnapshot<Object?>> getPrayers() => (super.noSuchMethod(
+  _i4.Future<_i2.QuerySnapshot<Object?>> getPrayers() => (super.noSuchMethod(
         Invocation.method(
           #getPrayers,
           [],
         ),
-        returnValue: _i5.Future<_i2.QuerySnapshot<Object?>>.value(
+        returnValue: _i4.Future<_i2.QuerySnapshot<Object?>>.value(
             _FakeQuerySnapshot_1<Object?>(
           this,
           Invocation.method(
@@ -82,7 +94,7 @@ class MockPrayerFireStoreService extends _i1.Mock
             [],
           ),
         )),
-        returnValueForMissingStub: _i5.Future<_i2.QuerySnapshot<Object?>>.value(
+        returnValueForMissingStub: _i4.Future<_i2.QuerySnapshot<Object?>>.value(
             _FakeQuerySnapshot_1<Object?>(
           this,
           Invocation.method(
@@ -90,17 +102,17 @@ class MockPrayerFireStoreService extends _i1.Mock
             [],
           ),
         )),
-      ) as _i5.Future<_i2.QuerySnapshot<Object?>>);
+      ) as _i4.Future<_i2.QuerySnapshot<Object?>>);
 }
 
 /// A class which mocks [ConnectionChecker].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockConnectionChecker extends _i1.Mock implements _i6.ConnectionChecker {
+class MockConnectionChecker extends _i1.Mock implements _i7.ConnectionChecker {
   @override
-  _i5.Future<bool> get isConnected => (super.noSuchMethod(
+  _i4.Future<bool> get isConnected => (super.noSuchMethod(
         Invocation.getter(#isConnected),
-        returnValue: _i5.Future<bool>.value(false),
-        returnValueForMissingStub: _i5.Future<bool>.value(false),
-      ) as _i5.Future<bool>);
+        returnValue: _i4.Future<bool>.value(false),
+        returnValueForMissingStub: _i4.Future<bool>.value(false),
+      ) as _i4.Future<bool>);
 }

@@ -112,14 +112,15 @@ class MockPrayerRepository extends _i1.Mock implements _i3.PrayerRepository {
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, _i6.Prayer>>);
   @override
-  _i4.Future<_i2.Either<_i5.Failure, _i6.Prayer>> getPrayers() =>
+  _i4.Future<_i2.Either<_i5.Failure, List<_i6.Prayer>>> getPrayers() =>
       (super.noSuchMethod(
         Invocation.method(
           #getPrayers,
           [],
         ),
-        returnValue: _i4.Future<_i2.Either<_i5.Failure, _i6.Prayer>>.value(
-            _FakeEither_0<_i5.Failure, _i6.Prayer>(
+        returnValue:
+            _i4.Future<_i2.Either<_i5.Failure, List<_i6.Prayer>>>.value(
+                _FakeEither_0<_i5.Failure, List<_i6.Prayer>>(
           this,
           Invocation.method(
             #getPrayers,
@@ -127,13 +128,13 @@ class MockPrayerRepository extends _i1.Mock implements _i3.PrayerRepository {
           ),
         )),
         returnValueForMissingStub:
-            _i4.Future<_i2.Either<_i5.Failure, _i6.Prayer>>.value(
-                _FakeEither_0<_i5.Failure, _i6.Prayer>(
+            _i4.Future<_i2.Either<_i5.Failure, List<_i6.Prayer>>>.value(
+                _FakeEither_0<_i5.Failure, List<_i6.Prayer>>(
           this,
           Invocation.method(
             #getPrayers,
             [],
           ),
         )),
-      ) as _i4.Future<_i2.Either<_i5.Failure, _i6.Prayer>>);
+      ) as _i4.Future<_i2.Either<_i5.Failure, List<_i6.Prayer>>>);
 }

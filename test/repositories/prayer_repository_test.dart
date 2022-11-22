@@ -3,8 +3,6 @@ import 'package:christabodenew/models/prayer_model.dart';
 import 'package:christabodenew/repositories/prayer_repository.dart';
 import 'package:christabodenew/services/prayer/prayer_firestore_service.dart';
 import 'package:christabodenew/services/prayer/prayer_hive_service.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';

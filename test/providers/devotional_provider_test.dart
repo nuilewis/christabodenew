@@ -24,6 +24,27 @@ void main() {
       startDate: DateTime.now(),
       endDate: DateTime.now());
 
+  final List<Devotional> returnedDevotionalList = [
+    Devotional(
+        title: "title 1",
+        scripture: "scripture 1",
+        scriptureReference: "scriptureReference 1",
+        confessionOfFaith: "confessionOfFaith",
+        author: "author",
+        content: "content",
+        startDate: DateTime.now(),
+        endDate: DateTime.now()),
+    Devotional(
+        title: "title 2",
+        scripture: "scripture 2",
+        scriptureReference: "scriptureReference 2",
+        confessionOfFaith: "confessionOfFaith",
+        author: "author",
+        content: "content",
+        startDate: DateTime.now(),
+        endDate: DateTime.now()),
+  ];
+
   setUp(() {
     mockDevotionalRepository = MockDevotionalRepository();
     devotionalProvider = DevotionalProvider(mockDevotionalRepository);
@@ -40,8 +61,8 @@ void main() {
         "Should return a [Devotional] obj and set the state to success when [getDevotional] is called successfully from the repository",
         () async {
       //arrange
-      when(mockDevotionalRepository.getDevotional())
-          .thenAnswer((_) async => Right(returnedDevotional));
+      when(mockDevotionalRepository.getDevotionals())
+          .thenAnswer((_) async => Right(returnedDevotionalList));
 
       //act
       await devotionalProvider.getDevotional();
@@ -50,7 +71,7 @@ void main() {
       expect(devotionalProvider.todaysDevotional, returnedDevotional);
       expect(devotionalProvider.state, DevotionalState.success);
 
-      verify(mockDevotionalRepository.getDevotional()).called(1);
+      verify(mockDevotionalRepository.getDevotionals()).called(1);
       verifyNoMoreInteractions(mockDevotionalRepository);
     });
 
@@ -58,7 +79,7 @@ void main() {
         "Should return a [Failure] obj and set the state to success when [getDevotional] is called un successfully from the repository",
         () async {
       //arrange
-      when(mockDevotionalRepository.getDevotional()).thenAnswer((_) async =>
+      when(mockDevotionalRepository.getDevotionals()).thenAnswer((_) async =>
           Future.value(
               const Left(FirebaseFailure(errorMessage: "error message"))));
 
@@ -71,7 +92,7 @@ void main() {
       expect(devotionalProvider.errorMessage, "error message");
       expect(devotionalProvider.state, DevotionalState.error);
 
-      verify(mockDevotionalRepository.getDevotional()).called(1);
+      verify(mockDevotionalRepository.getDevotionals()).called(1);
       verifyNoMoreInteractions(mockDevotionalRepository);
     });
   });

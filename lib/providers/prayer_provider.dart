@@ -80,13 +80,14 @@ class PrayerProvider extends ChangeNotifier {
     state = PrayerState.submitting;
     notifyListeners();
 
-    Either<Failure, Prayer> response = await prayerRepository.getPrayers();
+    Either<Failure, List<Prayer>> response =
+        await prayerRepository.getPrayers();
     response.fold((failure) {
       errorMessage = failure.errorMessage ??
           "An error occurred while getting today's prayer";
       state = PrayerState.error;
     }, (prayer) {
-      todaysPrayer = prayer;
+      todaysPrayer = prayer.first;
       //allPrayers = prayer;
       state = PrayerState.success;
     });

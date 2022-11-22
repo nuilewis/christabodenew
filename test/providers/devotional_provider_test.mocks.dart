@@ -113,28 +113,29 @@ class MockDevotionalRepository extends _i1.Mock
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, _i6.Devotional>>);
   @override
-  _i4.Future<_i2.Either<_i5.Failure, _i6.Devotional>> getDevotional() =>
+  _i4.Future<_i2.Either<_i5.Failure, List<_i6.Devotional>>> getDevotionals() =>
       (super.noSuchMethod(
         Invocation.method(
-          #getDevotional,
+          #getDevotionals,
           [],
         ),
-        returnValue: _i4.Future<_i2.Either<_i5.Failure, _i6.Devotional>>.value(
-            _FakeEither_0<_i5.Failure, _i6.Devotional>(
+        returnValue:
+            _i4.Future<_i2.Either<_i5.Failure, List<_i6.Devotional>>>.value(
+                _FakeEither_0<_i5.Failure, List<_i6.Devotional>>(
           this,
           Invocation.method(
-            #getDevotional,
+            #getDevotionals,
             [],
           ),
         )),
         returnValueForMissingStub:
-            _i4.Future<_i2.Either<_i5.Failure, _i6.Devotional>>.value(
-                _FakeEither_0<_i5.Failure, _i6.Devotional>(
+            _i4.Future<_i2.Either<_i5.Failure, List<_i6.Devotional>>>.value(
+                _FakeEither_0<_i5.Failure, List<_i6.Devotional>>(
           this,
           Invocation.method(
-            #getDevotional,
+            #getDevotionals,
             [],
           ),
         )),
-      ) as _i4.Future<_i2.Either<_i5.Failure, _i6.Devotional>>);
+      ) as _i4.Future<_i2.Either<_i5.Failure, List<_i6.Devotional>>>);
 }

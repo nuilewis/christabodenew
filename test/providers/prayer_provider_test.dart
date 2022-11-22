@@ -20,6 +20,8 @@ void main() {
       content: "prayerMessage",
       date: DateTime.now());
 
+  final List<Prayer> returnedPrayerList = Prayer.demoData;
+
   setUp(() {
     mockPrayerRepository = MockPrayerRepository();
     prayerProvider = PrayerProvider(prayerRepository: mockPrayerRepository);
@@ -38,7 +40,7 @@ void main() {
         () async {
       //arrange
       when(mockPrayerRepository.getPrayers())
-          .thenAnswer((_) async => Right(returnedPrayer));
+          .thenAnswer((_) async => Right(returnedPrayerList));
 
       //act
       await prayerProvider.getPrayer();
