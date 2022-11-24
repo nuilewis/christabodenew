@@ -1,10 +1,25 @@
 import 'package:equatable/equatable.dart';
+import 'package:hive/hive.dart';
 
+part 'message_model.g.dart';
+
+const int _categoryHiveIndex = 0;
+const int _titleHiveIndex = 1;
+const int _contentHiveIndex = 2;
+const int _authorHiveIndex = 3;
+const int _dateHiveIndex = 4;
+
+@HiveType(typeId: 2)
 class Message extends Equatable {
+  @HiveField(_categoryHiveIndex)
   final String? category;
+  @HiveField(_titleHiveIndex)
   final String title;
+  @HiveField(_contentHiveIndex)
   final String content;
-  final String author;
+  @HiveField(_authorHiveIndex)
+  final String? author;
+  @HiveField(_dateHiveIndex)
   final DateTime? date;
 
   const Message(

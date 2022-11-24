@@ -1,15 +1,37 @@
 import 'package:equatable/equatable.dart';
+import 'package:hive/hive.dart';
 
+part 'devotional_model.g.dart';
+
+const int _titleHiveIndex = 0;
+const int _excerptHiveIndex = 1;
+const int _scriptureHiveIndex = 2;
+const int _scriptureRefHiveIndex = 3;
+const int _contentHiveIndex = 4;
+const int _confessionHiveIndex = 5;
+const int _authorHiveIndex = 6;
+const int _startDateHiveIndex = 7;
+const int _endDateHiveIndex = 8;
+
+@HiveType(typeId: 0)
 class Devotional extends Equatable {
+  @HiveField(_titleHiveIndex)
   final String title;
+  @HiveField(_excerptHiveIndex)
   final String? excerpt;
+  @HiveField(_scriptureHiveIndex)
   final String scripture;
+  @HiveField(_scriptureRefHiveIndex)
   final String scriptureReference;
+  @HiveField(_contentHiveIndex)
   final String content;
+  @HiveField(_confessionHiveIndex)
   final String confessionOfFaith;
+  @HiveField(_authorHiveIndex)
   final String author;
+  @HiveField(_startDateHiveIndex)
   final DateTime startDate;
-
+  @HiveField(_endDateHiveIndex)
   final DateTime endDate;
 
   const Devotional(

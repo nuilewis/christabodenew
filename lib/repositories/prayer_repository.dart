@@ -1,6 +1,7 @@
 import 'package:christabodenew/services/prayer/prayer_hive_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import '../core/connection_checker/connection_checker.dart';
 import '../core/errors/failure.dart';
@@ -38,9 +39,8 @@ class PrayerRepositoryImplementation implements PrayerRepository {
     /// try to get from offline
     /// if offline is empty, then check for network connectivity, if network is not there, throw a network error
     /// if network is there, then try to get from offline.
-
-    ///Todo: try to get prayer offline, if its, empty then  retry online.
-    _prayerList = await prayerHiveService.getData();
+    final Box prayerBox = await prayerHiveService.openBox();
+    _prayerList = await prayerHiveService.getData(prayerBox);
     if (_prayerList.isEmpty) {
       ///If the prayer list from local storage is empty, then try to get
       ///a new list from firestore;

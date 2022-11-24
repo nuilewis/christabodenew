@@ -1,9 +1,22 @@
 import 'package:equatable/equatable.dart';
+import 'package:hive/hive.dart';
 
+part 'event_model.g.dart';
+
+const int _nameHiveIndex = 0;
+const int _descriptionHiveIndex = 1;
+const int _startHiveIndex = 2;
+const int _endHiveIndex = 3;
+
+@HiveType(typeId: 3)
 class Event extends Equatable {
+  @HiveField(_nameHiveIndex)
   final String name;
+  @HiveField(_descriptionHiveIndex)
   final String description;
+  @HiveField(_startHiveIndex)
   final DateTime startDate;
+  @HiveField(_endHiveIndex)
   final DateTime? endDate;
 
   const Event(

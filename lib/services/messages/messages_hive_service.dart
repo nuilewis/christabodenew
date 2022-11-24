@@ -1,10 +1,10 @@
+import 'package:christabodenew/models/message_model.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import '../../models/prayer_model.dart';
 import '../hive_base_service.dart';
 
-class PrayerHiveService extends HiveService {
-  final String boxName = "prayerBox";
+class MessagesHiveService extends HiveService {
+  final String boxName = "messagesBox";
 
   Future<Box> openBox() async {
     Box box = await Hive.openBox(boxName);
@@ -14,18 +14,18 @@ class PrayerHiveService extends HiveService {
   @override
   Future<void> initHive() async {
     super.initHive();
-    Hive.registerAdapter(PrayerAdapter());
+    Hive.registerAdapter(MessageAdapter());
   }
 
-  Future<List<Prayer>> getData(Box box) async {
+  Future<List<Message>> getData(Box box) async {
     if (box.values.isNotEmpty) {
-      return box.values.toList().cast<Prayer>();
+      return box.values.toList().cast<Message>();
     } else {
-      return <Prayer>[];
+      return <Message>[];
     }
   }
 
-  Future<void> addPrayers(Box box, List<Prayer> prayers) async {
+  Future<void> addPrayers(Box box, List<Message> prayers) async {
     await box.put(boxName, prayers);
   }
 

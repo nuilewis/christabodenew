@@ -4,6 +4,7 @@ import 'package:christabodenew/services/devotional/devotional_firestore_service.
 import 'package:christabodenew/services/devotional/devotional_hive_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import '../core/errors/failure.dart';
 
@@ -36,8 +37,8 @@ class DevotionalRepositoryImplementation implements DevotionalRepository {
     /// try to get from offline
     /// if offline is empty, then check for network connectivity, if network is not there, throw a network error
     /// if network is there, then try to get from offline.
-
-    _devotionalList = await devotionalHiveService.getData();
+    final Box devotionalBox = await devotionalHiveService.openBox();
+    _devotionalList = await devotionalHiveService.getData(devotionalBox);
     if (_devotionalList.isEmpty) {
       ///If the devotional list from local storage is empty, then try to get
       ///a new list from firestore;

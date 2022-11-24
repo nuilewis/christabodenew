@@ -3,15 +3,16 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
+import 'dart:async' as _i5;
 
 import 'package:christabodenew/core/connection_checker/connection_checker.dart'
-    as _i7;
-import 'package:christabodenew/models/prayer_model.dart' as _i5;
+    as _i8;
+import 'package:christabodenew/models/prayer_model.dart' as _i6;
 import 'package:christabodenew/services/prayer/prayer_firestore_service.dart'
-    as _i6;
-import 'package:christabodenew/services/prayer/prayer_hive_service.dart' as _i3;
-import 'package:cloud_firestore/cloud_firestore.dart' as _i2;
+    as _i7;
+import 'package:christabodenew/services/prayer/prayer_hive_service.dart' as _i4;
+import 'package:cloud_firestore/cloud_firestore.dart' as _i3;
+import 'package:hive_flutter/hive_flutter.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -25,9 +26,8 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeFirebaseFirestore_0 extends _i1.SmartFake
-    implements _i2.FirebaseFirestore {
-  _FakeFirebaseFirestore_0(
+class _FakeBox_0<E> extends _i1.SmartFake implements _i2.Box<E> {
+  _FakeBox_0(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -36,9 +36,20 @@ class _FakeFirebaseFirestore_0 extends _i1.SmartFake
         );
 }
 
-class _FakeQuerySnapshot_1<T extends Object?> extends _i1.SmartFake
-    implements _i2.QuerySnapshot<T> {
-  _FakeQuerySnapshot_1(
+class _FakeFirebaseFirestore_1 extends _i1.SmartFake
+    implements _i3.FirebaseFirestore {
+  _FakeFirebaseFirestore_1(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeQuerySnapshot_2<T extends Object?> extends _i1.SmartFake
+    implements _i3.QuerySnapshot<T> {
+  _FakeQuerySnapshot_2(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -50,69 +61,132 @@ class _FakeQuerySnapshot_1<T extends Object?> extends _i1.SmartFake
 /// A class which mocks [PrayerHiveService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockPrayerHiveService extends _i1.Mock implements _i3.PrayerHiveService {
+class MockPrayerHiveService extends _i1.Mock implements _i4.PrayerHiveService {
   @override
-  _i4.Future<List<_i5.Prayer>> getData() => (super.noSuchMethod(
+  String get boxName => (super.noSuchMethod(
+        Invocation.getter(#boxName),
+        returnValue: '',
+        returnValueForMissingStub: '',
+      ) as String);
+  @override
+  _i5.Future<_i2.Box<dynamic>> openBox() => (super.noSuchMethod(
         Invocation.method(
-          #getData,
+          #openBox,
           [],
         ),
-        returnValue: _i4.Future<List<_i5.Prayer>>.value(<_i5.Prayer>[]),
+        returnValue: _i5.Future<_i2.Box<dynamic>>.value(_FakeBox_0<dynamic>(
+          this,
+          Invocation.method(
+            #openBox,
+            [],
+          ),
+        )),
         returnValueForMissingStub:
-            _i4.Future<List<_i5.Prayer>>.value(<_i5.Prayer>[]),
-      ) as _i4.Future<List<_i5.Prayer>>);
+            _i5.Future<_i2.Box<dynamic>>.value(_FakeBox_0<dynamic>(
+          this,
+          Invocation.method(
+            #openBox,
+            [],
+          ),
+        )),
+      ) as _i5.Future<_i2.Box<dynamic>>);
+  @override
+  _i5.Future<void> initHive() => (super.noSuchMethod(
+        Invocation.method(
+          #initHive,
+          [],
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+  @override
+  _i5.Future<List<_i6.Prayer>> getData(_i2.Box<dynamic>? box) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getData,
+          [box],
+        ),
+        returnValue: _i5.Future<List<_i6.Prayer>>.value(<_i6.Prayer>[]),
+        returnValueForMissingStub:
+            _i5.Future<List<_i6.Prayer>>.value(<_i6.Prayer>[]),
+      ) as _i5.Future<List<_i6.Prayer>>);
+  @override
+  _i5.Future<void> addPrayers(
+    _i2.Box<dynamic>? box,
+    List<_i6.Prayer>? prayers,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #addPrayers,
+          [
+            box,
+            prayers,
+          ],
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+  @override
+  _i5.Future<void> clearPrayers(_i2.Box<dynamic>? box) => (super.noSuchMethod(
+        Invocation.method(
+          #clearPrayers,
+          [box],
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 }
 
 /// A class which mocks [PrayerFireStoreService].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockPrayerFireStoreService extends _i1.Mock
-    implements _i6.PrayerFireStoreService {
+    implements _i7.PrayerFireStoreService {
   @override
-  _i2.FirebaseFirestore get firestore => (super.noSuchMethod(
+  _i3.FirebaseFirestore get firestore => (super.noSuchMethod(
         Invocation.getter(#firestore),
-        returnValue: _FakeFirebaseFirestore_0(
+        returnValue: _FakeFirebaseFirestore_1(
           this,
           Invocation.getter(#firestore),
         ),
-        returnValueForMissingStub: _FakeFirebaseFirestore_0(
+        returnValueForMissingStub: _FakeFirebaseFirestore_1(
           this,
           Invocation.getter(#firestore),
         ),
-      ) as _i2.FirebaseFirestore);
+      ) as _i3.FirebaseFirestore);
   @override
-  _i4.Future<_i2.QuerySnapshot<Object?>> getPrayers() => (super.noSuchMethod(
+  _i5.Future<_i3.QuerySnapshot<Object?>> getPrayers() => (super.noSuchMethod(
         Invocation.method(
           #getPrayers,
           [],
         ),
-        returnValue: _i4.Future<_i2.QuerySnapshot<Object?>>.value(
-            _FakeQuerySnapshot_1<Object?>(
+        returnValue: _i5.Future<_i3.QuerySnapshot<Object?>>.value(
+            _FakeQuerySnapshot_2<Object?>(
           this,
           Invocation.method(
             #getPrayers,
             [],
           ),
         )),
-        returnValueForMissingStub: _i4.Future<_i2.QuerySnapshot<Object?>>.value(
-            _FakeQuerySnapshot_1<Object?>(
+        returnValueForMissingStub: _i5.Future<_i3.QuerySnapshot<Object?>>.value(
+            _FakeQuerySnapshot_2<Object?>(
           this,
           Invocation.method(
             #getPrayers,
             [],
           ),
         )),
-      ) as _i4.Future<_i2.QuerySnapshot<Object?>>);
+      ) as _i5.Future<_i3.QuerySnapshot<Object?>>);
 }
 
 /// A class which mocks [ConnectionChecker].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockConnectionChecker extends _i1.Mock implements _i7.ConnectionChecker {
+class MockConnectionChecker extends _i1.Mock implements _i8.ConnectionChecker {
   @override
-  _i4.Future<bool> get isConnected => (super.noSuchMethod(
+  _i5.Future<bool> get isConnected => (super.noSuchMethod(
         Invocation.getter(#isConnected),
-        returnValue: _i4.Future<bool>.value(false),
-        returnValueForMissingStub: _i4.Future<bool>.value(false),
-      ) as _i4.Future<bool>);
+        returnValue: _i5.Future<bool>.value(false),
+        returnValueForMissingStub: _i5.Future<bool>.value(false),
+      ) as _i5.Future<bool>);
 }
