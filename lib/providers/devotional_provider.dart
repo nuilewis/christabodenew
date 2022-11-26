@@ -26,6 +26,7 @@ class DevotionalProvider extends ChangeNotifier {
     response.fold((failure) {
       errorMessage = failure.errorMessage ??
           "An error occurred while getting today's Devotional";
+      print(errorMessage);
       state = DevotionalState.error;
     }, (devotional) {
       todaysDevotional = devotional;
@@ -45,6 +46,7 @@ class DevotionalProvider extends ChangeNotifier {
     response.fold((failure) {
       errorMessage = failure.errorMessage ??
           "An error occurred while getting today's Devotional";
+      print(errorMessage);
       state = DevotionalState.error;
     }, (devotional) {
       todaysDevotional = devotional;
@@ -64,6 +66,7 @@ class DevotionalProvider extends ChangeNotifier {
     response.fold((failure) {
       errorMessage = failure.errorMessage ??
           "An error occurred while getting today's Devotional";
+      print(errorMessage);
       state = DevotionalState.error;
     }, (devotional) {
       todaysDevotional = devotional;
@@ -73,6 +76,7 @@ class DevotionalProvider extends ChangeNotifier {
   }
 
   Future<void> getDevotional() async {
+    print("get devotional is running");
     if (state == DevotionalState.submitting) return;
     state = DevotionalState.submitting;
     notifyListeners();
@@ -82,11 +86,14 @@ class DevotionalProvider extends ChangeNotifier {
     response.fold((failure) {
       errorMessage = failure.errorMessage ??
           "An error occurred while getting today's Devotional";
+      print(errorMessage);
       state = DevotionalState.error;
     }, (devotional) {
       allDevotionals = devotional;
+      //todaysDevotional = devotional.first;
       state = DevotionalState.success;
     });
+    getCurrentDevotional();
     notifyListeners();
   }
 }

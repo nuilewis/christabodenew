@@ -11,12 +11,6 @@ class MessagesHiveService extends HiveService {
     return box;
   }
 
-  @override
-  Future<void> initHive() async {
-    super.initHive();
-    Hive.registerAdapter(MessageAdapter());
-  }
-
   Future<List<Message>> getData(Box box) async {
     if (box.values.isNotEmpty) {
       return box.values.toList().cast<Message>();

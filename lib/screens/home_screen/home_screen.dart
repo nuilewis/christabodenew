@@ -26,13 +26,13 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer3<DevotionalProvider, PrayerProvider, MessagesProvider>(
       builder: ((context, devotionalData, prayerData, messagesData, child) {
-        if (devotionalData.state == DevotionalState.submitting ||
-            prayerData.state == PrayerState.submitting ||
-            messagesData.state == MessageState.submitting) {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(const SnackBar(content: Text("submitting")));
-        }
+        // if (devotionalData.state == DevotionalState.submitting ||
+        //     prayerData.state == PrayerState.submitting ||
+        //     messagesData.state == MessageState.submitting) {
+        //   ScaffoldMessenger.of(context)
+        //     ..hideCurrentSnackBar()
+        //     ..showSnackBar(const SnackBar(content: Text("submitting")));
+        // }
         return Scaffold(
           body: SafeArea(
             child: SingleChildScrollView(

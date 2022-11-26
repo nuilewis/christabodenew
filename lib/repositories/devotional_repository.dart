@@ -53,16 +53,16 @@ class DevotionalRepositoryImplementation implements DevotionalRepository {
             for (var element in querySnapshot.docs) {
               Map<String, dynamic> documentData =
                   element.data() as Map<String, dynamic>;
-              String excerpt =
-                  documentData["content"].toString().substring(0, 20);
+
+              Timestamp startDate = documentData["start"];
+              Timestamp endDate = documentData["end"];
               devotional = Devotional(
                 title: documentData["title"],
                 scripture: documentData["scripture"],
                 scriptureReference: documentData["scriptureRef"],
                 content: documentData["content"],
-                startDate: documentData["start"],
-                endDate: documentData["end"],
-                excerpt: excerpt,
+                startDate: startDate.toDate(),
+                endDate: endDate.toDate(),
                 confessionOfFaith: documentData["confession"],
                 author: documentData["author"],
               );
@@ -88,10 +88,17 @@ class DevotionalRepositoryImplementation implements DevotionalRepository {
   @override
   Future<Either<Failure, Devotional>> getCurrentDevotional() async {
     if (_devotionalList.isNotEmpty) {
-      List<Devotional> todaysDevotional = _devotionalList.where((element) =>
-          _today.isAfter(element.startDate) &&
-          _today.isBefore(element.endDate)) as List<Devotional>;
-      return Right(todaysDevotional.first);
+      List<Devotional> todaysDevotional = _devotionalList
+          .where((element) =>
+              _today.isAfter(element.startDate) &&
+              _today.isBefore(element.endDate))
+          .toList();
+      if (todaysDevotional.isEmpty) {
+        return Left(
+            FirebaseFailure(errorMessage: "No Devotional message found"));
+      } else {
+        return Right(todaysDevotional.first);
+      }
     } else {
       return const Left(FirebaseFailure(errorMessage: "No Devotional found"));
     }

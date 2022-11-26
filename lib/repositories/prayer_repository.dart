@@ -55,15 +55,14 @@ class PrayerRepositoryImplementation implements PrayerRepository {
             for (var element in querySnapshot.docs) {
               Map<String, dynamic> documentData =
                   element.data() as Map<String, dynamic>;
-              String excerpt =
-                  documentData["content"].toString().substring(0, 20);
+
+              Timestamp date = documentData["date"];
               prayer = Prayer(
                 title: documentData["title"],
                 scripture: documentData["scripture"],
                 scriptureReference: documentData["scriptureRef"],
                 content: documentData["content"],
-                date: documentData["start"],
-                excerpt: excerpt,
+                date: date.toDate(),
               );
 
               _prayerList.add(prayer);
@@ -88,10 +87,16 @@ class PrayerRepositoryImplementation implements PrayerRepository {
     if (_prayerList.isNotEmpty) {
       ///Gates the prayers whose dates and months are equal
       ///to the date and months of today.
-      List<Prayer> todaysPrayer = _prayerList.where((element) =>
-          element.date.month == _today.month &&
-          element.date.day == _today.day) as List<Prayer>;
-      return Right(todaysPrayer.first);
+      List<Prayer> todaysPrayer = _prayerList
+          .where((element) =>
+              element.date.month == _today.month &&
+              element.date.day == _today.day)
+          .toList();
+      if (todaysPrayer.isEmpty) {
+        return Left(FirebaseFailure(errorMessage: "No Prayers Found"));
+      } else {
+        return Right(todaysPrayer.first);
+      }
     } else {
       return const Left(FirebaseFailure(errorMessage: "No prayers found"));
     }

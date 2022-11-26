@@ -18,38 +18,35 @@ class DevotionalAdapter extends TypeAdapter<Devotional> {
     };
     return Devotional(
       title: fields[0] as String,
-      excerpt: fields[1] as String?,
-      scripture: fields[2] as String,
-      scriptureReference: fields[3] as String,
-      confessionOfFaith: fields[5] as String,
-      author: fields[6] as String,
-      content: fields[4] as String,
-      startDate: fields[7] as DateTime,
-      endDate: fields[8] as DateTime,
+      scripture: fields[1] as String,
+      scriptureReference: fields[2] as String,
+      confessionOfFaith: fields[4] as String,
+      author: fields[5] as String,
+      content: fields[3] as String,
+      startDate: fields[6] as DateTime,
+      endDate: fields[7] as DateTime,
     );
   }
 
   @override
   void write(BinaryWriter writer, Devotional obj) {
     writer
-      ..writeByte(9)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.title)
       ..writeByte(1)
-      ..write(obj.excerpt)
-      ..writeByte(2)
       ..write(obj.scripture)
-      ..writeByte(3)
+      ..writeByte(2)
       ..write(obj.scriptureReference)
-      ..writeByte(4)
+      ..writeByte(3)
       ..write(obj.content)
-      ..writeByte(5)
+      ..writeByte(4)
       ..write(obj.confessionOfFaith)
-      ..writeByte(6)
+      ..writeByte(5)
       ..write(obj.author)
-      ..writeByte(7)
+      ..writeByte(6)
       ..write(obj.startDate)
-      ..writeByte(8)
+      ..writeByte(7)
       ..write(obj.endDate);
   }
 

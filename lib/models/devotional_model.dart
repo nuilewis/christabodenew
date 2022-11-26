@@ -4,21 +4,18 @@ import 'package:hive/hive.dart';
 part 'devotional_model.g.dart';
 
 const int _titleHiveIndex = 0;
-const int _excerptHiveIndex = 1;
-const int _scriptureHiveIndex = 2;
-const int _scriptureRefHiveIndex = 3;
-const int _contentHiveIndex = 4;
-const int _confessionHiveIndex = 5;
-const int _authorHiveIndex = 6;
-const int _startDateHiveIndex = 7;
-const int _endDateHiveIndex = 8;
+const int _scriptureHiveIndex = 1;
+const int _scriptureRefHiveIndex = 2;
+const int _contentHiveIndex = 3;
+const int _confessionHiveIndex = 4;
+const int _authorHiveIndex = 5;
+const int _startDateHiveIndex = 6;
+const int _endDateHiveIndex = 7;
 
 @HiveType(typeId: 0)
 class Devotional extends Equatable {
   @HiveField(_titleHiveIndex)
   final String title;
-  @HiveField(_excerptHiveIndex)
-  final String? excerpt;
   @HiveField(_scriptureHiveIndex)
   final String scripture;
   @HiveField(_scriptureRefHiveIndex)
@@ -36,7 +33,6 @@ class Devotional extends Equatable {
 
   const Devotional(
       {required this.title,
-      this.excerpt,
       required this.scripture,
       required this.scriptureReference,
       required this.confessionOfFaith,
@@ -47,7 +43,6 @@ class Devotional extends Equatable {
 
   Devotional copyWith({
     String? title,
-    String? excerpt,
     String? scripture,
     String? author,
     String? scriptureReference,

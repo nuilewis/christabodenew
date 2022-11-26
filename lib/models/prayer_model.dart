@@ -4,18 +4,15 @@ import 'package:hive/hive.dart';
 part 'prayer_model.g.dart';
 
 const int _titleHiveIndex = 0;
-const int _excerptHiveIndex = 1;
-const int _scriptureHiveIndex = 2;
-const int _scriptureRefHiveIndex = 3;
-const int _contentHiveIndex = 4;
-const int _dateHiveIndex = 5;
+const int _scriptureHiveIndex = 1;
+const int _scriptureRefHiveIndex = 2;
+const int _contentHiveIndex = 3;
+const int _dateHiveIndex = 4;
 
 @HiveType(typeId: 1)
 class Prayer extends Equatable {
   @HiveField(_titleHiveIndex)
   final String title;
-  @HiveField(_excerptHiveIndex)
-  final String? excerpt;
   @HiveField(_scriptureHiveIndex)
   final String scripture;
   @HiveField(_scriptureRefHiveIndex)
@@ -27,7 +24,6 @@ class Prayer extends Equatable {
 
   const Prayer(
       {required this.title,
-      this.excerpt,
       required this.scripture,
       required this.scriptureReference,
       required this.content,
@@ -75,5 +71,5 @@ class Prayer extends Equatable {
 
   @override
   List<Object?> get props =>
-      [title, excerpt, content, scripture, scriptureReference, date];
+      [title, content, scripture, scriptureReference, date];
 }

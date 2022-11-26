@@ -28,6 +28,7 @@ class PrayerProvider extends ChangeNotifier {
     response.fold((failure) {
       errorMessage = failure.errorMessage ??
           "An error occurred while getting today's prayer";
+      print(errorMessage);
       state = PrayerState.error;
     }, (prayer) {
       todaysPrayer = prayer;
@@ -45,6 +46,7 @@ class PrayerProvider extends ChangeNotifier {
     response.fold((failure) {
       errorMessage = failure.errorMessage ??
           "An error occurred while getting today's prayer";
+      print(errorMessage);
       state = PrayerState.error;
 
       notifyListeners();
@@ -66,6 +68,7 @@ class PrayerProvider extends ChangeNotifier {
     response.fold((failure) {
       errorMessage = failure.errorMessage ??
           "An error occurred while getting today's prayer";
+      print(errorMessage);
       state = PrayerState.error;
     }, (prayer) {
       todaysPrayer = prayer;
@@ -76,6 +79,7 @@ class PrayerProvider extends ChangeNotifier {
   }
 
   Future<void> getPrayer() async {
+    print("get prayer is running");
     if (state == PrayerState.submitting) return;
     state = PrayerState.submitting;
     notifyListeners();
@@ -85,12 +89,13 @@ class PrayerProvider extends ChangeNotifier {
     response.fold((failure) {
       errorMessage = failure.errorMessage ??
           "An error occurred while getting today's prayer";
+      print(errorMessage);
       state = PrayerState.error;
     }, (prayer) {
-      todaysPrayer = prayer.first;
-      //allPrayers = prayer;
+      allPrayers = prayer;
       state = PrayerState.success;
     });
+    getCurrentPrayer();
     notifyListeners();
   }
 }

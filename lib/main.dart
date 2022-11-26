@@ -13,6 +13,7 @@ import 'package:christabodenew/screens/messages_screen/messages_screen.dart';
 import 'package:christabodenew/screens/prayer_screen/prayer_screen.dart';
 import 'package:christabodenew/services/devotional/devotional_firestore_service.dart';
 import 'package:christabodenew/services/devotional/devotional_hive_service.dart';
+import 'package:christabodenew/services/hive_base_service.dart';
 import 'package:christabodenew/services/messages/messages_hive_service.dart';
 import 'package:christabodenew/services/prayer/prayer_firestore_service.dart';
 import 'package:christabodenew/services/prayer/prayer_hive_service.dart';
@@ -88,8 +89,7 @@ class _MyAppState extends State<MyApp> {
             create: (context) =>
                 DevotionalProvider(_devotionalRepository)..getDevotional()),
         ChangeNotifierProvider<MessagesProvider>(
-            create: (context) =>
-                MessagesProvider(_messagesRepository)..getMessage())
+            create: (context) => MessagesProvider(_messagesRepository))
       ],
       child: MaterialApp(
         title: 'Christ Abode Ministries',
@@ -113,8 +113,6 @@ Future<void> initialiseHive() async {
   final PrayerHiveService prayerHiveService = PrayerHiveService();
   final DevotionalHiveService devotionalHiveService = DevotionalHiveService();
   final MessagesHiveService messagesHiveService = MessagesHiveService();
-
-  await prayerHiveService.initHive();
-  await devotionalHiveService.initHive();
-  await messagesHiveService.initHive();
+  final HiveService mainHiveService = HiveService();
+  await mainHiveService.initHive();
 }
