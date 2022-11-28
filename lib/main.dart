@@ -95,7 +95,7 @@ class _MyAppState extends State<MyApp> {
         title: 'Christ Abode Ministries',
         theme: lightThemeData(context),
         darkTheme: darkThemeData(context),
-        themeMode: ThemeMode.dark,
+        themeMode: ThemeMode.light,
         home: const BottomNavBar(),
         routes: {
           HomeScreen.id: (context) => const HomeScreen(),

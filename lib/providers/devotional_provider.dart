@@ -93,7 +93,6 @@ class DevotionalProvider extends ChangeNotifier {
       //todaysDevotional = devotional.first;
       state = DevotionalState.success;
     });
-    getCurrentDevotional();
     notifyListeners();
   }
 }

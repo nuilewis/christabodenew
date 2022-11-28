@@ -19,11 +19,11 @@ class MessagesHiveService extends HiveService {
     }
   }
 
-  Future<void> addPrayers(Box box, List<Message> prayers) async {
+  Future<void> addMessages(Box box, List<Message> prayers) async {
     await box.put(boxName, prayers);
   }
 
-  Future<void> clearPrayers(Box box) async {
+  Future<void> clearMessages(Box box) async {
     await box.clear();
   }
 }

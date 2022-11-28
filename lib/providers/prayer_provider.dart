@@ -95,7 +95,6 @@ class PrayerProvider extends ChangeNotifier {
       allPrayers = prayer;
       state = PrayerState.success;
     });
-    getCurrentPrayer();
     notifyListeners();
   }
 }

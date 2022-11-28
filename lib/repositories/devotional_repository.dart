@@ -94,7 +94,7 @@ class DevotionalRepositoryImplementation implements DevotionalRepository {
               _today.isBefore(element.endDate))
           .toList();
       if (todaysDevotional.isEmpty) {
-        return Left(
+        return const Left(
             FirebaseFailure(errorMessage: "No Devotional message found"));
       } else {
         return Right(todaysDevotional.first);

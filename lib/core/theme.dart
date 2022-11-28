@@ -10,9 +10,9 @@ ThemeData lightThemeData(BuildContext context) {
   return ThemeData(
       useMaterial3: true,
       appBarTheme: appBarTheme,
-      primaryColor: kBlue,
-      primaryColorLight: kLightBlue,
-      primaryColorDark: kBlueDark,
+      primaryColor: kPurple80,
+      primaryColorLight: kPurple60,
+      primaryColorDark: kPurple,
       scaffoldBackgroundColor: Colors.white,
       brightness: Brightness.light,
       backgroundColor: Colors.white,
@@ -32,8 +32,7 @@ ThemeData lightThemeData(BuildContext context) {
         headline1: kHeading.copyWith(color: kDark),
         headline2: kHeadingLight.copyWith(color: kDark),
       ),
-      //colorScheme: ColorScheme.light().copyWith(secondary: cLightGrey),
-      colorScheme: const ColorScheme.light().copyWith(secondary: kFuchsiaLight),
+      colorScheme: const ColorScheme.light().copyWith(secondary: kLightBlue),
       cardColor: kDark20);
 }
 
@@ -42,9 +41,9 @@ ThemeData lightThemeData(BuildContext context) {
 ThemeData darkThemeData(BuildContext context) {
   return ThemeData(
       appBarTheme: appBarTheme,
-      primaryColor: kBlue,
-      primaryColorLight: kLightBlue,
-      primaryColorDark: kBlueDark,
+      primaryColor: kPurple80,
+      primaryColorLight: kPurple60,
+      primaryColorDark: kPurple,
       scaffoldBackgroundColor: const Color.fromARGB(255, 28, 28, 28),
       brightness: Brightness.dark,
       backgroundColor: kDark,
@@ -64,8 +63,7 @@ ThemeData darkThemeData(BuildContext context) {
         headline1: kHeading.copyWith(color: Colors.white),
         headline2: kHeadingLight.copyWith(color: Colors.white),
       ),
-      //colorScheme: ColorScheme.light().copyWith(secondary: cLightGrey),
-      colorScheme: const ColorScheme.dark().copyWith(secondary: kFuchsia),
+      colorScheme: const ColorScheme.dark().copyWith(secondary: kLightBlue),
       cardColor: kCardColorDarkTheme);
 }
 

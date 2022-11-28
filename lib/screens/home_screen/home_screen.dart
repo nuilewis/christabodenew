@@ -2,7 +2,6 @@ import 'package:christabodenew/models/devotional_model.dart';
 import 'package:christabodenew/providers/messages_provider.dart';
 import 'package:christabodenew/providers/prayer_provider.dart';
 import 'package:christabodenew/screens/home_screen/components/devotional_card.dart';
-import 'package:christabodenew/screens/home_screen/components/video_card.dart';
 import 'package:christabodenew/screens/messages_screen/messages_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -44,7 +43,7 @@ class HomeScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const SizedBox(height: kDefaultPadding),
+                      const SizedBox(height: kDefaultPadding2x),
                       Text("Welcome",
                           style: Theme.of(context).textTheme.headline1),
                       const SizedBox(
@@ -78,16 +77,16 @@ class HomeScreen extends StatelessWidget {
                         onPressed: () {},
                       ),
                       const SizedBox(height: kDefaultPadding2x),
-                      Text(
-                        "Videos",
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline2!
-                            .copyWith(fontSize: 24),
-                      ),
-                      const SizedBox(height: kDefaultPadding),
-                      const VideoCard(),
-                      const SizedBox(height: kDefaultPadding2x),
+                      // Text(
+                      //   "Videos",
+                      //   style: Theme.of(context)
+                      //       .textTheme
+                      //       .headline2!
+                      //       .copyWith(fontSize: 24),
+                      // ),
+                      // const SizedBox(height: kDefaultPadding),
+                      // const VideoCard(),
+                      // const SizedBox(height: kDefaultPadding2x),
                       Text(
                         "Upcoming Events",
                         style: Theme.of(context)

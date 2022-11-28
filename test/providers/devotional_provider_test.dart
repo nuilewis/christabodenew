@@ -68,7 +68,7 @@ void main() {
       await devotionalProvider.getDevotional();
 
       //assert
-      expect(devotionalProvider.todaysDevotional, returnedDevotional);
+      expect(devotionalProvider.allDevotionals, returnedDevotionalList);
       expect(devotionalProvider.state, DevotionalState.success);
 
       verify(mockDevotionalRepository.getDevotionals()).called(1);

@@ -46,7 +46,7 @@ void main() {
       await prayerProvider.getPrayer();
 
       //assert
-      expect(prayerProvider.todaysPrayer, returnedPrayer);
+      expect(prayerProvider.allPrayers, returnedPrayerList);
       expect(prayerProvider.state, PrayerState.success);
 
       verify(mockPrayerRepository.getPrayers()).called(1);

@@ -91,15 +91,6 @@ class MockPrayerHiveService extends _i1.Mock implements _i4.PrayerHiveService {
         )),
       ) as _i5.Future<_i2.Box<dynamic>>);
   @override
-  _i5.Future<void> initHive() => (super.noSuchMethod(
-        Invocation.method(
-          #initHive,
-          [],
-        ),
-        returnValue: _i5.Future<void>.value(),
-        returnValueForMissingStub: _i5.Future<void>.value(),
-      ) as _i5.Future<void>);
-  @override
   _i5.Future<List<_i6.Prayer>> getData(_i2.Box<dynamic>? box) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -131,6 +122,15 @@ class MockPrayerHiveService extends _i1.Mock implements _i4.PrayerHiveService {
         Invocation.method(
           #clearPrayers,
           [box],
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+  @override
+  _i5.Future<void> initHive() => (super.noSuchMethod(
+        Invocation.method(
+          #initHive,
+          [],
         ),
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),

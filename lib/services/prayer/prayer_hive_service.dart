@@ -11,12 +11,6 @@ class PrayerHiveService extends HiveService {
     return box;
   }
 
-  @override
-  Future<void> initHive() async {
-    super.initHive();
-    Hive.registerAdapter(PrayerAdapter());
-  }
-
   Future<List<Prayer>> getData(Box box) async {
     if (box.values.isNotEmpty) {
       return box.values.toList().cast<Prayer>();

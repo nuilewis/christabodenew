@@ -1,3 +1,4 @@
+import 'package:christabodenew/core/date_time_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -26,7 +27,11 @@ class _PrayerCardState extends State<PrayerCard> {
         height: 150,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(kDefaultPadding2x),
-            color: kBlue40),
+            color: kBlue40,
+            gradient: LinearGradient(
+                colors: [kBlue, kGreen],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight)),
         child: Stack(
           //  fit: StackFit.expand,
           children: [
@@ -57,6 +62,9 @@ class _PrayerCardState extends State<PrayerCard> {
                   const SizedBox(height: kDefaultPadding / 2),
                   Text(widget.prayer.content,
                       maxLines: 2,
+                      style: Theme.of(context).textTheme.bodyText2),
+                  const SizedBox(height: kDefaultPadding / 2),
+                  Text(dateTimeFormatter(context, DateTime.now()),
                       style: Theme.of(context).textTheme.bodyText2),
                 ],
               ),
