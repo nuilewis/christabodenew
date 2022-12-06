@@ -1,11 +1,13 @@
 import 'package:christabodenew/core/date_time_formatter.dart';
 import 'package:christabodenew/providers/devotional_provider.dart';
+import 'package:christabodenew/providers/unsplash_image_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/constants.dart';
 import '../../models/devotional_model.dart';
+import '../../models/unsplash_image.dart';
 
 class DevotionalScreen extends StatelessWidget {
   static const id = "devotional_screen";
@@ -19,10 +21,11 @@ class DevotionalScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<DevotionalProvider>(
-        builder: ((context, devotionalData, child) {
+    return Consumer2<DevotionalProvider, UnsplashImageProvider>(
+        builder: ((context, devotionalData, unsplashImageData, child) {
       Devotional todaysDevotional =
           devotionalData.todaysDevotional ?? Devotional.empty;
+      final UnsplashImage? featuredImage = unsplashImageData.featuredImage;
       return Scaffold(
         body: CustomScrollView(slivers: [
           SliverAppBar(

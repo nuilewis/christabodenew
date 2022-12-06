@@ -3,6 +3,7 @@ import 'package:christabodenew/firebase_options.dart';
 import 'package:christabodenew/providers/devotional_provider.dart';
 import 'package:christabodenew/providers/messages_provider.dart';
 import 'package:christabodenew/providers/prayer_provider.dart';
+import 'package:christabodenew/providers/unsplash_image_provider.dart';
 import 'package:christabodenew/repositories/devotional_repository.dart';
 import 'package:christabodenew/repositories/messages_repository.dart';
 import 'package:christabodenew/repositories/prayer_repository.dart';
@@ -17,12 +18,14 @@ import 'package:christabodenew/services/hive_base_service.dart';
 import 'package:christabodenew/services/messages/messages_hive_service.dart';
 import 'package:christabodenew/services/prayer/prayer_firestore_service.dart';
 import 'package:christabodenew/services/prayer/prayer_hive_service.dart';
+import 'package:christabodenew/services/unsplash/unsplash_api_client.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
 
 import 'core/theme.dart';
+import 'repositories/unsplash_image_repository.dart';
 import 'screens/home_screen/home.dart';
 
 void main() async {
@@ -61,6 +64,10 @@ class _MyAppState extends State<MyApp> {
   ///Creating and Injecting Messages Dependencies
   late MessagesRepository _messagesRepository;
 
+  ///Creating and Injecting Unsplash Image Dependencies
+  late UnsplashImageRepository _unsplashImageRepository;
+  final UnsplashAPIClient _unsplashAPIClient = UnsplashAPIClient();
+
   @override
   void initState() {
     _prayerRepository = PrayerRepositoryImplementation(
@@ -74,6 +81,9 @@ class _MyAppState extends State<MyApp> {
         connectionChecker: _connectionChecker);
 
     _messagesRepository = MessagesRepositoryImplementation();
+
+    _unsplashImageRepository = UnsplashImageRepositoryImplementation(
+        apiClient: _unsplashAPIClient, connectionChecker: _connectionChecker);
     super.initState();
   }
 
@@ -89,7 +99,10 @@ class _MyAppState extends State<MyApp> {
             create: (context) =>
                 DevotionalProvider(_devotionalRepository)..getDevotional()),
         ChangeNotifierProvider<MessagesProvider>(
-            create: (context) => MessagesProvider(_messagesRepository))
+            create: (context) => MessagesProvider(_messagesRepository)),
+        ChangeNotifierProvider<UnsplashImageProvider>(
+            create: (context) => UnsplashImageProvider(
+                unsplashImageRepository: _unsplashImageRepository))
       ],
       child: MaterialApp(
         title: 'Christ Abode Ministries',
