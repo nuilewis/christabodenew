@@ -1,4 +1,5 @@
 import 'package:christabodenew/models/unsplash_image.dart';
+import 'package:christabodenew/services/unsplash/.env.dart';
 import 'package:dio/dio.dart';
 
 import '../../core/errors/exceptions.dart';
@@ -13,7 +14,7 @@ class UnsplashAPIClient {
       baseUrl: _baseUrl,
       responseType: ResponseType.json,
       headers: {
-        "Authorization": "Client-ID YOUR_ACCESS_KEY",
+        "Authorization": "Client-ID $unsplashAccessKey",
         "Accept-Version": "v1",
       },
     ),

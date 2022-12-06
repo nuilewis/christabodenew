@@ -102,7 +102,8 @@ class _MyAppState extends State<MyApp> {
             create: (context) => MessagesProvider(_messagesRepository)),
         ChangeNotifierProvider<UnsplashImageProvider>(
             create: (context) => UnsplashImageProvider(
-                unsplashImageRepository: _unsplashImageRepository))
+                unsplashImageRepository: _unsplashImageRepository)
+              ..getRandomImage())
       ],
       child: MaterialApp(
         title: 'Christ Abode Ministries',

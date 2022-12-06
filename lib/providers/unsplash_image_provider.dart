@@ -11,7 +11,7 @@ class UnsplashImageProvider extends ChangeNotifier {
   final UnsplashImageRepository unsplashImageRepository;
   UnsplashImageState state = UnsplashImageState.initial;
   String errorMessage = "";
-  UnsplashImage? featuredImage;
+  UnsplashImage featuredImage = UnsplashImage.empty;
 
   UnsplashImageProvider({required this.unsplashImageRepository});
 
@@ -34,7 +34,7 @@ class UnsplashImageProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getRandomImage(String category) async {
+  Future<void> getRandomImage() async {
     if (state == UnsplashImageState.submitting) return;
     state = UnsplashImageState.submitting;
     notifyListeners();
