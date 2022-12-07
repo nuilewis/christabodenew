@@ -78,7 +78,7 @@ class PrayerRepositoryImplementation implements PrayerRepository {
         return const Left(NetworkFailure());
       }
     } else {
-      return const Left(FirebaseFailure(errorMessage: "Failed to get prayer"));
+      return Right(_prayerList);
     }
   }
 

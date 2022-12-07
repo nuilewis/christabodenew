@@ -80,8 +80,7 @@ class DevotionalRepositoryImplementation implements DevotionalRepository {
         return const Left(NetworkFailure());
       }
     } else {
-      return const Left(
-          FirebaseFailure(errorMessage: "Failed to get Devotional"));
+      return Right(_devotionalList);
     }
   }
 

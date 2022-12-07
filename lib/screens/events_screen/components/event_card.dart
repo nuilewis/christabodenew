@@ -1,15 +1,15 @@
+import 'package:christabodenew/core/date_time_formatter.dart';
 import 'package:flutter/material.dart';
+
 import '../../../core/constants.dart';
+import '../../../models/event_model.dart';
 
 class EventCard extends StatelessWidget {
-  final String eventName;
-  final String? eventDescription;
-  final String eventDate;
+  final Event event;
+
   const EventCard({
     Key? key,
-    required this.eventName,
-    this.eventDescription,
-    required this.eventDate,
+    required this.event,
   }) : super(key: key);
 
   @override
@@ -40,15 +40,18 @@ class EventCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      eventName,
+                      event.name,
                       style: Theme.of(context)
                           .textTheme
                           .bodyText1!
                           .copyWith(fontSize: 18, color: Colors.white),
                     ),
                     Text(
-                      eventDescription ?? "An event like no other",
-                      style: Theme.of(context).textTheme.bodyText2!.copyWith(color: Colors.white),
+                      event.description,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText2!
+                          .copyWith(color: Colors.white),
                     ),
                   ],
                 ),
@@ -56,12 +59,25 @@ class EventCard extends StatelessWidget {
               Positioned(
                 right: kDefaultPadding,
                 bottom: kDefaultPadding,
-                child: Text(
-                  "Sunday 02/02/2022",
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText1!
-                      .copyWith(fontSize: 18 ,color: Colors.white),
+                child: Column(
+                  children: [
+                    Text(
+                      dateTimeFormatter(context, event.startDate),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText1!
+                          .copyWith(fontSize: 18, color: Colors.white),
+                    ),
+                    event.endDate != null
+                        ? Text(
+                            dateTimeFormatter(context, event.endDate!),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1!
+                                .copyWith(fontSize: 18, color: Colors.white),
+                          )
+                        : const SizedBox(),
+                  ],
                 ),
               ),
             ],

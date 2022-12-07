@@ -1,4 +1,5 @@
 import 'package:christabodenew/models/devotional_model.dart';
+import 'package:christabodenew/providers/events_provider.dart';
 import 'package:christabodenew/providers/messages_provider.dart';
 import 'package:christabodenew/providers/prayer_provider.dart';
 import 'package:christabodenew/screens/home_screen/components/devotional_card.dart';
@@ -23,8 +24,10 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer3<DevotionalProvider, PrayerProvider, MessagesProvider>(
-      builder: ((context, devotionalData, prayerData, messagesData, child) {
+    return Consumer4<DevotionalProvider, PrayerProvider, MessagesProvider,
+        EventsProvider>(
+      builder: ((context, devotionalData, prayerData, messagesData, eventData,
+          child) {
         // if (devotionalData.state == DevotionalState.submitting ||
         //     prayerData.state == PrayerState.submitting ||
         //     messagesData.state == MessageState.submitting) {
@@ -95,10 +98,19 @@ class HomeScreen extends StatelessWidget {
                             .copyWith(fontSize: 24),
                       ),
                       const SizedBox(height: kDefaultPadding),
-                      const EventCard(
-                        eventName: "Feast of Ingathering",
-                        eventDate: "25/10/2022",
-                      ),
+
+                      eventData.allEvents.isNotEmpty
+                          ? ListView.builder(
+                              itemCount: eventData.allEvents.length,
+                              itemBuilder: (context, index) {
+                                return EventCard(
+                                    event: eventData.allEvents[index]);
+                              })
+                          : Text(
+                              "There are no events scheduled for now.",
+                              style: Theme.of(context).textTheme.bodyText2,
+                            ),
+
                       const SizedBox(height: kDefaultPadding2x),
                       Text(
                         "Messages",
