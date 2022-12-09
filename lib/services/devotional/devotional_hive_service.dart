@@ -19,17 +19,22 @@ class DevotionalHiveService extends HiveService {
 
   Future<List<Devotional>> getData(Box box) async {
     if (box.values.isNotEmpty) {
-      return box.values.toList().cast<Devotional>();
+      ///Hive is storing the devotional as a List of list, therefore, all devotional
+      ///items are in a List<Devotional>, which is stored in the first index of the the larger list
+      ///
+      /// SO we get the first item in the larger list, which is the list of devotional items
+      /// before we then cast as a list of devotional items and output our result.
+      return box.values.first.toList().cast<Devotional>();
     } else {
       return <Devotional>[];
     }
   }
 
-  Future<void> addPrayers(Box box, List<Devotional> devotional) async {
+  Future<void> addDevotional(Box box, List<Devotional> devotional) async {
     await box.put(boxName, devotional);
   }
 
-  Future<void> clearPrayers(Box box) async {
+  Future<void> clearDevotional(Box box) async {
     await box.clear();
   }
 }

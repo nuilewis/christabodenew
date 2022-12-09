@@ -38,7 +38,9 @@ class DevotionalRepositoryImplementation implements DevotionalRepository {
     /// if offline is empty, then check for network connectivity, if network is not there, throw a network error
     /// if network is there, then try to get from offline.
     final Box devotionalBox = await devotionalHiveService.openBox();
+
     _devotionalList = await devotionalHiveService.getData(devotionalBox);
+
     if (_devotionalList.isEmpty) {
       ///If the devotional list from local storage is empty, then try to get
       ///a new list from firestore;
@@ -50,26 +52,22 @@ class DevotionalRepositoryImplementation implements DevotionalRepository {
               await devotionalFirestoreService.getDevotionals();
 
           if (querySnapshot.docs.isNotEmpty) {
-            for (var element in querySnapshot.docs) {
+            for (DocumentSnapshot element in querySnapshot.docs) {
               Map<String, dynamic> documentData =
                   element.data() as Map<String, dynamic>;
-
-              Timestamp startDate = documentData["start"];
-              Timestamp endDate = documentData["end"];
-              devotional = Devotional(
-                title: documentData["title"],
-                scripture: documentData["scripture"],
-                scriptureReference: documentData["scriptureRef"],
-                content: documentData["content"],
-                startDate: startDate.toDate(),
-                endDate: endDate.toDate(),
-                confessionOfFaith: documentData["confession"],
-                author: documentData["author"],
-              );
+              devotional = Devotional.fromMap(data: documentData);
 
               _devotionalList.add(devotional);
             }
           }
+
+          ///Sorting the list in order according to their star dates before adding to the database
+          _devotionalList.sort((a, b) => a.startDate.compareTo(b.startDate));
+
+          ///Now add the list of devotionals to the hive database
+          await devotionalHiveService.addDevotional(
+              devotionalBox, _devotionalList);
+
           return Right(_devotionalList);
         } on FirebaseException catch (e) {
           ///If a Firebase error has occurred, then return a [FirebaseFailure]
@@ -89,9 +87,25 @@ class DevotionalRepositoryImplementation implements DevotionalRepository {
     if (_devotionalList.isNotEmpty) {
       List<Devotional> todaysDevotional = _devotionalList
           .where((element) =>
-              _today.isAfter(element.startDate) &&
-              _today.isBefore(element.endDate))
+                  _today == element.startDate ||
+                  _today == element.endDate ||
+                  _today.isAfter(element.startDate) &&
+                      _today.isBefore(element.endDate)
+
+              ///There are 3 cases here for which a devotional message is returned.
+              ///
+              ///1. Either today is equal to the start date of the devotional message
+              ///2. Or Today is equal to the end date of the devotional message
+              ///
+              ///These 2 cases cover all messages that are 2 days long.
+              ///
+              /// 3. And finally Today falls between the start date of the devotional message and the
+              /// the end date of the devotional message.
+              /// This case covers messages where it runs for 3 or more days.
+
+              )
           .toList();
+
       if (todaysDevotional.isEmpty) {
         return const Left(
             FirebaseFailure(errorMessage: "No Devotional message found"));
@@ -107,9 +121,16 @@ class DevotionalRepositoryImplementation implements DevotionalRepository {
   Future<Either<Failure, Devotional>> getNextDevotional() async {
     if (_devotionalList.isNotEmpty) {
       //Get the index of the current prayer, then use it to get the next.
-      _currentDevotionalIndex = _devotionalList.indexWhere((element) =>
-          _today.isAfter(element.startDate) &&
-          _today.isBefore(element.endDate));
+      _currentDevotionalIndex = _devotionalList.indexWhere(
+        (element) =>
+            _today == element.startDate ||
+            _today == element.endDate ||
+            _today.isAfter(element.startDate) &&
+                _today.isBefore(element.endDate)
+
+        ///The test conditions to get the current devotional
+        ,
+      );
 
       Devotional nextDevotional = _devotionalList[_currentDevotionalIndex++];
       _currentDevotionalIndex = _currentDevotionalIndex++;
@@ -124,7 +145,6 @@ class DevotionalRepositoryImplementation implements DevotionalRepository {
   Future<Either<Failure, Devotional>> getPreviousDevotional() async {
     if (_devotionalList.isNotEmpty) {
       //Get the index of the current prayer, then use it to get the next.
-
       Devotional previousDevotional =
           _devotionalList[_currentDevotionalIndex--];
       _currentDevotionalIndex = _currentDevotionalIndex--;

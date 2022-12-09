@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
 
@@ -41,6 +42,7 @@ class Devotional extends Equatable {
       required this.startDate,
       required this.endDate});
 
+  ///-------CopyWith--------///
   Devotional copyWith({
     String? title,
     String? scripture,
@@ -62,6 +64,37 @@ class Devotional extends Equatable {
         endDate: endDate ?? this.endDate);
   }
 
+  ///---------To Map and From Map methods---------///
+  Map<String, dynamic> toMap() {
+    Map<String, dynamic> data = {
+      "author": author,
+      "content": content,
+      "confession": confessionOfFaith,
+      "start": startDate,
+      "end": endDate,
+      "scripture": scripture,
+      "scriptureRef": scriptureReference,
+      "title": title,
+    };
+    return data;
+  }
+
+  factory Devotional.fromMap({required Map<String, dynamic> data}) {
+    Timestamp startDate = data["start"];
+    Timestamp endDate = data["end"];
+    return Devotional(
+      title: data["title"],
+      scripture: data["scripture"],
+      scriptureReference: data["scriptureRef"],
+      content: data["content"],
+      startDate: startDate.toDate(),
+      endDate: endDate.toDate(),
+      confessionOfFaith: data["confession"],
+      author: data["author"],
+    );
+  }
+
+  ///-------Empty-------///
   static Devotional empty = Devotional(
       title: "title",
       scripture: "scripture",

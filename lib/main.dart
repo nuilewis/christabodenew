@@ -5,6 +5,7 @@ import 'package:christabodenew/providers/messages_provider.dart';
 import 'package:christabodenew/providers/prayer_provider.dart';
 import 'package:christabodenew/providers/unsplash_image_provider.dart';
 import 'package:christabodenew/repositories/devotional_repository.dart';
+import 'package:christabodenew/repositories/events_repository.dart';
 import 'package:christabodenew/repositories/messages_repository.dart';
 import 'package:christabodenew/repositories/prayer_repository.dart';
 import 'package:christabodenew/screens/bottom_nav_bar.dart';
@@ -14,6 +15,8 @@ import 'package:christabodenew/screens/messages_screen/messages_screen.dart';
 import 'package:christabodenew/screens/prayer_screen/prayer_screen.dart';
 import 'package:christabodenew/services/devotional/devotional_firestore_service.dart';
 import 'package:christabodenew/services/devotional/devotional_hive_service.dart';
+import 'package:christabodenew/services/events/event_hive_service.dart';
+import 'package:christabodenew/services/events/events_firestore_service.dart';
 import 'package:christabodenew/services/hive_base_service.dart';
 import 'package:christabodenew/services/messages/messages_hive_service.dart';
 import 'package:christabodenew/services/prayer/prayer_firestore_service.dart';
@@ -25,6 +28,7 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
 
 import 'core/theme.dart';
+import 'providers/events_provider.dart';
 import 'repositories/unsplash_image_repository.dart';
 import 'screens/home_screen/home.dart';
 
@@ -64,6 +68,12 @@ class _MyAppState extends State<MyApp> {
   ///Creating and Injecting Messages Dependencies
   late MessagesRepository _messagesRepository;
 
+  ///Creating and Injecting Events Dependencies
+  final EventsFirestoreService _eventsFirestoreService =
+      EventsFirestoreService();
+  final EventsHiveService _eventsHiveService = EventsHiveService();
+  late EventsRepository _eventsRepository;
+
   ///Creating and Injecting Unsplash Image Dependencies
   late UnsplashImageRepository _unsplashImageRepository;
   final UnsplashAPIClient _unsplashAPIClient = UnsplashAPIClient();
@@ -81,6 +91,11 @@ class _MyAppState extends State<MyApp> {
         connectionChecker: _connectionChecker);
 
     _messagesRepository = MessagesRepositoryImplementation();
+
+    _eventsRepository = EventsRepositoryImplementation(
+        eventsFirestoreService: _eventsFirestoreService,
+        eventsHiveService: _eventsHiveService,
+        connectionChecker: _connectionChecker);
 
     _unsplashImageRepository = UnsplashImageRepositoryImplementation(
         apiClient: _unsplashAPIClient, connectionChecker: _connectionChecker);
@@ -100,6 +115,9 @@ class _MyAppState extends State<MyApp> {
                 DevotionalProvider(_devotionalRepository)..getDevotional()),
         ChangeNotifierProvider<MessagesProvider>(
             create: (context) => MessagesProvider(_messagesRepository)),
+        ChangeNotifierProvider<EventsProvider>(
+            create: (context) =>
+                EventsProvider(eventsRepository: _eventsRepository)),
         ChangeNotifierProvider<UnsplashImageProvider>(
             create: (context) => UnsplashImageProvider(
                 unsplashImageRepository: _unsplashImageRepository)
