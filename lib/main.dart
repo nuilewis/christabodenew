@@ -18,7 +18,6 @@ import 'package:christabodenew/services/devotional/devotional_hive_service.dart'
 import 'package:christabodenew/services/events/event_hive_service.dart';
 import 'package:christabodenew/services/events/events_firestore_service.dart';
 import 'package:christabodenew/services/hive_base_service.dart';
-import 'package:christabodenew/services/messages/messages_hive_service.dart';
 import 'package:christabodenew/services/prayer/prayer_firestore_service.dart';
 import 'package:christabodenew/services/prayer/prayer_hive_service.dart';
 import 'package:christabodenew/services/unsplash/unsplash_api_client.dart';
@@ -117,7 +116,8 @@ class _MyAppState extends State<MyApp> {
             create: (context) => MessagesProvider(_messagesRepository)),
         ChangeNotifierProvider<EventsProvider>(
             create: (context) =>
-                EventsProvider(eventsRepository: _eventsRepository)),
+                EventsProvider(eventsRepository: _eventsRepository)
+                  ..getEvents()),
         ChangeNotifierProvider<UnsplashImageProvider>(
             create: (context) => UnsplashImageProvider(
                 unsplashImageRepository: _unsplashImageRepository)
@@ -128,6 +128,7 @@ class _MyAppState extends State<MyApp> {
         theme: lightThemeData(context),
         darkTheme: darkThemeData(context),
         themeMode: ThemeMode.light,
+        debugShowCheckedModeBanner: false,
         home: const BottomNavBar(),
         routes: {
           HomeScreen.id: (context) => const HomeScreen(),
@@ -142,9 +143,6 @@ class _MyAppState extends State<MyApp> {
 }
 
 Future<void> initialiseHive() async {
-  final PrayerHiveService prayerHiveService = PrayerHiveService();
-  final DevotionalHiveService devotionalHiveService = DevotionalHiveService();
-  final MessagesHiveService messagesHiveService = MessagesHiveService();
   final HiveService mainHiveService = HiveService();
   await mainHiveService.initHive();
 }

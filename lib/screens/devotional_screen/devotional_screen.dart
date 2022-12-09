@@ -29,8 +29,8 @@ class _DevotionalScreenState extends State<DevotionalScreen> {
   Widget build(BuildContext context) {
     return Consumer2<DevotionalProvider, UnsplashImageProvider>(
       builder: ((context, devotionalData, unsplashImageData, child) {
-        Devotional todaysDevotional =
-            devotionalData.todaysDevotional ?? Devotional.empty;
+        Devotional currentDevotional =
+            devotionalData.currentDevotional ?? Devotional.empty;
         final UnsplashImage featuredImage = unsplashImageData.featuredImage;
         return Scaffold(
           body: CustomScrollView(
@@ -43,7 +43,10 @@ class _DevotionalScreenState extends State<DevotionalScreen> {
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        icon: SvgPicture.asset("assets/svg/back_icon.svg"),
+                        icon: SvgPicture.asset(
+                          "assets/svg/back_icon.svg",
+                          color: Colors.white,
+                        ),
                       ),
                 floating: true,
                 pinned: true,
@@ -61,7 +64,7 @@ class _DevotionalScreenState extends State<DevotionalScreen> {
                     child: Padding(
                       padding: const EdgeInsets.only(top: kDefaultPadding2x),
                       child: Text(
-                        todaysDevotional.title,
+                        currentDevotional.title,
                         textAlign: TextAlign.center,
                         style: Theme.of(context)
                             .textTheme
@@ -142,16 +145,16 @@ class _DevotionalScreenState extends State<DevotionalScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                todaysDevotional.author,
+                                currentDevotional.author,
                                 style: Theme.of(context).textTheme.bodyText1,
                               ),
                               Text(
-                                "${dateTimeFormatter(context, todaysDevotional.startDate)} - ",
+                                "${dateTimeFormatter(context, currentDevotional.startDate)} - ",
                                 style: Theme.of(context).textTheme.bodyText2,
                               ),
                               Text(
                                 dateTimeFormatter(
-                                    context, todaysDevotional.endDate),
+                                    context, currentDevotional.endDate),
                                 style: Theme.of(context).textTheme.bodyText2,
                               ),
                             ],
@@ -183,7 +186,7 @@ class _DevotionalScreenState extends State<DevotionalScreen> {
                       const SizedBox(
                         height: kDefaultPadding,
                       ),
-                      Text(todaysDevotional.scripture,
+                      Text(currentDevotional.scripture,
                           textAlign: TextAlign.left,
                           style: Theme.of(context).textTheme.bodyText1),
                       const SizedBox(
@@ -191,15 +194,42 @@ class _DevotionalScreenState extends State<DevotionalScreen> {
                       ),
                       Align(
                           alignment: Alignment.centerRight,
-                          child: Text(todaysDevotional.scriptureReference)),
+                          child: Text(currentDevotional.scriptureReference)),
 
                       const SizedBox(
                         height: kDefaultPadding2x,
                       ),
                       Text(
-                        todaysDevotional.content,
+                        currentDevotional.content,
                         textAlign: TextAlign.left,
                       ),
+                      const SizedBox(height: kDefaultPadding),
+                      Row(
+                        children: [
+                          NextPreviousButton(
+                              onPressed: () async {
+                                await devotionalData.getPreviousDevotional();
+                                await unsplashImageData.getRandomImage();
+                              },
+                              isNextButton: false),
+                          const Spacer(),
+                          NextPreviousButton(onPressed: () async {
+                            devotionalData.getNextDevotional();
+                            await unsplashImageData.getRandomImage();
+                          })
+                        ],
+                      ),
+                      const SizedBox(height: kDefaultPadding2x),
+                      Text(
+                        "Christ Abode Ministries",
+                        style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                            fontSize: 12,
+                            color: Theme.of(context)
+                                .iconTheme
+                                .color!
+                                .withOpacity(.4)),
+                      ),
+                      const SizedBox(height: kDefaultPadding2x),
                     ],
                   ),
                 ),
@@ -208,6 +238,43 @@ class _DevotionalScreenState extends State<DevotionalScreen> {
           ),
         );
       }),
+    );
+  }
+}
+
+class NextPreviousButton extends StatelessWidget {
+  final VoidCallback onPressed;
+  final bool? isNextButton;
+  final double? elevation;
+  final Color? bgColour;
+  final Color? iconColour;
+  const NextPreviousButton(
+      {Key? key,
+      required this.onPressed,
+      this.isNextButton = true,
+      this.elevation,
+      this.bgColour,
+      this.iconColour})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        padding: EdgeInsets.zero,
+        backgroundColor: bgColour ?? Theme.of(context).primaryColor,
+        elevation: elevation ?? 0,
+        shape: const CircleBorder(),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: SvgPicture.asset(
+            isNextButton!
+                ? "assets/svg/forward_icon.svg"
+                : "assets/svg/back_icon.svg",
+            color: iconColour ?? Colors.white),
+      ),
     );
   }
 }

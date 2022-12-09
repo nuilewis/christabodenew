@@ -2,10 +2,9 @@ import 'package:christabodenew/screens/home_screen/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../core/constants.dart';
 import 'devotional_screen/devotional_screen.dart';
-import 'prayer_screen/prayer_screen.dart';
 import 'events_screen/events_screen.dart';
+import 'prayer_screen/prayer_screen.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({Key? key}) : super(key: key);
@@ -36,7 +35,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   Widget _bottomNavBar(int selectedIndex) {
     return BottomNavigationBar(
-      
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         type: BottomNavigationBarType.fixed,
         // landscapeLayout: BottomNavigationBarLandscapeLayout.spread,
@@ -51,7 +49,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
         showUnselectedLabels: true,
         unselectedFontSize: 12,
         selectedFontSize: 12,
-        selectedItemColor: kBlue,
+        selectedItemColor: Theme.of(context).primaryColor,
         currentIndex: selectedIndex,
         items: [
           BottomNavigationBarItem(
@@ -63,32 +61,31 @@ class _BottomNavBarState extends State<BottomNavBar> {
             ),
             activeIcon: SvgPicture.asset(
               "assets/svg/home_icon.svg",
-              color: kBlue,
-             // height: 23,
+              color: Theme.of(context).primaryColor,
+              // height: 23,
             ),
           ),
           BottomNavigationBarItem(
             label: "Devotional",
             icon: SvgPicture.asset(
               "assets/svg/read_icon.svg",
-           //   height: 23,
+              //   height: 23,
               color: Theme.of(context).iconTheme.color,
             ),
             activeIcon: SvgPicture.asset(
               "assets/svg/read_icon.svg",
-              color: kBlue,
-            //  height: 23,
+              color: Theme.of(context).primaryColor,
+              //  height: 23,
             ),
           ),
           BottomNavigationBarItem(
             label: "Prayer",
             icon: SvgPicture.asset("assets/svg/prayer_icon.svg",
-                  height: 26,
-                color: Theme.of(context).iconTheme.color),
+                height: 26, color: Theme.of(context).iconTheme.color),
             activeIcon: SvgPicture.asset(
               "assets/svg/prayer_icon.svg",
-              color: kBlue,
-                height: 26,
+              color: Theme.of(context).primaryColor,
+              height: 26,
             ),
           ),
           BottomNavigationBarItem(
@@ -100,7 +97,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
             ),
             activeIcon: SvgPicture.asset(
               "assets/svg/notification_icon.svg",
-              color: kBlue,
+              color: Theme.of(context).primaryColor,
               //  height: 23,
             ),
           ),

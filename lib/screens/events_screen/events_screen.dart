@@ -34,16 +34,17 @@ class EventsScreen extends StatelessWidget {
                   style: Theme.of(context).textTheme.headline2,
                 ),
                 const SizedBox(
-                  height: kDefaultPadding,
+                  height: kDefaultPadding2x,
                 ),
                 Text(
-                  "Upcoming",
+                  "Upcoming Events",
                   style: Theme.of(context)
                       .textTheme
                       .headline2!
                       .copyWith(fontSize: 20),
                 ),
-                eventData.allEvents.isNotEmpty
+                const SizedBox(height: kDefaultPadding),
+                eventData.upcomingEvents.isNotEmpty
                     ? ListView.builder(
                         itemCount: eventData.allEvents.length,
                         itemBuilder: (context, index) {
@@ -52,15 +53,55 @@ class EventsScreen extends StatelessWidget {
                     : Center(
                         child: Column(
                           children: [
+                            //  Spacer(),
                             Icon(
                               Icons.notifications_off_outlined,
                               size: MediaQuery.of(context).size.width * .3,
+                              color: Theme.of(context)
+                                  .primaryColor
+                                  .withOpacity(.3),
                             ),
                             const SizedBox(height: kDefaultPadding),
                             Text(
                               "There are no events scheduled for now.",
                               style: Theme.of(context).textTheme.bodyText2,
                             ),
+                            //  Spacer(),
+                          ],
+                        ),
+                      ),
+                const SizedBox(height: kDefaultPadding2x),
+                Text(
+                  "Past Events",
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline2!
+                      .copyWith(fontSize: 20),
+                ),
+                const SizedBox(height: kDefaultPadding),
+                eventData.upcomingEvents.isNotEmpty
+                    ? ListView.builder(
+                        itemCount: eventData.allEvents.length,
+                        itemBuilder: (context, index) {
+                          return EventCard(event: eventData.allEvents[index]);
+                        })
+                    : Center(
+                        child: Column(
+                          children: [
+                            //    Spacer(),
+                            Icon(
+                              Icons.notifications_off_outlined,
+                              size: MediaQuery.of(context).size.width * .3,
+                              color: Theme.of(context)
+                                  .primaryColor
+                                  .withOpacity(.3),
+                            ),
+                            const SizedBox(height: kDefaultPadding),
+                            Text(
+                              "There are no past events.",
+                              style: Theme.of(context).textTheme.bodyText2,
+                            ),
+                            // Spacer(),
                           ],
                         ),
                       ),

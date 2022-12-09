@@ -28,8 +28,7 @@ class PrayerRepositoryImplementation implements PrayerRepository {
   List<Prayer> _prayerList = [];
   final DateTime _today = DateTime(DateTime.now().year, DateTime.now().month,
       DateTime.now().day, 0, 0, 0, 0, 0);
-  final DateTime _tomorrow = DateTime(DateTime.now().year, DateTime.now().month,
-      DateTime.now().day + 1, 0, 0, 0, 0, 0);
+
   int _currentPrayerIndex = 0;
 
   @override

@@ -15,6 +15,8 @@ class EventsProvider extends ChangeNotifier {
   EventState state = EventState.initial;
   String errorMessage = "";
   List<Event> allEvents = [];
+  List<Event> pastEvents = [];
+  List<Event> upcomingEvents = [];
 
   Future<void> getEvents() async {
     if (state == EventState.submitting) return;
@@ -29,6 +31,46 @@ class EventsProvider extends ChangeNotifier {
       state = EventState.error;
     }, (eventsList) {
       allEvents = eventsList;
+      state = EventState.success;
+    });
+
+    notifyListeners();
+  }
+
+  Future<void> getUpcomingEvents() async {
+    if (state == EventState.submitting) return;
+    state = EventState.submitting;
+    //  notifyListeners();
+
+    Either<Failure, List<Event>> response =
+        await eventsRepository.getUpcomingEvents();
+
+    response.fold((failure) {
+      errorMessage = failure.errorMessage ?? "There are no upcoming events";
+      state = EventState.error;
+      upcomingEvents = [];
+    }, (upcomingEventsList) {
+      upcomingEvents = upcomingEventsList;
+      state = EventState.success;
+    });
+
+    //notifyListeners();
+  }
+
+  Future<void> getPastEvents() async {
+    if (state == EventState.submitting) return;
+    state = EventState.submitting;
+    notifyListeners();
+
+    Either<Failure, List<Event>> response =
+        await eventsRepository.getUpcomingEvents();
+
+    response.fold((failure) {
+      errorMessage = failure.errorMessage ?? "There are no past events";
+      state = EventState.error;
+      pastEvents = [];
+    }, (pastEventsList) {
+      pastEvents = pastEventsList;
       state = EventState.success;
     });
 

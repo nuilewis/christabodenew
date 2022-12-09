@@ -12,6 +12,7 @@ class PrayerProvider extends ChangeNotifier {
   PrayerState state = PrayerState.initial;
   String errorMessage = "";
   Prayer? todaysPrayer;
+  Prayer? currentPrayer;
   List<Prayer> allPrayers = [];
 
   PrayerProvider({required this.prayerRepository});
@@ -20,7 +21,7 @@ class PrayerProvider extends ChangeNotifier {
     if (state == PrayerState.submitting) return;
 
     state = PrayerState.submitting;
-    notifyListeners();
+    // notifyListeners();
 
     Either<Failure, Prayer> response =
         await prayerRepository.getCurrentPrayer();
@@ -28,13 +29,13 @@ class PrayerProvider extends ChangeNotifier {
     response.fold((failure) {
       errorMessage = failure.errorMessage ??
           "An error occurred while getting today's prayer";
-      print(errorMessage);
       state = PrayerState.error;
     }, (prayer) {
       todaysPrayer = prayer;
+      currentPrayer = prayer;
       state = PrayerState.success;
     });
-    notifyListeners();
+    //   notifyListeners();
   }
 
   Future<void> getNextPrayer() async {
@@ -46,12 +47,12 @@ class PrayerProvider extends ChangeNotifier {
     response.fold((failure) {
       errorMessage = failure.errorMessage ??
           "An error occurred while getting today's prayer";
-      print(errorMessage);
+
       state = PrayerState.error;
 
       notifyListeners();
-    }, (prayer) {
-      todaysPrayer = prayer;
+    }, (nextPrayer) {
+      currentPrayer = nextPrayer;
       state = PrayerState.success;
 
       notifyListeners();
@@ -68,10 +69,10 @@ class PrayerProvider extends ChangeNotifier {
     response.fold((failure) {
       errorMessage = failure.errorMessage ??
           "An error occurred while getting today's prayer";
-      print(errorMessage);
+
       state = PrayerState.error;
-    }, (prayer) {
-      todaysPrayer = prayer;
+    }, (previousPrayer) {
+      currentPrayer = previousPrayer;
       state = PrayerState.success;
     });
 
@@ -79,7 +80,6 @@ class PrayerProvider extends ChangeNotifier {
   }
 
   Future<void> getPrayer() async {
-    print("get prayer is running");
     if (state == PrayerState.submitting) return;
     state = PrayerState.submitting;
     notifyListeners();
@@ -89,7 +89,6 @@ class PrayerProvider extends ChangeNotifier {
     response.fold((failure) {
       errorMessage = failure.errorMessage ??
           "An error occurred while getting today's prayer";
-      print(errorMessage);
       state = PrayerState.error;
     }, (prayer) {
       allPrayers = prayer;

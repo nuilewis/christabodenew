@@ -13,9 +13,17 @@ class EventsHiveService extends HiveService {
 
   Future<List<Event>> getData(Box box) async {
     if (box.values.isNotEmpty) {
-      return box.values.toList().cast<Event>();
+      return box.values.first.toList().cast<Event>();
     } else {
       return <Event>[];
     }
+  }
+
+  Future<void> addEvents(Box box, List<Event> events) async {
+    await box.put(boxName, events);
+  }
+
+  Future<void> clearEvents(Box box) async {
+    await box.clear();
   }
 }

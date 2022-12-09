@@ -14,7 +14,7 @@ import '../devotional_screen/devotional_screen.dart';
 import '../events_screen/components/event_card.dart';
 import 'components/prayer_card.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   static const id = "home_screen";
   static Route route() {
     return MaterialPageRoute(builder: (context) => const HomeScreen());
@@ -23,18 +23,24 @@ class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void didChangeDependencies() {
+    Provider.of<DevotionalProvider>(context).getCurrentDevotional();
+    Provider.of<PrayerProvider>(context).getCurrentPrayer();
+    Provider.of<EventsProvider>(context).getUpcomingEvents();
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Consumer4<DevotionalProvider, PrayerProvider, MessagesProvider,
         EventsProvider>(
       builder: ((context, devotionalData, prayerData, messagesData, eventData,
           child) {
-        // if (devotionalData.state == DevotionalState.submitting ||
-        //     prayerData.state == PrayerState.submitting ||
-        //     messagesData.state == MessageState.submitting) {
-        //   ScaffoldMessenger.of(context)
-        //     ..hideCurrentSnackBar()
-        //     ..showSnackBar(const SnackBar(content: Text("submitting")));
-        // }
         return Scaffold(
           body: SafeArea(
             child: SingleChildScrollView(
@@ -99,7 +105,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: kDefaultPadding),
 
-                      eventData.allEvents.isNotEmpty
+                      eventData.upcomingEvents.isNotEmpty
                           ? ListView.builder(
                               itemCount: eventData.allEvents.length,
                               itemBuilder: (context, index) {
@@ -107,20 +113,20 @@ class HomeScreen extends StatelessWidget {
                                     event: eventData.allEvents[index]);
                               })
                           : Text(
-                              "There are no events scheduled for now.",
+                              "There are no upcoming events scheduled for now.",
                               style: Theme.of(context).textTheme.bodyText2,
                             ),
 
                       const SizedBox(height: kDefaultPadding2x),
-                      Text(
-                        "Messages",
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline2!
-                            .copyWith(fontSize: 24),
-                      ),
-                      const SizedBox(height: kDefaultPadding),
-                      const MessagesCategoryItem(),
+                      // Text(
+                      //   "Messages",
+                      //   style: Theme.of(context)
+                      //       .textTheme
+                      //       .headline2!
+                      //       .copyWith(fontSize: 24),
+                      // ),
+                      // const SizedBox(height: kDefaultPadding),
+                      // const MessagesCategoryItem(),
                       const SizedBox(height: kDefaultPadding2x),
                     ],
                   ),

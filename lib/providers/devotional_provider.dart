@@ -12,6 +12,7 @@ class DevotionalProvider extends ChangeNotifier {
   DevotionalState state = DevotionalState.initial;
   String errorMessage = "";
   Devotional? todaysDevotional;
+  Devotional? currentDevotional;
   List<Devotional> allDevotionals = [];
 
   DevotionalProvider(this.devotionalRepository);
@@ -19,21 +20,21 @@ class DevotionalProvider extends ChangeNotifier {
   Future<void> getCurrentDevotional() async {
     if (state == DevotionalState.submitting) return;
     state = DevotionalState.submitting;
-    notifyListeners();
+    //notifyListeners();
     Either<Failure, Devotional> response =
         await devotionalRepository.getCurrentDevotional();
 
     response.fold((failure) {
       errorMessage = failure.errorMessage ??
           "An error occurred while getting today's Devotional";
-      print(errorMessage);
       state = DevotionalState.error;
     }, (devotional) {
       todaysDevotional = devotional;
+      currentDevotional = devotional;
       state = DevotionalState.success;
     });
 
-    notifyListeners();
+    // notifyListeners();
   }
 
   Future<void> getNextDevotional() async {
@@ -46,10 +47,10 @@ class DevotionalProvider extends ChangeNotifier {
     response.fold((failure) {
       errorMessage = failure.errorMessage ??
           "An error occurred while getting today's Devotional";
-      print(errorMessage);
+
       state = DevotionalState.error;
-    }, (devotional) {
-      todaysDevotional = devotional;
+    }, (nextDevotional) {
+      currentDevotional = nextDevotional;
       state = DevotionalState.success;
     });
     notifyListeners();
@@ -66,17 +67,16 @@ class DevotionalProvider extends ChangeNotifier {
     response.fold((failure) {
       errorMessage = failure.errorMessage ??
           "An error occurred while getting today's Devotional";
-      print(errorMessage);
+
       state = DevotionalState.error;
-    }, (devotional) {
-      todaysDevotional = devotional;
+    }, (previousDevotional) {
+      currentDevotional = previousDevotional;
       state = DevotionalState.success;
     });
     notifyListeners();
   }
 
   Future<void> getDevotional() async {
-    print("get devotional is running");
     if (state == DevotionalState.submitting) return;
     state = DevotionalState.submitting;
     notifyListeners();
@@ -86,15 +86,14 @@ class DevotionalProvider extends ChangeNotifier {
     response.fold((failure) {
       errorMessage = failure.errorMessage ??
           "An error occurred while getting today's Devotional";
-      print(errorMessage);
+
       state = DevotionalState.error;
     }, (devotional) {
       allDevotionals = devotional;
-      print("succesfully gotten devotionals");
-      //todaysDevotional = devotional.first;
+
       state = DevotionalState.success;
     });
-    getCurrentDevotional();
+
     notifyListeners();
   }
 }

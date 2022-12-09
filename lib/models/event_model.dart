@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
 
@@ -38,6 +39,30 @@ class Event extends Equatable {
         endDate: endDate ?? this.endDate);
   }
 
+  ///---------To Map and From Map methods---------///
+  Map<String, dynamic> toMap() {
+    Map<String, dynamic> data = {
+      "name": name,
+      "description": description,
+      "start": startDate,
+      "end": endDate,
+    };
+    return data;
+  }
+
+  // factory constructor that returns a Devotional obj from a Map<String, dynamic>
+  factory Event.fromMap({
+    required Map<String, dynamic> data,
+  }) {
+    Timestamp startDate = data["start"];
+    Timestamp endDate = data["end"];
+    return Event(
+      name: data["name"],
+      description: data["description"],
+      startDate: startDate.toDate(),
+      endDate: endDate.toDate(),
+    );
+  }
   static Event empty = Event(
       name: "name", description: "description", startDate: DateTime.now());
   bool get isEmpty => this == Event.empty;

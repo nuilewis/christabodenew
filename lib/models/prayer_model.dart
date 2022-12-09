@@ -73,7 +73,7 @@ class Prayer extends Equatable {
   }
 
   static Prayer empty = Prayer(
-      title: "",
+      title: "Title",
       scripture: "scripture",
       scriptureReference: "scriptureReference",
       content: "content",

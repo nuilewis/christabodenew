@@ -132,8 +132,8 @@ class DevotionalRepositoryImplementation implements DevotionalRepository {
         ,
       );
 
-      Devotional nextDevotional = _devotionalList[_currentDevotionalIndex++];
-      _currentDevotionalIndex = _currentDevotionalIndex++;
+      Devotional nextDevotional = _devotionalList[_currentDevotionalIndex + 1];
+      _currentDevotionalIndex = _currentDevotionalIndex + 1;
       return Right(nextDevotional);
     } else {
       return const Left(
@@ -147,7 +147,9 @@ class DevotionalRepositoryImplementation implements DevotionalRepository {
       //Get the index of the current prayer, then use it to get the next.
       Devotional previousDevotional =
           _devotionalList[_currentDevotionalIndex--];
+
       _currentDevotionalIndex = _currentDevotionalIndex--;
+
       return Right(previousDevotional);
     } else {
       return const Left(FirebaseFailure(
