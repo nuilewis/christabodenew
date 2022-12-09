@@ -13,7 +13,7 @@ class PrayerHiveService extends HiveService {
 
   Future<List<Prayer>> getData(Box box) async {
     if (box.values.isNotEmpty) {
-      return box.values.toList().cast<Prayer>();
+      return box.values.first.toList().cast<Prayer>();
     } else {
       return <Prayer>[];
     }

@@ -52,22 +52,23 @@ class PrayerRepositoryImplementation implements PrayerRepository {
               await prayerFirestoreService.getPrayers();
 
           if (querySnapshot.docs.isNotEmpty) {
-            for (var element in querySnapshot.docs) {
+            for (DocumentSnapshot element in querySnapshot.docs) {
               Map<String, dynamic> documentData =
                   element.data() as Map<String, dynamic>;
 
-              Timestamp date = documentData["date"];
-              prayer = Prayer(
-                title: documentData["title"],
-                scripture: documentData["scripture"],
-                scriptureReference: documentData["scriptureRef"],
-                content: documentData["content"],
-                date: date.toDate(),
-              );
+              prayer = Prayer.fromMap(data: documentData);
 
               _prayerList.add(prayer);
             }
           }
+
+          ///Sorting the list in order before saving to the database
+
+          _prayerList.sort((a, b) => a.date.compareTo(b.date));
+
+          ///Now add the list of prayers to local storage
+
+          await prayerHiveService.addPrayers(prayerBox, _prayerList);
           return Right(_prayerList);
         } on FirebaseException catch (e) {
           ///If a Firebase error has occurred, then return a [FirebaseFailure]
@@ -89,11 +90,16 @@ class PrayerRepositoryImplementation implements PrayerRepository {
       ///to the date and months of today.
       List<Prayer> todaysPrayer = _prayerList
           .where((element) =>
-              element.date.month == _today.month &&
-              element.date.day == _today.day)
+                  element.date.month == _today.month &&
+                  element.date.day == _today.day
+
+              ///We compare only the months and days rather than comparing
+              ///the whole date, to make the year irrelevant, that way the prayers
+              ///will be gotten regardless of the year.
+              )
           .toList();
       if (todaysPrayer.isEmpty) {
-        return Left(FirebaseFailure(errorMessage: "No Prayers Found"));
+        return const Left(FirebaseFailure(errorMessage: "No Prayers Found"));
       } else {
         return Right(todaysPrayer.first);
       }
@@ -107,9 +113,12 @@ class PrayerRepositoryImplementation implements PrayerRepository {
     if (_prayerList.isNotEmpty) {
       //Get the index of the current prayer, then use it to get the next.
       ///Get the element where the date is after today at 12, AM, 0 sec, 0 millisec
-      /// and is before tomorrow at 12 AM, O sec, O millisec
-      _currentPrayerIndex = _prayerList.indexWhere((element) =>
-          element.date.isAfter(_today) && element.date.isBefore(_tomorrow));
+      /// and is before tomorrow at 12 AM, O sec, O millisecond
+      _currentPrayerIndex = _prayerList.indexWhere(
+        (element) =>
+            element.date.month == _today.month &&
+            element.date.day == _today.day,
+      );
 
       Prayer nextPrayer = _prayerList[_currentPrayerIndex++];
       _currentPrayerIndex = _currentPrayerIndex++;

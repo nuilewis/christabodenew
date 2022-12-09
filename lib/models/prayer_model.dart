@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
 
@@ -43,6 +44,32 @@ class Prayer extends Equatable {
         scriptureReference: scriptureReference ?? this.scriptureReference,
         content: content ?? this.content,
         date: date ?? this.date);
+  }
+
+  ///---------To Map and From Map methods---------///
+  Map<String, dynamic> toMap() {
+    Map<String, dynamic> data = {
+      "content": content,
+      "date": date,
+      "scripture": scripture,
+      "scriptureRef": scriptureReference,
+      "title": title,
+    };
+    return data;
+  }
+
+  // factory constructor that returns a Devotional obj from a Map<String, dynamic>
+  factory Prayer.fromMap({
+    required Map<String, dynamic> data,
+  }) {
+    Timestamp date = data["date"];
+    return Prayer(
+      title: data["title"],
+      scripture: data["scripture"],
+      scriptureReference: data["scriptureRef"],
+      content: data["content"],
+      date: date.toDate(),
+    );
   }
 
   static Prayer empty = Prayer(

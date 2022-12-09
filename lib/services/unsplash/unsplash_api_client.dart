@@ -31,7 +31,7 @@ class UnsplashAPIClient {
       } else {
         DioError dioError = DioError(
             requestOptions:
-                RequestOptions(path: "${_baseUrl}$_randomImageEndpoint"));
+                RequestOptions(path: "$_baseUrl$_randomImageEndpoint"));
         final ApiException exception =
             ApiException(errorMessage: dioError.message);
         throw exception;
@@ -54,7 +54,7 @@ class UnsplashAPIClient {
       } else {
         DioError dioError = DioError(
             requestOptions:
-                RequestOptions(path: "${_baseUrl}$_randomImageEndpoint"));
+                RequestOptions(path: "$_baseUrl$_randomImageEndpoint"));
         final ApiException exception =
             ApiException(errorMessage: dioError.message);
         throw exception;
