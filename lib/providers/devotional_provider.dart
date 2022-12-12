@@ -14,6 +14,7 @@ class DevotionalProvider extends ChangeNotifier {
   Devotional? todaysDevotional;
   Devotional? currentDevotional;
   List<Devotional> allDevotionals = [];
+  List<Devotional> likedDevotionals = [];
 
   DevotionalProvider(this.devotionalRepository);
 
@@ -76,7 +77,7 @@ class DevotionalProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getDevotional() async {
+  Future<void> getDevotionals() async {
     if (state == DevotionalState.submitting) return;
     state = DevotionalState.submitting;
     notifyListeners();
@@ -91,6 +92,58 @@ class DevotionalProvider extends ChangeNotifier {
     }, (devotional) {
       allDevotionals = devotional;
 
+      state = DevotionalState.success;
+    });
+
+    notifyListeners();
+  }
+
+  Future<void> getLikedDevotionals() async {
+    if (state == DevotionalState.submitting) return;
+    state = DevotionalState.submitting;
+    notifyListeners();
+    Either<Failure, List<Devotional>> response =
+        await devotionalRepository.getLikedDevotionals();
+
+    response.fold((failure) {
+      errorMessage = failure.errorMessage ??
+          "An error occurred while getting your favourite Devotional messages";
+
+      state = DevotionalState.error;
+    }, (likedDevotional) {
+      likedDevotionals = likedDevotional;
+      state = DevotionalState.success;
+    });
+
+    notifyListeners();
+  }
+
+  ///Used for both liking and unliking devotionals, as well as any
+  ///other updates to the devotional list that is necessary
+  Future<void> updateDevotionalList(List<Devotional> updatedList) async {
+    Either<Failure, void> response =
+        await devotionalRepository.updateDevotionalSavedList(updatedList);
+
+    response.fold((failure) {
+      errorMessage = failure.errorMessage ??
+          "An error occurred while saving your favourite Devotional messages";
+      state = DevotionalState.error;
+    }, (nothing) {
+      state = DevotionalState.success;
+    });
+
+    notifyListeners();
+  }
+
+  Future<void> clearDevotional() async {
+    Either<Failure, void> response =
+        await devotionalRepository.clearDevotionals();
+
+    response.fold((failure) {
+      errorMessage = failure.errorMessage ??
+          "An error occurred while clearing Devotional messages";
+      state = DevotionalState.error;
+    }, (nothing) {
       state = DevotionalState.success;
     });
 

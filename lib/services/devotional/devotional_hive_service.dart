@@ -4,10 +4,10 @@ import 'package:hive_flutter/hive_flutter.dart';
 import '../hive_base_service.dart';
 
 class DevotionalHiveService extends HiveService {
-  final String boxName = "devotionalBox";
+  final String _boxName = "devotionalBox";
 
   Future<Box> openBox() async {
-    Box box = await Hive.openBox(boxName);
+    Box box = await Hive.openBox(_boxName);
     return box;
   }
 
@@ -31,7 +31,7 @@ class DevotionalHiveService extends HiveService {
   }
 
   Future<void> addDevotional(Box box, List<Devotional> devotional) async {
-    await box.put(boxName, devotional);
+    await box.put(_boxName, devotional);
   }
 
   Future<void> clearDevotional(Box box) async {

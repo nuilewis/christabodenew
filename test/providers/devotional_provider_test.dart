@@ -65,7 +65,7 @@ void main() {
           .thenAnswer((_) async => Right(returnedDevotionalList));
 
       //act
-      await devotionalProvider.getDevotional();
+      await devotionalProvider.getDevotionals();
 
       //assert
       expect(devotionalProvider.allDevotionals, returnedDevotionalList);
@@ -85,7 +85,7 @@ void main() {
 
       //act
 
-      await devotionalProvider.getDevotional();
+      await devotionalProvider.getDevotionals();
 
       //assert
       expect(devotionalProvider.todaysDevotional, null);

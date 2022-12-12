@@ -13,6 +13,12 @@ abstract class DevotionalRepository {
   Future<Either<Failure, Devotional>> getNextDevotional();
   Future<Either<Failure, Devotional>> getPreviousDevotional();
   Future<Either<Failure, List<Devotional>>> getDevotionals();
+
+  ///Liking Devotional Methods
+  Future<Either<Failure, List<Devotional>>> getLikedDevotionals();
+  Future<Either<Failure, void>> updateDevotionalSavedList(
+      List<Devotional> updatedList);
+  Future<Either<Failure, void>> clearDevotionals();
 }
 
 class DevotionalRepositoryImplementation implements DevotionalRepository {
@@ -26,6 +32,7 @@ class DevotionalRepositoryImplementation implements DevotionalRepository {
       required this.connectionChecker});
 
   List<Devotional> _devotionalList = [];
+  List<Devotional> _likedDevotionalsList = [];
   final DateTime _today = DateTime(DateTime.now().year, DateTime.now().month,
       DateTime.now().day, 0, 0, 0, 0, 0);
   int _currentDevotionalIndex = 0;
@@ -154,6 +161,46 @@ class DevotionalRepositoryImplementation implements DevotionalRepository {
     } else {
       return const Left(FirebaseFailure(
           errorMessage: "Unable to get the previous devotional"));
+    }
+  }
+
+  ///-------Liked Devotionals Methods--------///
+  @override
+  Future<Either<Failure, List<Devotional>>> getLikedDevotionals() async {
+    try {
+      _likedDevotionalsList =
+          _devotionalList.where((element) => element.isLiked == true).toList();
+
+      return Right(_likedDevotionalsList);
+    } catch (e) {
+      return const Left(FirebaseFailure(
+          errorMessage: "Unable to get your favourite devotional messages"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> updateDevotionalSavedList(
+      List<Devotional> updatedList) async {
+    final Box box = await devotionalHiveService.openBox();
+    try {
+      await devotionalHiveService.addDevotional(box, updatedList);
+
+      return Right(Future.value());
+    } catch (e) {
+      return const Left(
+          FirebaseFailure(errorMessage: "Unable to add to your favourites"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> clearDevotionals() async {
+    final Box box = await devotionalHiveService.openBox();
+    try {
+      await devotionalHiveService.clearDevotional(box);
+      return Right(Future.value());
+    } catch (e) {
+      return const Left(
+          FirebaseFailure(errorMessage: "Unable to clear your favourites"));
     }
   }
 }
