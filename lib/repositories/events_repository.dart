@@ -12,6 +12,7 @@ abstract class EventsRepository {
   Future<Either<Failure, List<Event>>> getEvents();
   Future<Either<Failure, List<Event>>> getUpcomingEvents();
   Future<Either<Failure, List<Event>>> getPastEvents();
+  Future<Either<Failure, List<Event>>> getMonthlyEvents();
 }
 
 class EventsRepositoryImplementation implements EventsRepository {
@@ -25,6 +26,7 @@ class EventsRepositoryImplementation implements EventsRepository {
       required this.connectionChecker});
 
   List<Event> _eventsList = [];
+  List<Event> _monthlyEvents = [];
   List<Event> _upcomingEvents = [];
   List<Event> _pastEvents = [];
 
@@ -70,8 +72,9 @@ class EventsRepositoryImplementation implements EventsRepository {
 
   @override
   Future<Either<Failure, List<Event>>> getPastEvents() async {
+    ///We now find our past and present events for the month rather than for all time.
     if (_eventsList.isNotEmpty) {
-      _pastEvents = _eventsList
+      _pastEvents = _monthlyEvents
           .where((element) => element.startDate.isBefore(_today))
           .toList();
       _pastEvents.sort((a, b) => a.startDate.compareTo(b.startDate));
@@ -85,7 +88,8 @@ class EventsRepositoryImplementation implements EventsRepository {
   @override
   Future<Either<Failure, List<Event>>> getUpcomingEvents() async {
     if (_eventsList.isNotEmpty) {
-      _upcomingEvents = _eventsList
+      ///We now find our past and present events for the month rather than for all time.
+      _upcomingEvents = _monthlyEvents
           .where(
             (element) =>
                 element.startDate == _today ||
@@ -97,6 +101,22 @@ class EventsRepositoryImplementation implements EventsRepository {
     } else {
       return const Left(
           FirebaseFailure(errorMessage: "There are no past events"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Event>>> getMonthlyEvents() async {
+    if (_eventsList.isNotEmpty) {
+      _monthlyEvents = _eventsList
+          .where((element) =>
+              element.startDate.month == _today.month &&
+              element.startDate.year == _today.year)
+          .toList();
+      _monthlyEvents.sort((a, b) => a.startDate.compareTo(b.startDate));
+      return Right(_monthlyEvents);
+    } else {
+      return const Left(FirebaseFailure(
+          errorMessage: "There are no events scheduled this month"));
     }
   }
 }

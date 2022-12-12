@@ -37,7 +37,7 @@ class EventsScreen extends StatelessWidget {
                   height: kDefaultPadding2x,
                 ),
                 Text(
-                  "Upcoming Events",
+                  "Upcoming Events for ${monthsOfYear[DateTime.now().month]}",
                   style: Theme.of(context)
                       .textTheme
                       .headline2!
@@ -46,9 +46,10 @@ class EventsScreen extends StatelessWidget {
                 const SizedBox(height: kDefaultPadding),
                 eventData.upcomingEvents.isNotEmpty
                     ? ListView.builder(
-                        itemCount: eventData.allEvents.length,
+                        itemCount: eventData.upcomingEvents.length,
                         itemBuilder: (context, index) {
-                          return EventCard(event: eventData.allEvents[index]);
+                          return EventCard(
+                              event: eventData.upcomingEvents[index]);
                         })
                     : Center(
                         child: Column(
@@ -79,11 +80,11 @@ class EventsScreen extends StatelessWidget {
                       .copyWith(fontSize: 20),
                 ),
                 const SizedBox(height: kDefaultPadding),
-                eventData.upcomingEvents.isNotEmpty
+                eventData.pastEvents.isNotEmpty
                     ? ListView.builder(
-                        itemCount: eventData.allEvents.length,
+                        itemCount: eventData.pastEvents.length,
                         itemBuilder: (context, index) {
-                          return EventCard(event: eventData.allEvents[index]);
+                          return EventCard(event: eventData.pastEvents[index]);
                         })
                     : Center(
                         child: Column(

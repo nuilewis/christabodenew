@@ -52,12 +52,28 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const SizedBox(height: kDefaultPadding2x),
-                      Text("Welcome",
+                      const SizedBox(height: kDefaultPadding * 3),
+                      Text("Welcome to the Christ Abode Ministries",
                           style: Theme.of(context).textTheme.headline1),
                       const SizedBox(
                         height: kDefaultPadding2x,
                       ),
+                      Text(
+                        "Next Up",
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline2!
+                            .copyWith(fontSize: 24),
+                      ),
+                      const SizedBox(height: kDefaultPadding),
+                      eventData.upcomingEvents.isNotEmpty
+                          ? EventCard(event: eventData.monthlyEvents.first)
+                          : Text(
+                              "There are no upcoming events scheduled for now.",
+                              style: Theme.of(context).textTheme.bodyText2,
+                            ),
+
+                      const SizedBox(height: kDefaultPadding2x),
                       Text(
                         "Today's Devotional",
                         style: Theme.of(context)
@@ -96,28 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       // const SizedBox(height: kDefaultPadding),
                       // const VideoCard(),
                       // const SizedBox(height: kDefaultPadding2x),
-                      Text(
-                        "Upcoming Events",
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline2!
-                            .copyWith(fontSize: 24),
-                      ),
-                      const SizedBox(height: kDefaultPadding),
 
-                      eventData.upcomingEvents.isNotEmpty
-                          ? ListView.builder(
-                              itemCount: eventData.allEvents.length,
-                              itemBuilder: (context, index) {
-                                return EventCard(
-                                    event: eventData.allEvents[index]);
-                              })
-                          : Text(
-                              "There are no upcoming events scheduled for now.",
-                              style: Theme.of(context).textTheme.bodyText2,
-                            ),
-
-                      const SizedBox(height: kDefaultPadding2x),
                       // Text(
                       //   "Messages",
                       //   style: Theme.of(context)

@@ -14,7 +14,8 @@ class EventsProvider extends ChangeNotifier {
 
   EventState state = EventState.initial;
   String errorMessage = "";
-  List<Event> allEvents = [];
+  //List<Event> _allEvents = [];
+  List<Event> monthlyEvents = [];
   List<Event> pastEvents = [];
   List<Event> upcomingEvents = [];
 
@@ -30,7 +31,26 @@ class EventsProvider extends ChangeNotifier {
           failure.errorMessage ?? "An error occurred while getting the events";
       state = EventState.error;
     }, (eventsList) {
-      allEvents = eventsList;
+      monthlyEvents = eventsList;
+      state = EventState.success;
+    });
+
+    notifyListeners();
+  }
+
+  Future<void> getMonthlyEvents() async {
+    if (state == EventState.submitting) return;
+    state = EventState.submitting;
+    notifyListeners();
+
+    Either<Failure, List<Event>> response = await eventsRepository.getEvents();
+
+    response.fold((failure) {
+      errorMessage =
+          failure.errorMessage ?? "An error occurred while getting the events";
+      state = EventState.error;
+    }, (eventsList) {
+      monthlyEvents = eventsList;
       state = EventState.success;
     });
 
