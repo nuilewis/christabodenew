@@ -13,6 +13,11 @@ abstract class PrayerRepository {
   Future<Either<Failure, Prayer>> getNextPrayer();
   Future<Either<Failure, Prayer>> getPreviousPrayer();
   Future<Either<Failure, List<Prayer>>> getPrayers();
+
+  ///Liking Prayer Methods
+  Future<Either<Failure, List<Prayer>>> getLikedPrayers();
+  Future<Either<Failure, void>> updatePrayerSavedList(List<Prayer> updatedList);
+  Future<Either<Failure, void>> clearPrayers();
 }
 
 class PrayerRepositoryImplementation implements PrayerRepository {
@@ -26,6 +31,7 @@ class PrayerRepositoryImplementation implements PrayerRepository {
   });
 
   List<Prayer> _prayerList = [];
+  List<Prayer> _likedPrayerList = [];
   final DateTime _today = DateTime(DateTime.now().year, DateTime.now().month,
       DateTime.now().day, 0, 0, 0, 0, 0);
 
@@ -140,6 +146,45 @@ class PrayerRepositoryImplementation implements PrayerRepository {
     } else {
       return const Left(
           FirebaseFailure(errorMessage: "Unable to get the previous Prayer"));
+    }
+  }
+
+  ///-------Liked Prayer Methods--------///
+  @override
+  Future<Either<Failure, List<Prayer>>> getLikedPrayers() async {
+    try {
+      _likedPrayerList =
+          _prayerList.where((element) => element.isLiked == true).toList();
+
+      return Right(_likedPrayerList);
+    } catch (e) {
+      return const Left(
+          FirebaseFailure(errorMessage: "Unable to get your liked prayers"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> updatePrayerSavedList(
+      List<Prayer> updatedLIst) async {
+    final Box box = await prayerHiveService.openBox();
+    try {
+      await prayerHiveService.addPrayers(box, updatedLIst);
+      return Right(Future.value());
+    } catch (e) {
+      return const Left(
+          FirebaseFailure(errorMessage: "Unable to add to your favourites"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> clearPrayers() async {
+    final Box box = await prayerHiveService.openBox();
+    try {
+      await prayerHiveService.clearPrayers(box);
+      return Right(Future.value());
+    } catch (e) {
+      return const Left(
+          FirebaseFailure(errorMessage: "Unable to clear your favourites"));
     }
   }
 }

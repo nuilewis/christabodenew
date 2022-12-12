@@ -96,4 +96,31 @@ class PrayerProvider extends ChangeNotifier {
     });
     notifyListeners();
   }
+
+  ///Used for both liking and unliking devotionals, as well as any
+  ///other updates to the devotional list that is necessary
+  Future<void> updatePrayerList(List<Prayer> updatedList) async {
+    Either<Failure, void> response =
+        await prayerRepository.updatePrayerSavedList(updatedList);
+    response.fold((failure) {
+      errorMessage = failure.errorMessage ??
+          "An error occurred while getting today's prayer";
+      state = PrayerState.error;
+    }, (nothing) {
+      state = PrayerState.success;
+    });
+    notifyListeners();
+  }
+
+  Future<void> clearPrayer() async {
+    Either<Failure, void> response = await prayerRepository.clearPrayers();
+    response.fold((failure) {
+      errorMessage = failure.errorMessage ??
+          "An error occurred while getting today's prayer";
+      state = PrayerState.error;
+    }, (nothing) {
+      state = PrayerState.success;
+    });
+    notifyListeners();
+  }
 }

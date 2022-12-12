@@ -4,10 +4,10 @@ import '../../models/prayer_model.dart';
 import '../hive_base_service.dart';
 
 class PrayerHiveService extends HiveService {
-  final String boxName = "prayerBox";
+  final String _boxName = "prayerBox";
 
   Future<Box> openBox() async {
-    Box box = await Hive.openBox(boxName);
+    Box box = await Hive.openBox(_boxName);
     return box;
   }
 
@@ -20,7 +20,7 @@ class PrayerHiveService extends HiveService {
   }
 
   Future<void> addPrayers(Box box, List<Prayer> prayers) async {
-    await box.put(boxName, prayers);
+    await box.put(_boxName, prayers);
   }
 
   Future<void> clearPrayers(Box box) async {
