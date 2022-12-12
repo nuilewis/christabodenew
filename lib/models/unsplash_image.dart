@@ -8,13 +8,14 @@ class UnsplashImage extends Equatable {
   final String? uploaderName;
   final String? uploaderUrl;
 
-  const UnsplashImage(
-      {required this.id,
-      required this.imgUrl,
-      required this.blurHash,
-      required this.uploaderName,
-      this.colour,
-      this.uploaderUrl});
+  const UnsplashImage({
+    required this.id,
+    required this.imgUrl,
+    required this.blurHash,
+    required this.uploaderName,
+    this.colour,
+    this.uploaderUrl,
+  });
 
   factory UnsplashImage.fromJson(Map<String, dynamic> json) {
     return UnsplashImage(

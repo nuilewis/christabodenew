@@ -4,10 +4,16 @@ import 'package:hive_flutter/hive_flutter.dart';
 import '../hive_base_service.dart';
 
 class MessagesHiveService extends HiveService {
-  final String boxName = "messagesBox";
+  final String _boxName = "messagesBox";
+  final String _likedBoxName = "likedMessagesBox";
 
   Future<Box> openBox() async {
-    Box box = await Hive.openBox(boxName);
+    Box box = await Hive.openBox(_boxName);
+    return box;
+  }
+
+  Future<Box> openLikedBox() async {
+    Box box = await Hive.openBox(_likedBoxName);
     return box;
   }
 
@@ -20,7 +26,11 @@ class MessagesHiveService extends HiveService {
   }
 
   Future<void> addMessages(Box box, List<Message> prayers) async {
-    await box.put(boxName, prayers);
+    await box.put(_boxName, prayers);
+  }
+
+  Future<void> addLikedMessages(Box box, List<Message> prayers) async {
+    await box.put(_likedBoxName, prayers);
   }
 
   Future<void> clearMessages(Box box) async {

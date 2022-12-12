@@ -4,10 +4,10 @@ import 'package:hive_flutter/hive_flutter.dart';
 import '../hive_base_service.dart';
 
 class EventsHiveService extends HiveService {
-  final String boxName = "eventsBox";
+  final String _boxName = "eventsBox";
 
   Future<Box> openBox() async {
-    Box box = await Hive.openBox(boxName);
+    Box box = await Hive.openBox(_boxName);
     return box;
   }
 
@@ -20,7 +20,7 @@ class EventsHiveService extends HiveService {
   }
 
   Future<void> addEvents(Box box, List<Event> events) async {
-    await box.put(boxName, events);
+    await box.put(_boxName, events);
   }
 
   Future<void> clearEvents(Box box) async {
