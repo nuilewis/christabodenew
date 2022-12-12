@@ -9,6 +9,7 @@ const int _scriptureHiveIndex = 1;
 const int _scriptureRefHiveIndex = 2;
 const int _contentHiveIndex = 3;
 const int _dateHiveIndex = 4;
+const int _isLikedHiveIndex = 5;
 
 @HiveType(typeId: 1)
 class Prayer extends Equatable {
@@ -22,13 +23,17 @@ class Prayer extends Equatable {
   final String content;
   @HiveField(_dateHiveIndex)
   final DateTime date;
+  @HiveField(_isLikedHiveIndex)
+  final bool isLiked;
 
-  const Prayer(
-      {required this.title,
-      required this.scripture,
-      required this.scriptureReference,
-      required this.content,
-      required this.date});
+  const Prayer({
+    required this.title,
+    required this.scripture,
+    required this.scriptureReference,
+    required this.content,
+    required this.date,
+    this.isLiked = false,
+  });
 
   Prayer copyWith({
     String? title,
@@ -37,13 +42,16 @@ class Prayer extends Equatable {
     String? scriptureReference,
     String? content,
     DateTime? date,
+    bool? isLiked,
   }) {
     return Prayer(
-        title: title ?? this.title,
-        scripture: scripture ?? this.scripture,
-        scriptureReference: scriptureReference ?? this.scriptureReference,
-        content: content ?? this.content,
-        date: date ?? this.date);
+      title: title ?? this.title,
+      scripture: scripture ?? this.scripture,
+      scriptureReference: scriptureReference ?? this.scriptureReference,
+      content: content ?? this.content,
+      date: date ?? this.date,
+      isLiked: isLiked ?? this.isLiked,
+    );
   }
 
   ///---------To Map and From Map methods---------///
@@ -98,5 +106,5 @@ class Prayer extends Equatable {
 
   @override
   List<Object?> get props =>
-      [title, content, scripture, scriptureReference, date];
+      [title, content, scripture, scriptureReference, date, isLiked];
 }

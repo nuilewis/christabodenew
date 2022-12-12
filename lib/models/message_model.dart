@@ -8,6 +8,7 @@ const int _titleHiveIndex = 1;
 const int _contentHiveIndex = 2;
 const int _authorHiveIndex = 3;
 const int _dateHiveIndex = 4;
+const int _isLikedHiveIndex = 5;
 
 @HiveType(typeId: 2)
 class Message extends Equatable {
@@ -21,13 +22,16 @@ class Message extends Equatable {
   final String? author;
   @HiveField(_dateHiveIndex)
   final DateTime? date;
+  @HiveField(_isLikedHiveIndex)
+  final bool isLiked;
 
   const Message(
       {this.category,
       required this.title,
       required this.content,
       required this.author,
-      this.date});
+      this.date,
+      this.isLiked = false});
 
   Message copyWith({
     String? category,
@@ -35,12 +39,14 @@ class Message extends Equatable {
     String? content,
     String? author,
     DateTime? date,
+    bool? isLiked,
   }) {
     return Message(
         author: author ?? this.author,
         title: title ?? this.title,
         content: content ?? this.content,
-        category: category ?? this.category);
+        category: category ?? this.category,
+        isLiked: isLiked ?? this.isLiked);
   }
 
   static const Message empty =
@@ -49,5 +55,5 @@ class Message extends Equatable {
   bool get isNotEmpty => this != Message.empty;
 
   @override
-  List<Object?> get props => [author, title, content, category];
+  List<Object?> get props => [author, title, content, category, isLiked];
 }

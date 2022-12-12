@@ -8,6 +8,7 @@ const int _nameHiveIndex = 0;
 const int _descriptionHiveIndex = 1;
 const int _startHiveIndex = 2;
 const int _endHiveIndex = 3;
+const int _isLikedHiveIndex = 4;
 
 @HiveType(typeId: 3)
 class Event extends Equatable {
@@ -19,24 +20,31 @@ class Event extends Equatable {
   final DateTime startDate;
   @HiveField(_endHiveIndex)
   final DateTime? endDate;
+  @HiveField(_isLikedHiveIndex)
+  final bool isLiked;
 
-  const Event(
-      {required this.name,
-      required this.description,
-      required this.startDate,
-      this.endDate});
+  const Event({
+    required this.name,
+    required this.description,
+    required this.startDate,
+    this.endDate,
+    this.isLiked = false,
+  });
 
   Event copyWith({
     String? name,
     String? description,
     DateTime? startDate,
     DateTime? endDate,
+    bool? isLiked,
   }) {
     return Event(
-        name: name ?? this.name,
-        description: description ?? this.description,
-        startDate: startDate ?? this.startDate,
-        endDate: endDate ?? this.endDate);
+      name: name ?? this.name,
+      description: description ?? this.description,
+      startDate: startDate ?? this.startDate,
+      endDate: endDate ?? this.endDate,
+      isLiked: isLiked ?? this.isLiked,
+    );
   }
 
   ///---------To Map and From Map methods---------///
@@ -69,5 +77,5 @@ class Event extends Equatable {
   bool get isNotEmpty => this != Event.empty;
 
   @override
-  List<Object?> get props => [name, description, startDate, endDate];
+  List<Object?> get props => [name, description, startDate, endDate, isLiked];
 }

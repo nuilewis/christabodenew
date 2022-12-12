@@ -12,6 +12,7 @@ const int _confessionHiveIndex = 4;
 const int _authorHiveIndex = 5;
 const int _startDateHiveIndex = 6;
 const int _endDateHiveIndex = 7;
+const int _isLikedHiveIndex = 8;
 
 @HiveType(typeId: 0)
 class Devotional extends Equatable {
@@ -31,16 +32,20 @@ class Devotional extends Equatable {
   final DateTime startDate;
   @HiveField(_endDateHiveIndex)
   final DateTime endDate;
+  @HiveField(_isLikedHiveIndex)
+  final bool isLiked;
 
-  const Devotional(
-      {required this.title,
-      required this.scripture,
-      required this.scriptureReference,
-      required this.confessionOfFaith,
-      required this.author,
-      required this.content,
-      required this.startDate,
-      required this.endDate});
+  const Devotional({
+    required this.title,
+    required this.scripture,
+    required this.scriptureReference,
+    required this.confessionOfFaith,
+    required this.author,
+    required this.content,
+    required this.startDate,
+    required this.endDate,
+    this.isLiked = false,
+  });
 
   ///-------CopyWith--------///
   Devotional copyWith({
@@ -52,16 +57,19 @@ class Devotional extends Equatable {
     String? content,
     DateTime? startDate,
     DateTime? endDate,
+    bool? isLiked,
   }) {
     return Devotional(
-        title: title ?? this.title,
-        scripture: scripture ?? this.scripture,
-        scriptureReference: scriptureReference ?? this.scriptureReference,
-        confessionOfFaith: confessionOfFaith ?? this.confessionOfFaith,
-        content: content ?? this.content,
-        author: author ?? this.author,
-        startDate: startDate ?? this.startDate,
-        endDate: endDate ?? this.endDate);
+      title: title ?? this.title,
+      scripture: scripture ?? this.scripture,
+      scriptureReference: scriptureReference ?? this.scriptureReference,
+      confessionOfFaith: confessionOfFaith ?? this.confessionOfFaith,
+      content: content ?? this.content,
+      author: author ?? this.author,
+      startDate: startDate ?? this.startDate,
+      endDate: endDate ?? this.endDate,
+      isLiked: isLiked ?? this.isLiked,
+    );
   }
 
   ///---------To Map and From Map methods---------///
@@ -115,6 +123,7 @@ class Devotional extends Equatable {
         content,
         author,
         startDate,
-        endDate
+        endDate,
+        isLiked,
       ];
 }
