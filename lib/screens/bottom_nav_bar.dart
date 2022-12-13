@@ -1,3 +1,4 @@
+import 'package:christabodenew/screens/favourite_screen/favourites_screen.dart';
 import 'package:christabodenew/screens/home_screen/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -27,6 +28,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
       key: PageStorageKey(PrayerScreen.id),
     ),
     const EventsScreen(key: PageStorageKey(EventsScreen.id)),
+    const FavouritesScreen(key: PageStorageKey(FavouritesScreen.id)),
   ];
 
   final PageStorageBucket bucket = PageStorageBucket();
@@ -56,49 +58,62 @@ class _BottomNavBarState extends State<BottomNavBar> {
             label: "Home",
             icon: SvgPicture.asset(
               "assets/svg/home_icon.svg",
-              //height: 23,
+              height: 23,
               color: Theme.of(context).iconTheme.color,
             ),
             activeIcon: SvgPicture.asset(
               "assets/svg/home_icon.svg",
               color: Theme.of(context).primaryColor,
-              // height: 23,
+              height: 23,
             ),
           ),
           BottomNavigationBarItem(
             label: "Devotional",
             icon: SvgPicture.asset(
               "assets/svg/read_icon.svg",
-              //   height: 23,
+              height: 23,
               color: Theme.of(context).iconTheme.color,
             ),
             activeIcon: SvgPicture.asset(
               "assets/svg/read_icon.svg",
               color: Theme.of(context).primaryColor,
-              //  height: 23,
+              height: 23,
             ),
           ),
           BottomNavigationBarItem(
             label: "Prayer",
             icon: SvgPicture.asset("assets/svg/prayer_icon.svg",
-                height: 26, color: Theme.of(context).iconTheme.color),
+                height: 24, color: Theme.of(context).iconTheme.color),
             activeIcon: SvgPicture.asset(
               "assets/svg/prayer_icon.svg",
               color: Theme.of(context).primaryColor,
-              height: 26,
+              height: 24,
             ),
           ),
           BottomNavigationBarItem(
             label: "Events",
             icon: SvgPicture.asset(
               "assets/svg/notification_icon.svg",
-              //      height: 23,
+              height: 23,
               color: Theme.of(context).iconTheme.color,
             ),
             activeIcon: SvgPicture.asset(
               "assets/svg/notification_icon.svg",
               color: Theme.of(context).primaryColor,
-              //  height: 23,
+              height: 23,
+            ),
+          ),
+          BottomNavigationBarItem(
+            label: "Favourites",
+            icon: SvgPicture.asset(
+              "assets/svg/heart_icon.svg",
+              height: 23,
+              color: Theme.of(context).iconTheme.color,
+            ),
+            activeIcon: SvgPicture.asset(
+              "assets/svg/heart_icon.svg",
+              color: Theme.of(context).primaryColor,
+              height: 23,
             ),
           ),
         ]);

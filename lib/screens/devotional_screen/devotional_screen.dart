@@ -41,6 +41,8 @@ class _DevotionalScreenState extends State<DevotionalScreen> {
                     ? const SizedBox()
                     : IconButton(
                         onPressed: () {
+                          devotionalData
+                              .toggleLikedDevotional(currentDevotional);
                           Navigator.pop(context);
                         },
                         icon: SvgPicture.asset(
@@ -79,7 +81,7 @@ class _DevotionalScreenState extends State<DevotionalScreen> {
                         child: BlurHash(
                           imageFit: BoxFit.cover,
                           image: featuredImage.imgUrl,
-                          hash: featuredImage.blurHash!,
+                          hash: featuredImage.blurHash,
                         ),
                       ),
                       Container(
@@ -149,7 +151,7 @@ class _DevotionalScreenState extends State<DevotionalScreen> {
                                 style: Theme.of(context).textTheme.bodyText1,
                               ),
                               Text(
-                                "${dateTimeFormatter(context, currentDevotional.startDate)} - ",
+                                "${dateTimeFormatter(context, currentDevotional.startDate)} to ",
                                 style: Theme.of(context).textTheme.bodyText2,
                               ),
                               Text(
@@ -163,14 +165,20 @@ class _DevotionalScreenState extends State<DevotionalScreen> {
                           IconButton(
                             onPressed: () {},
                             icon: SvgPicture.asset(
-                              "assets/svg/share_icon.svg",
+
+                                  "assets/svg/share_icon.svg",
                               color: Theme.of(context).iconTheme.color,
                             ),
                           ),
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              devotionalData.toggleLikedDevotional(currentDevotional);
+                            },
                             icon: SvgPicture.asset(
-                              "assets/svg/heart_icon.svg",
+                              currentDevotional.isLiked
+                                  ? "assets/svg/heart_icon_filled.svg"
+                                  : "assets/svg/heart_icon.svg",
+
                               color: Theme.of(context).iconTheme.color,
                             ),
                           ),

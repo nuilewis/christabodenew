@@ -12,6 +12,7 @@ class DevotionalProvider extends ChangeNotifier {
   DevotionalState state = DevotionalState.initial;
   String errorMessage = "";
   Devotional? todaysDevotional;
+
   Devotional? currentDevotional;
   List<Devotional> allDevotionals = [];
   List<Devotional> likedDevotionals = [];
@@ -135,6 +136,12 @@ class DevotionalProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> initStuff() async {
+    await getDevotionals();
+    await getCurrentDevotional();
+    await getLikedDevotionals();
+  }
+
   Future<void> clearDevotional() async {
     Either<Failure, void> response =
         await devotionalRepository.clearDevotionals();
@@ -147,6 +154,27 @@ class DevotionalProvider extends ChangeNotifier {
       state = DevotionalState.success;
     });
 
+    notifyListeners();
+  }
+
+  Future<void> toggleLikedDevotional(Devotional devotional) async {
+    if (allDevotionals.isNotEmpty) {
+      int devIndex = allDevotionals
+          .indexWhere((element) => element.startDate == devotional.startDate);
+
+      ///This sets [isLiked] to be the opposite of what is the current value
+      Devotional updatedMessage = allDevotionals[devIndex]
+          .copyWith(isLiked: !allDevotionals[devIndex].isLiked);
+      List<Devotional> updatedList = allDevotionals;
+      updatedList.removeAt(devIndex);
+      updatedList.insert(devIndex, updatedMessage);
+
+      await updateDevotionalList(updatedList);
+      await getLikedDevotionals();
+      state = DevotionalState.success;
+    } else {
+      state = DevotionalState.error;
+    }
     notifyListeners();
   }
 }

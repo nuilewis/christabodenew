@@ -2,9 +2,9 @@ import 'package:equatable/equatable.dart';
 
 class UnsplashImage extends Equatable {
   final String? id;
-  final String? imgUrl;
+  final String imgUrl;
+  final String blurHash;
   final String? colour;
-  final String? blurHash;
   final String? uploaderName;
   final String? uploaderUrl;
 
@@ -27,8 +27,11 @@ class UnsplashImage extends Equatable {
         colour: json["color"]);
   }
 
-  static const UnsplashImage empty =
-      UnsplashImage(id: null, imgUrl: null, blurHash: null, uploaderName: null);
+  static const UnsplashImage empty = UnsplashImage(
+      id: "",
+      imgUrl: "",
+      blurHash: "L00000fQfQfQfQfQfQfQfQfQfQfQ",
+      uploaderName: "");
 
   bool get isEmpty => this == UnsplashImage.empty;
   bool get isNotEmpty => this != UnsplashImage.empty;

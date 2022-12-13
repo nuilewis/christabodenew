@@ -11,6 +11,7 @@ import 'package:christabodenew/repositories/prayer_repository.dart';
 import 'package:christabodenew/screens/bottom_nav_bar.dart';
 import 'package:christabodenew/screens/devotional_screen/devotional_screen.dart';
 import 'package:christabodenew/screens/events_screen/events_screen.dart';
+import 'package:christabodenew/screens/favourite_screen/favourites_screen.dart';
 import 'package:christabodenew/screens/messages_screen/messages_screen.dart';
 import 'package:christabodenew/screens/prayer_screen/prayer_screen.dart';
 import 'package:christabodenew/services/devotional/devotional_firestore_service.dart';
@@ -111,7 +112,7 @@ class _MyAppState extends State<MyApp> {
                   ..getPrayer()),
         ChangeNotifierProvider<DevotionalProvider>(
             create: (context) =>
-                DevotionalProvider(_devotionalRepository)..getDevotionals()),
+                DevotionalProvider(_devotionalRepository)..initStuff()),
         ChangeNotifierProvider<MessagesProvider>(
             create: (context) => MessagesProvider(_messagesRepository)),
         ChangeNotifierProvider<EventsProvider>(
@@ -136,6 +137,7 @@ class _MyAppState extends State<MyApp> {
           PrayerScreen.id: (context) => const PrayerScreen(),
           EventsScreen.id: (context) => const EventsScreen(),
           MessagesScreen.id: (context) => const MessagesScreen(),
+          FavouritesScreen.id: (context) => const FavouritesScreen(),
         },
       ),
     );
