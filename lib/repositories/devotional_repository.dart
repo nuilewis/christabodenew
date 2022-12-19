@@ -10,8 +10,6 @@ import '../core/errors/failure.dart';
 
 abstract class DevotionalRepository {
   Future<Either<Failure, Devotional>> getCurrentDevotional();
-  Future<Either<Failure, Devotional>> getNextDevotional();
-  Future<Either<Failure, Devotional>> getPreviousDevotional();
   Future<Either<Failure, List<Devotional>>> getDevotionals();
 
   ///Liking Devotional Methods
@@ -35,7 +33,6 @@ class DevotionalRepositoryImplementation implements DevotionalRepository {
   List<Devotional> _likedDevotionalsList = [];
   final DateTime _today = DateTime(DateTime.now().year, DateTime.now().month,
       DateTime.now().day, 0, 0, 0, 0, 0);
-  int _currentDevotionalIndex = 0;
 
   @override
   Future<Either<Failure, List<Devotional>>> getDevotionals() async {
@@ -124,53 +121,13 @@ class DevotionalRepositoryImplementation implements DevotionalRepository {
     }
   }
 
-  @override
-  Future<Either<Failure, Devotional>> getNextDevotional() async {
-    if (_devotionalList.isNotEmpty) {
-      //Get the index of the current prayer, then use it to get the next.
-      _currentDevotionalIndex = _devotionalList.indexWhere(
-        (element) =>
-            _today == element.startDate ||
-            _today == element.endDate ||
-            _today.isAfter(element.startDate) &&
-                _today.isBefore(element.endDate)
-
-        ///The test conditions to get the current devotional
-        ,
-      );
-
-      Devotional nextDevotional = _devotionalList[_currentDevotionalIndex + 1];
-      _currentDevotionalIndex = _currentDevotionalIndex + 1;
-      return Right(nextDevotional);
-    } else {
-      return const Left(
-          FirebaseFailure(errorMessage: "Unable to get the next devotional"));
-    }
-  }
-
-  @override
-  Future<Either<Failure, Devotional>> getPreviousDevotional() async {
-    if (_devotionalList.isNotEmpty) {
-      //Get the index of the current prayer, then use it to get the next.
-      Devotional previousDevotional =
-          _devotionalList[_currentDevotionalIndex--];
-
-      _currentDevotionalIndex = _currentDevotionalIndex--;
-
-      return Right(previousDevotional);
-    } else {
-      return const Left(FirebaseFailure(
-          errorMessage: "Unable to get the previous devotional"));
-    }
-  }
-
   ///-------Liked Devotionals Methods--------///
   @override
   Future<Either<Failure, List<Devotional>>> getLikedDevotionals() async {
     try {
       _likedDevotionalsList =
           _devotionalList.where((element) => element.isLiked == true).toList();
-
+      print("gotten liked devotionals");
       return Right(_likedDevotionalsList);
     } catch (e) {
       return const Left(FirebaseFailure(
@@ -184,7 +141,7 @@ class DevotionalRepositoryImplementation implements DevotionalRepository {
     final Box box = await devotionalHiveService.openBox();
     try {
       await devotionalHiveService.addDevotional(box, updatedList);
-
+      print("updated devotional list");
       return Right(Future.value());
     } catch (e) {
       return const Left(
@@ -197,6 +154,7 @@ class DevotionalRepositoryImplementation implements DevotionalRepository {
     final Box box = await devotionalHiveService.openBox();
     try {
       await devotionalHiveService.clearDevotional(box);
+      print("cleared devotionals");
       return Right(Future.value());
     } catch (e) {
       return const Left(

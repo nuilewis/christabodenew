@@ -44,6 +44,7 @@ class _DevotionalCardState extends State<DevotionalCard> {
             Padding(
               padding: const EdgeInsets.all(kDefaultPadding),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(width: double.infinity),
                   Text(

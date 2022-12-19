@@ -39,45 +39,6 @@ class DevotionalProvider extends ChangeNotifier {
     // notifyListeners();
   }
 
-  Future<void> getNextDevotional() async {
-    if (state == DevotionalState.submitting) return;
-    state = DevotionalState.submitting;
-    notifyListeners();
-    Either<Failure, Devotional> response =
-        await devotionalRepository.getNextDevotional();
-
-    response.fold((failure) {
-      errorMessage = failure.errorMessage ??
-          "An error occurred while getting today's Devotional";
-
-      state = DevotionalState.error;
-    }, (nextDevotional) {
-      currentDevotional = nextDevotional;
-      state = DevotionalState.success;
-    });
-    notifyListeners();
-  }
-
-  Future<void> getPreviousDevotional() async {
-    if (state == DevotionalState.submitting) return;
-    state = DevotionalState.submitting;
-    notifyListeners();
-
-    Either<Failure, Devotional> response =
-        await devotionalRepository.getPreviousDevotional();
-
-    response.fold((failure) {
-      errorMessage = failure.errorMessage ??
-          "An error occurred while getting today's Devotional";
-
-      state = DevotionalState.error;
-    }, (previousDevotional) {
-      currentDevotional = previousDevotional;
-      state = DevotionalState.success;
-    });
-    notifyListeners();
-  }
-
   Future<void> getDevotionals() async {
     if (state == DevotionalState.submitting) return;
     state = DevotionalState.submitting;
@@ -157,17 +118,14 @@ class DevotionalProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> toggleLikedDevotional(Devotional devotional) async {
+  Future<void> toggleLikedDevotional(int index) async {
     if (allDevotionals.isNotEmpty) {
-      int devIndex = allDevotionals
-          .indexWhere((element) => element.startDate == devotional.startDate);
-
       ///This sets [isLiked] to be the opposite of what is the current value
-      Devotional updatedMessage = allDevotionals[devIndex]
-          .copyWith(isLiked: !allDevotionals[devIndex].isLiked);
+      Devotional updatedMessage = allDevotionals[index]
+          .copyWith(isLiked: !allDevotionals[index].isLiked);
       List<Devotional> updatedList = allDevotionals;
-      updatedList.removeAt(devIndex);
-      updatedList.insert(devIndex, updatedMessage);
+      updatedList.removeAt(index);
+      updatedList.insert(index, updatedMessage);
 
       await updateDevotionalList(updatedList);
       await getLikedDevotionals();
