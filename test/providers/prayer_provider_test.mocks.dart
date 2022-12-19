@@ -137,4 +137,81 @@ class MockPrayerRepository extends _i1.Mock implements _i3.PrayerRepository {
           ),
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, List<_i6.Prayer>>>);
+  @override
+  _i4.Future<_i2.Either<_i5.Failure, List<_i6.Prayer>>> getLikedPrayers() =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getLikedPrayers,
+          [],
+        ),
+        returnValue:
+            _i4.Future<_i2.Either<_i5.Failure, List<_i6.Prayer>>>.value(
+                _FakeEither_0<_i5.Failure, List<_i6.Prayer>>(
+          this,
+          Invocation.method(
+            #getLikedPrayers,
+            [],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i4.Future<_i2.Either<_i5.Failure, List<_i6.Prayer>>>.value(
+                _FakeEither_0<_i5.Failure, List<_i6.Prayer>>(
+          this,
+          Invocation.method(
+            #getLikedPrayers,
+            [],
+          ),
+        )),
+      ) as _i4.Future<_i2.Either<_i5.Failure, List<_i6.Prayer>>>);
+  @override
+  _i4.Future<_i2.Either<_i5.Failure, void>> updatePrayerSavedList(
+          List<_i6.Prayer>? updatedList) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updatePrayerSavedList,
+          [updatedList],
+        ),
+        returnValue: _i4.Future<_i2.Either<_i5.Failure, void>>.value(
+            _FakeEither_0<_i5.Failure, void>(
+          this,
+          Invocation.method(
+            #updatePrayerSavedList,
+            [updatedList],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i4.Future<_i2.Either<_i5.Failure, void>>.value(
+                _FakeEither_0<_i5.Failure, void>(
+          this,
+          Invocation.method(
+            #updatePrayerSavedList,
+            [updatedList],
+          ),
+        )),
+      ) as _i4.Future<_i2.Either<_i5.Failure, void>>);
+  @override
+  _i4.Future<_i2.Either<_i5.Failure, void>> clearPrayers() =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #clearPrayers,
+          [],
+        ),
+        returnValue: _i4.Future<_i2.Either<_i5.Failure, void>>.value(
+            _FakeEither_0<_i5.Failure, void>(
+          this,
+          Invocation.method(
+            #clearPrayers,
+            [],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i4.Future<_i2.Either<_i5.Failure, void>>.value(
+                _FakeEither_0<_i5.Failure, void>(
+          this,
+          Invocation.method(
+            #clearPrayers,
+            [],
+          ),
+        )),
+      ) as _i4.Future<_i2.Either<_i5.Failure, void>>);
 }

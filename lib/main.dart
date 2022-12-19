@@ -3,11 +3,13 @@ import 'package:christabodenew/firebase_options.dart';
 import 'package:christabodenew/providers/devotional_provider.dart';
 import 'package:christabodenew/providers/messages_provider.dart';
 import 'package:christabodenew/providers/prayer_provider.dart';
+import 'package:christabodenew/providers/settings_provider.dart';
 import 'package:christabodenew/providers/unsplash_image_provider.dart';
 import 'package:christabodenew/repositories/devotional_repository.dart';
 import 'package:christabodenew/repositories/events_repository.dart';
 import 'package:christabodenew/repositories/messages_repository.dart';
 import 'package:christabodenew/repositories/prayer_repository.dart';
+import 'package:christabodenew/repositories/settings_repository.dart';
 import 'package:christabodenew/screens/bottom_nav_bar.dart';
 import 'package:christabodenew/screens/devotional_screen/devotional_screen.dart';
 import 'package:christabodenew/screens/events_screen/events_screen.dart';
@@ -21,6 +23,7 @@ import 'package:christabodenew/services/events/events_firestore_service.dart';
 import 'package:christabodenew/services/hive_base_service.dart';
 import 'package:christabodenew/services/prayer/prayer_firestore_service.dart';
 import 'package:christabodenew/services/prayer/prayer_hive_service.dart';
+import 'package:christabodenew/services/settings/settings_hive_service.dart';
 import 'package:christabodenew/services/unsplash/unsplash_api_client.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -78,6 +81,10 @@ class _MyAppState extends State<MyApp> {
   late UnsplashImageRepository _unsplashImageRepository;
   final UnsplashAPIClient _unsplashAPIClient = UnsplashAPIClient();
 
+  ///Creating and Injecting Settings Dependencies
+  late SettingsRepository _settingsRepository;
+  final SettingsHiveService _settingsHiveService = SettingsHiveService();
+
   @override
   void initState() {
     _prayerRepository = PrayerRepositoryImplementation(
@@ -99,6 +106,9 @@ class _MyAppState extends State<MyApp> {
 
     _unsplashImageRepository = UnsplashImageRepositoryImplementation(
         apiClient: _unsplashAPIClient, connectionChecker: _connectionChecker);
+
+    _settingsRepository =
+        SettingsRepositoryImplementation(_settingsHiveService);
     super.initState();
   }
 
@@ -122,24 +132,32 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider<UnsplashImageProvider>(
             create: (context) => UnsplashImageProvider(
                 unsplashImageRepository: _unsplashImageRepository)
-              ..getRandomImage())
+              ..getRandomImage()),
+        ChangeNotifierProvider<SettingsProvider>(
+            create: (context) =>
+                SettingsProvider(_settingsRepository)..getSettings())
       ],
-      child: MaterialApp(
-        title: 'Christ Abode Ministries',
-        theme: lightThemeData(context),
-        darkTheme: darkThemeData(context),
-        themeMode: ThemeMode.light,
-        debugShowCheckedModeBanner: false,
-        home: const BottomNavBar(),
-        routes: {
-          HomeScreen.id: (context) => const HomeScreen(),
-          DevotionalScreen.id: (context) => const DevotionalScreen(),
-          PrayerScreen.id: (context) => const PrayerScreen(),
-          EventsScreen.id: (context) => const EventsScreen(),
-          MessagesScreen.id: (context) => const MessagesScreen(),
-          FavouritesScreen.id: (context) => const FavouritesScreen(),
-        },
-      ),
+      child: Builder(builder: (context) {
+        return MaterialApp(
+          title: 'Christ Abode Ministries',
+          theme: lightThemeData(context),
+          darkTheme: darkThemeData(context),
+          themeMode:
+              Provider.of<SettingsProvider>(context).userSettings.isDarkMode
+                  ? ThemeMode.dark
+                  : ThemeMode.light,
+          debugShowCheckedModeBanner: false,
+          home: const BottomNavBar(),
+          routes: {
+            HomeScreen.id: (context) => const HomeScreen(),
+            DevotionalScreen.id: (context) => const DevotionalScreen(),
+            PrayerScreen.id: (context) => const PrayerScreen(),
+            EventsScreen.id: (context) => const EventsScreen(),
+            MessagesScreen.id: (context) => const MessagesScreen(),
+            FavouritesScreen.id: (context) => const FavouritesScreen(),
+          },
+        );
+      }),
     );
   }
 }

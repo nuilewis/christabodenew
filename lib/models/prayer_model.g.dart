@@ -22,13 +22,14 @@ class PrayerAdapter extends TypeAdapter<Prayer> {
       scriptureReference: fields[2] as String,
       content: fields[3] as String,
       date: fields[4] as DateTime,
+      isLiked: fields[5] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, Prayer obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.title)
       ..writeByte(1)
@@ -38,7 +39,9 @@ class PrayerAdapter extends TypeAdapter<Prayer> {
       ..writeByte(3)
       ..write(obj.content)
       ..writeByte(4)
-      ..write(obj.date);
+      ..write(obj.date)
+      ..writeByte(5)
+      ..write(obj.isLiked);
   }
 
   @override

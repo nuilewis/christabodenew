@@ -1,4 +1,3 @@
-import 'package:christabodenew/core/date_time_formatter.dart';
 import 'package:christabodenew/providers/devotional_provider.dart';
 import 'package:christabodenew/providers/unsplash_image_provider.dart';
 import 'package:flutter/material.dart';
@@ -8,12 +7,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/constants.dart';
-import '../../models/devotional_model.dart';
 import '../../models/unsplash_image.dart';
+import 'components/devotional_content.dart';
 
 class DevotionalScreen extends StatefulWidget {
   static const id = "devotional_screen";
   final bool isCalledFromNavBar;
+
   static Route route() {
     return MaterialPageRoute(builder: (context) => const DevotionalScreen());
   }
@@ -26,8 +26,17 @@ class DevotionalScreen extends StatefulWidget {
 }
 
 class _DevotionalScreenState extends State<DevotionalScreen> {
-  final PageController _devotionalPageController = PageController();
+  late final PageController _devotionalPageController;
+
   int currentIndex = 0;
+
+  @override
+  void initState() {
+    _devotionalPageController = PageController(
+        initialPage: context.watch<DevotionalProvider>().todaysDevotionalIndex);
+
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -147,12 +156,12 @@ class _DevotionalScreenState extends State<DevotionalScreen> {
                     currentDevotional: devotionalData.allDevotionals[index],
                     onNextButtonPressed: () {
                       _devotionalPageController.nextPage(
-                          duration: Duration(milliseconds: 300),
+                          duration: const Duration(milliseconds: 300),
                           curve: Curves.easeInOut);
                     },
                     onPreviousButtonPressed: () {
                       _devotionalPageController.previousPage(
-                          duration: Duration(milliseconds: 300),
+                          duration: const Duration(milliseconds: 300),
                           curve: Curves.easeInOut);
                     },
                     onLikedButtonPressed: () {
@@ -168,160 +177,6 @@ class _DevotionalScreenState extends State<DevotionalScreen> {
           ),
         );
       }),
-    );
-  }
-}
-
-class DevotionalContent extends StatelessWidget {
-  final Devotional currentDevotional;
-  final VoidCallback onNextButtonPressed;
-  final VoidCallback onPreviousButtonPressed;
-  final VoidCallback onShareButtonPressed;
-  final VoidCallback onLikedButtonPressed;
-  const DevotionalContent(
-      {Key? key,
-      required this.currentDevotional,
-      required this.onNextButtonPressed,
-      required this.onPreviousButtonPressed,
-      required this.onLikedButtonPressed,
-      required this.onShareButtonPressed})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-          borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(kDefaultPadding2x),
-        topRight: Radius.circular(kDefaultPadding2x),
-      )),
-      padding: const EdgeInsets.only(
-          left: kDefaultPadding, right: kDefaultPadding, top: kDefaultPadding),
-      child: Column(
-        children: [
-          //Misters Name and actions
-
-          Row(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    currentDevotional.author,
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                  Text(
-                    "${dateTimeFormatter(context, currentDevotional.startDate)} to ",
-                    style: Theme.of(context).textTheme.bodyText2,
-                  ),
-                  Text(
-                    dateTimeFormatter(context, currentDevotional.endDate),
-                    style: Theme.of(context).textTheme.bodyText2,
-                  ),
-                ],
-              ),
-              const Spacer(),
-              IconButton(
-                onPressed: onShareButtonPressed,
-                icon: SvgPicture.asset(
-                  "assets/svg/share_icon.svg",
-                  color: Theme.of(context).iconTheme.color,
-                ),
-              ),
-              IconButton(
-                onPressed: onLikedButtonPressed,
-                icon: SvgPicture.asset(
-                  currentDevotional.isLiked
-                      ? "assets/svg/heart_icon_filled.svg"
-                      : "assets/svg/heart_icon.svg",
-                  color: Theme.of(context).iconTheme.color,
-                ),
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: SvgPicture.asset(
-                  "assets/svg/settings_icon.svg",
-                  color: Theme.of(context).iconTheme.color,
-                ),
-              )
-            ],
-          ),
-          const SizedBox(
-            height: kDefaultPadding,
-          ),
-          Text(currentDevotional.scripture,
-              textAlign: TextAlign.left,
-              style: Theme.of(context).textTheme.bodyText1),
-          const SizedBox(
-            height: kDefaultPadding,
-          ),
-          Align(
-              alignment: Alignment.centerRight,
-              child: Text(currentDevotional.scriptureReference)),
-
-          const SizedBox(
-            height: kDefaultPadding2x,
-          ),
-          Text(
-            currentDevotional.content,
-            textAlign: TextAlign.left,
-          ),
-          const SizedBox(height: kDefaultPadding),
-          Row(
-            children: [
-              NextPreviousButton(
-                  onPressed: onPreviousButtonPressed, isNextButton: false),
-              const Spacer(),
-              NextPreviousButton(onPressed: onNextButtonPressed)
-            ],
-          ),
-          const SizedBox(height: kDefaultPadding2x),
-          Text(
-            "Christ Abode Ministries",
-            style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                fontSize: 12,
-                color: Theme.of(context).iconTheme.color!.withOpacity(.4)),
-          ),
-          const SizedBox(height: kDefaultPadding2x),
-        ],
-      ),
-    );
-  }
-}
-
-class NextPreviousButton extends StatelessWidget {
-  final VoidCallback onPressed;
-  final bool? isNextButton;
-  final double? elevation;
-  final Color? bgColour;
-  final Color? iconColour;
-  const NextPreviousButton(
-      {Key? key,
-      required this.onPressed,
-      this.isNextButton = true,
-      this.elevation,
-      this.bgColour,
-      this.iconColour})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        padding: EdgeInsets.zero,
-        backgroundColor: bgColour ?? Theme.of(context).primaryColor,
-        elevation: elevation ?? 0,
-        shape: const CircleBorder(),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: SvgPicture.asset(
-            isNextButton!
-                ? "assets/svg/forward_icon.svg"
-                : "assets/svg/back_icon.svg",
-            color: iconColour ?? Colors.white),
-      ),
     );
   }
 }

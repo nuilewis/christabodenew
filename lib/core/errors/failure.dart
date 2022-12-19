@@ -26,6 +26,21 @@ class FirebaseFailure implements Failure {
   bool? get stringify => true;
 }
 
+class LocalStorageFailure implements Failure {
+  @override
+  final String? errorMessage;
+  @override
+  final String? code;
+
+  const LocalStorageFailure({this.errorMessage, this.code});
+
+  @override
+  List<Object?> get props => [errorMessage, code];
+
+  @override
+  bool? get stringify => true;
+}
+
 class NetworkFailure implements Failure {
   @override
   final String? errorMessage;

@@ -1,44 +1,35 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'event_model.dart';
+part of 'settings_model.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class EventAdapter extends TypeAdapter<Event> {
+class SettingsAdapter extends TypeAdapter<Settings> {
   @override
-  final int typeId = 3;
+  final int typeId = 4;
 
   @override
-  Event read(BinaryReader reader) {
+  Settings read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Event(
-      name: fields[0] as String,
-      description: fields[1] as String,
-      startDate: fields[2] as DateTime,
-      endDate: fields[3] as DateTime?,
-      isLiked: fields[4] as bool,
+    return Settings(
+      isDarkMode: fields[0] as bool,
+      fontSize: fields[1] as double,
     );
   }
 
   @override
-  void write(BinaryWriter writer, Event obj) {
+  void write(BinaryWriter writer, Settings obj) {
     writer
-      ..writeByte(5)
-      ..writeByte(0)
-      ..write(obj.name)
-      ..writeByte(1)
-      ..write(obj.description)
       ..writeByte(2)
-      ..write(obj.startDate)
-      ..writeByte(3)
-      ..write(obj.endDate)
-      ..writeByte(4)
-      ..write(obj.isLiked);
+      ..writeByte(0)
+      ..write(obj.isDarkMode)
+      ..writeByte(1)
+      ..write(obj.fontSize);
   }
 
   @override
@@ -47,7 +38,7 @@ class EventAdapter extends TypeAdapter<Event> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is EventAdapter &&
+      other is SettingsAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

@@ -12,8 +12,8 @@ class DevotionalProvider extends ChangeNotifier {
   DevotionalState state = DevotionalState.initial;
   String errorMessage = "";
   Devotional? todaysDevotional;
+  int todaysDevotionalIndex = 0;
 
-  Devotional? currentDevotional;
   List<Devotional> allDevotionals = [];
   List<Devotional> likedDevotionals = [];
 
@@ -32,7 +32,25 @@ class DevotionalProvider extends ChangeNotifier {
       state = DevotionalState.error;
     }, (devotional) {
       todaysDevotional = devotional;
-      currentDevotional = devotional;
+      state = DevotionalState.success;
+    });
+
+    // notifyListeners();
+  }
+
+  Future<void> getTodaysDevotionalIndex() async {
+    if (state == DevotionalState.submitting) return;
+    state = DevotionalState.submitting;
+    //notifyListeners();
+    Either<Failure, int> response =
+        await devotionalRepository.getCurrentDevotionalIndex();
+
+    response.fold((failure) {
+      errorMessage = failure.errorMessage ??
+          "An error occurred while getting today's Devotional";
+      state = DevotionalState.error;
+    }, (index) {
+      todaysDevotionalIndex = index;
       state = DevotionalState.success;
     });
 
@@ -101,6 +119,7 @@ class DevotionalProvider extends ChangeNotifier {
     await getDevotionals();
     await getCurrentDevotional();
     await getLikedDevotionals();
+    await getTodaysDevotionalIndex();
   }
 
   Future<void> clearDevotional() async {

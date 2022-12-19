@@ -63,12 +63,6 @@ class _FakeQuerySnapshot_2<T extends Object?> extends _i1.SmartFake
 /// See the documentation for Mockito's code generation for more information.
 class MockPrayerHiveService extends _i1.Mock implements _i4.PrayerHiveService {
   @override
-  String get boxName => (super.noSuchMethod(
-        Invocation.getter(#boxName),
-        returnValue: '',
-        returnValueForMissingStub: '',
-      ) as String);
-  @override
   _i5.Future<_i2.Box<dynamic>> openBox() => (super.noSuchMethod(
         Invocation.method(
           #openBox,

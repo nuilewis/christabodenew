@@ -63,56 +63,6 @@ class MockDevotionalRepository extends _i1.Mock
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, _i6.Devotional>>);
   @override
-  _i4.Future<_i2.Either<_i5.Failure, _i6.Devotional>> getNextDevotional() =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #getNextDevotional,
-          [],
-        ),
-        returnValue: _i4.Future<_i2.Either<_i5.Failure, _i6.Devotional>>.value(
-            _FakeEither_0<_i5.Failure, _i6.Devotional>(
-          this,
-          Invocation.method(
-            #getNextDevotional,
-            [],
-          ),
-        )),
-        returnValueForMissingStub:
-            _i4.Future<_i2.Either<_i5.Failure, _i6.Devotional>>.value(
-                _FakeEither_0<_i5.Failure, _i6.Devotional>(
-          this,
-          Invocation.method(
-            #getNextDevotional,
-            [],
-          ),
-        )),
-      ) as _i4.Future<_i2.Either<_i5.Failure, _i6.Devotional>>);
-  @override
-  _i4.Future<_i2.Either<_i5.Failure, _i6.Devotional>> getPreviousDevotional() =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #getPreviousDevotional,
-          [],
-        ),
-        returnValue: _i4.Future<_i2.Either<_i5.Failure, _i6.Devotional>>.value(
-            _FakeEither_0<_i5.Failure, _i6.Devotional>(
-          this,
-          Invocation.method(
-            #getPreviousDevotional,
-            [],
-          ),
-        )),
-        returnValueForMissingStub:
-            _i4.Future<_i2.Either<_i5.Failure, _i6.Devotional>>.value(
-                _FakeEither_0<_i5.Failure, _i6.Devotional>(
-          this,
-          Invocation.method(
-            #getPreviousDevotional,
-            [],
-          ),
-        )),
-      ) as _i4.Future<_i2.Either<_i5.Failure, _i6.Devotional>>);
-  @override
   _i4.Future<_i2.Either<_i5.Failure, List<_i6.Devotional>>> getDevotionals() =>
       (super.noSuchMethod(
         Invocation.method(
@@ -138,4 +88,81 @@ class MockDevotionalRepository extends _i1.Mock
           ),
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, List<_i6.Devotional>>>);
+  @override
+  _i4.Future<_i2.Either<_i5.Failure, List<_i6.Devotional>>>
+      getLikedDevotionals() => (super.noSuchMethod(
+            Invocation.method(
+              #getLikedDevotionals,
+              [],
+            ),
+            returnValue:
+                _i4.Future<_i2.Either<_i5.Failure, List<_i6.Devotional>>>.value(
+                    _FakeEither_0<_i5.Failure, List<_i6.Devotional>>(
+              this,
+              Invocation.method(
+                #getLikedDevotionals,
+                [],
+              ),
+            )),
+            returnValueForMissingStub:
+                _i4.Future<_i2.Either<_i5.Failure, List<_i6.Devotional>>>.value(
+                    _FakeEither_0<_i5.Failure, List<_i6.Devotional>>(
+              this,
+              Invocation.method(
+                #getLikedDevotionals,
+                [],
+              ),
+            )),
+          ) as _i4.Future<_i2.Either<_i5.Failure, List<_i6.Devotional>>>);
+  @override
+  _i4.Future<_i2.Either<_i5.Failure, void>> updateDevotionalSavedList(
+          List<_i6.Devotional>? updatedList) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updateDevotionalSavedList,
+          [updatedList],
+        ),
+        returnValue: _i4.Future<_i2.Either<_i5.Failure, void>>.value(
+            _FakeEither_0<_i5.Failure, void>(
+          this,
+          Invocation.method(
+            #updateDevotionalSavedList,
+            [updatedList],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i4.Future<_i2.Either<_i5.Failure, void>>.value(
+                _FakeEither_0<_i5.Failure, void>(
+          this,
+          Invocation.method(
+            #updateDevotionalSavedList,
+            [updatedList],
+          ),
+        )),
+      ) as _i4.Future<_i2.Either<_i5.Failure, void>>);
+  @override
+  _i4.Future<_i2.Either<_i5.Failure, void>> clearDevotionals() =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #clearDevotionals,
+          [],
+        ),
+        returnValue: _i4.Future<_i2.Either<_i5.Failure, void>>.value(
+            _FakeEither_0<_i5.Failure, void>(
+          this,
+          Invocation.method(
+            #clearDevotionals,
+            [],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i4.Future<_i2.Either<_i5.Failure, void>>.value(
+                _FakeEither_0<_i5.Failure, void>(
+          this,
+          Invocation.method(
+            #clearDevotionals,
+            [],
+          ),
+        )),
+      ) as _i4.Future<_i2.Either<_i5.Failure, void>>);
 }

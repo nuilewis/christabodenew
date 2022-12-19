@@ -70,7 +70,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                                     .withOpacity(.3),
                                 width: MediaQuery.of(context).size.width * .3,
                               ),
-                              SizedBox(height: kDefaultPadding2x),
+                              const SizedBox(height: kDefaultPadding2x),
                               Text(
                                 "You haven't liked any Huios Epistolary Devotional message yet, once you do so, they'll appear here",
                                 textAlign: TextAlign.center,

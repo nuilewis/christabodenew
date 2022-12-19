@@ -4,6 +4,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import '../models/event_model.dart';
 import '../models/message_model.dart';
+import '../models/settings_model.dart';
 
 class HiveService {
   Future<void> initHive() async {
@@ -13,5 +14,6 @@ class HiveService {
     Hive.registerAdapter(DevotionalAdapter());
     Hive.registerAdapter(PrayerAdapter());
     Hive.registerAdapter(EventAdapter());
+    Hive.registerAdapter(SettingsAdapter());
   }
 }

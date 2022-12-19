@@ -10,6 +10,7 @@ import '../core/errors/failure.dart';
 
 abstract class DevotionalRepository {
   Future<Either<Failure, Devotional>> getCurrentDevotional();
+  Future<Either<Failure, int>> getCurrentDevotionalIndex();
   Future<Either<Failure, List<Devotional>>> getDevotionals();
 
   ///Liking Devotional Methods
@@ -121,13 +122,50 @@ class DevotionalRepositoryImplementation implements DevotionalRepository {
     }
   }
 
+  @override
+  Future<Either<Failure, int>> getCurrentDevotionalIndex() async {
+    if (_devotionalList.isNotEmpty) {
+      int todaysDevotionalIndex = _devotionalList.indexWhere((element) =>
+              _today == element.startDate ||
+              _today == element.endDate ||
+              _today.isAfter(element.startDate) &&
+                  _today.isBefore(element.endDate)
+
+          ///There are 3 cases here for which a devotional message is returned.
+          ///
+          ///1. Either today is equal to the start date of the devotional message
+          ///2. Or Today is equal to the end date of the devotional message
+          ///
+          ///These 2 cases cover all messages that are 2 days long.
+          ///
+          /// 3. And finally Today falls between the start date of the devotional message and the
+          /// the end date of the devotional message.
+          /// This case covers messages where it runs for 3 or more days.
+
+          );
+
+      if (todaysDevotionalIndex == -1) {
+        ///Inde being -1 means it did not get the devotional, ot the devotiona was nto found
+
+        print("get current devotional index failure");
+        print(todaysDevotionalIndex);
+        print("no devotional index found");
+        return const Left(
+            FirebaseFailure(errorMessage: "No Devotional message found"));
+      } else {
+        return Right(todaysDevotionalIndex);
+      }
+    } else {
+      return const Left(FirebaseFailure(errorMessage: "No Devotional found"));
+    }
+  }
+
   ///-------Liked Devotionals Methods--------///
   @override
   Future<Either<Failure, List<Devotional>>> getLikedDevotionals() async {
     try {
       _likedDevotionalsList =
           _devotionalList.where((element) => element.isLiked == true).toList();
-      print("gotten liked devotionals");
       return Right(_likedDevotionalsList);
     } catch (e) {
       return const Left(FirebaseFailure(
@@ -141,7 +179,6 @@ class DevotionalRepositoryImplementation implements DevotionalRepository {
     final Box box = await devotionalHiveService.openBox();
     try {
       await devotionalHiveService.addDevotional(box, updatedList);
-      print("updated devotional list");
       return Right(Future.value());
     } catch (e) {
       return const Left(
@@ -154,7 +191,6 @@ class DevotionalRepositoryImplementation implements DevotionalRepository {
     final Box box = await devotionalHiveService.openBox();
     try {
       await devotionalHiveService.clearDevotional(box);
-      print("cleared devotionals");
       return Right(Future.value());
     } catch (e) {
       return const Left(

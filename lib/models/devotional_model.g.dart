@@ -25,13 +25,14 @@ class DevotionalAdapter extends TypeAdapter<Devotional> {
       content: fields[3] as String,
       startDate: fields[6] as DateTime,
       endDate: fields[7] as DateTime,
+      isLiked: fields[8] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, Devotional obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(9)
       ..writeByte(0)
       ..write(obj.title)
       ..writeByte(1)
@@ -47,7 +48,9 @@ class DevotionalAdapter extends TypeAdapter<Devotional> {
       ..writeByte(6)
       ..write(obj.startDate)
       ..writeByte(7)
-      ..write(obj.endDate);
+      ..write(obj.endDate)
+      ..writeByte(8)
+      ..write(obj.isLiked);
   }
 
   @override
