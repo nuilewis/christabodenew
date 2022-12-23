@@ -1,4 +1,5 @@
 import 'package:christabodenew/core/date_time_formatter.dart';
+import 'package:christabodenew/core/extensions/string_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -50,7 +51,7 @@ class _PrayerCardState extends State<PrayerCard> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      widget.prayer.title,
+                      widget.prayer.title.toTitleCase(),
                       style: Theme.of(context)
                           .textTheme
                           .bodyText1!

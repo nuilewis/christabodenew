@@ -1,3 +1,4 @@
+import 'package:christabodenew/core/extensions/string_extension.dart';
 import 'package:christabodenew/models/devotional_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -48,7 +49,7 @@ class _DevotionalCardState extends State<DevotionalCard> {
                 children: [
                   const SizedBox(width: double.infinity),
                   Text(
-                    widget.devotional.title,
+                    widget.devotional.title.toTitleCase(),
                     style: Theme.of(context).textTheme.bodyText1!.copyWith(
                           fontSize: 24,
                           color: Colors.white,
