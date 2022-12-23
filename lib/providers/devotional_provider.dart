@@ -42,15 +42,18 @@ class DevotionalProvider extends ChangeNotifier {
     if (state == DevotionalState.submitting) return;
     state = DevotionalState.submitting;
     //notifyListeners();
+
     Either<Failure, int> response =
         await devotionalRepository.getCurrentDevotionalIndex();
 
     response.fold((failure) {
       errorMessage = failure.errorMessage ??
           "An error occurred while getting today's Devotional";
+
       state = DevotionalState.error;
     }, (index) {
       todaysDevotionalIndex = index;
+
       state = DevotionalState.success;
     });
 

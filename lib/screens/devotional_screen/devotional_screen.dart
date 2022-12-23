@@ -31,11 +31,11 @@ class _DevotionalScreenState extends State<DevotionalScreen> {
   int currentIndex = 0;
 
   @override
-  void initState() {
+  void didChangeDependencies() {
     _devotionalPageController = PageController(
         initialPage: context.watch<DevotionalProvider>().todaysDevotionalIndex);
 
-    super.initState();
+    super.didChangeDependencies();
   }
 
   @override
