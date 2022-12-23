@@ -31,14 +31,16 @@ class DevotionalContent extends StatelessWidget {
         Settings currentSettings = settingsData.userSettings;
         return Container(
           decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(kDefaultPadding2x),
-            topRight: Radius.circular(kDefaultPadding2x),
-          )),
+              //color: Colors.trans,
+              // borderRadius: BorderRadius.only(
+              //   topLeft: Radius.circular(kDefaultPadding2x),
+              //   topRight: Radius.circular(kDefaultPadding2x),
+              // )
+              ),
           padding: const EdgeInsets.only(
-              left: kDefaultPadding,
-              right: kDefaultPadding,
-              top: kDefaultPadding),
+            left: kDefaultPadding,
+            right: kDefaultPadding,
+          ),
           child: Column(
             children: [
               //Misters Name and actions

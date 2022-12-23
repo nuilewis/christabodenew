@@ -29,7 +29,7 @@ class FeaturedImage extends StatelessWidget {
         ),
         Positioned(
           right: kDefaultPadding,
-          bottom: kDefaultPadding,
+          bottom: kDefaultPadding * 3,
           child: RichText(
             text: TextSpan(children: [
               TextSpan(

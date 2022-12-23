@@ -2,7 +2,7 @@
 ///on all string, by first splitting each string into the constituent words, then capitalising the
 ///the first letter of the word, then joining the string again.
 ///
-/// Will return an empty string if the initial strin is empty.
+/// Will return an empty string if the initial string is empty.
 
 extension TitleCase on String {
   String toCapitalized() =>
