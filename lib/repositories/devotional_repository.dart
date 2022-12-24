@@ -145,7 +145,7 @@ class DevotionalRepositoryImplementation implements DevotionalRepository {
           );
 
       if (todaysDevotionalIndex == -1) {
-        ///Inde being -1 means it did not get the devotional, ot the devotiona was nto found
+        ///Index being -1 means it did not get the devotional, or the devotional was not found
 
         return const Left(
             FirebaseFailure(errorMessage: "No Devotional message found"));

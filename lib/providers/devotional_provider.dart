@@ -118,13 +118,6 @@ class DevotionalProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> initStuff() async {
-    await getDevotionals();
-    await getCurrentDevotional();
-    await getLikedDevotionals();
-    await getTodaysDevotionalIndex();
-  }
-
   Future<void> clearDevotional() async {
     Either<Failure, void> response =
         await devotionalRepository.clearDevotionals();
@@ -156,5 +149,12 @@ class DevotionalProvider extends ChangeNotifier {
       state = DevotionalState.error;
     }
     notifyListeners();
+  }
+
+  Future<void> initStuff() async {
+    await getDevotionals();
+    await getCurrentDevotional();
+    await getLikedDevotionals();
+    await getTodaysDevotionalIndex();
   }
 }

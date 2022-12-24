@@ -41,7 +41,7 @@ class _DevotionalScreenState extends State<DevotionalScreen>
       lowerBound: 0,
       upperBound: 280,
       vsync: this,
-      duration: Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 300),
     );
     colorAnimation = ColorTween(begin: Colors.white, end: kDark)
         .animate(scrollAnimationController);
@@ -173,7 +173,7 @@ class _DevotionalScreenState extends State<DevotionalScreen>
                                 decoration: BoxDecoration(
                                     color: Theme.of(context)
                                         .scaffoldBackgroundColor,
-                                    borderRadius: BorderRadius.only(
+                                    borderRadius: const BorderRadius.only(
                                       topLeft:
                                           Radius.circular(kDefaultPadding2x),
                                       topRight:
