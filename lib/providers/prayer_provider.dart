@@ -12,8 +12,11 @@ class PrayerProvider extends ChangeNotifier {
   PrayerState state = PrayerState.initial;
   String errorMessage = "";
   Prayer? todaysPrayer;
-  Prayer? currentPrayer;
+
   List<Prayer> allPrayers = [];
+  List<Prayer> likedPrayers = [];
+
+  int todaysPrayerIndex = 0;
 
   PrayerProvider({required this.prayerRepository});
 
@@ -32,54 +35,29 @@ class PrayerProvider extends ChangeNotifier {
       state = PrayerState.error;
     }, (prayer) {
       todaysPrayer = prayer;
-      currentPrayer = prayer;
       state = PrayerState.success;
     });
     //   notifyListeners();
   }
 
-  Future<void> getNextPrayer() async {
+  Future<void> getTodaysPrayerIndex() async {
     if (state == PrayerState.submitting) return;
     state = PrayerState.submitting;
-    notifyListeners();
-    Either<Failure, Prayer> response = await prayerRepository.getNextPrayer();
+
+    Either<Failure, int> response =
+        await prayerRepository.getCurrentPrayerIndex();
 
     response.fold((failure) {
       errorMessage = failure.errorMessage ??
-          "An error occurred while getting today's prayer";
-
+          "An error occurred while getting today's Prayer";
       state = PrayerState.error;
-
-      notifyListeners();
-    }, (nextPrayer) {
-      currentPrayer = nextPrayer;
+    }, (index) {
+      todaysPrayerIndex = index;
       state = PrayerState.success;
-
-      notifyListeners();
     });
   }
 
-  Future<void> getPreviousPrayer() async {
-    if (state == PrayerState.submitting) return;
-    state = PrayerState.submitting;
-    notifyListeners();
-    Either<Failure, Prayer> response =
-        await prayerRepository.getPreviousPrayer();
-
-    response.fold((failure) {
-      errorMessage = failure.errorMessage ??
-          "An error occurred while getting today's prayer";
-
-      state = PrayerState.error;
-    }, (previousPrayer) {
-      currentPrayer = previousPrayer;
-      state = PrayerState.success;
-    });
-
-    notifyListeners();
-  }
-
-  Future<void> getPrayer() async {
+  Future<void> getPrayers() async {
     if (state == PrayerState.submitting) return;
     state = PrayerState.submitting;
     notifyListeners();
@@ -94,6 +72,26 @@ class PrayerProvider extends ChangeNotifier {
       allPrayers = prayer;
       state = PrayerState.success;
     });
+    notifyListeners();
+  }
+
+  Future<void> getLikedPrayers() async {
+    if (state == PrayerState.submitting) return;
+    state = PrayerState.submitting;
+    notifyListeners();
+    Either<Failure, List<Prayer>> response =
+        await prayerRepository.getLikedPrayers();
+
+    response.fold((failure) {
+      errorMessage = failure.errorMessage ??
+          "An error occurred while getting your favourite Prayers";
+
+      state = PrayerState.error;
+    }, (likedPrayer) {
+      likedPrayers = likedPrayer;
+      state = PrayerState.success;
+    });
+
     notifyListeners();
   }
 
@@ -122,5 +120,30 @@ class PrayerProvider extends ChangeNotifier {
       state = PrayerState.success;
     });
     notifyListeners();
+  }
+
+  Future<void> toggleLikedPrayer(int index) async {
+    if (allPrayers.isNotEmpty) {
+      ///This sets [isLiked] to be the opposite of what is the current value
+      Prayer updatedPrayer =
+          allPrayers[index].copyWith(isLiked: !allPrayers[index].isLiked);
+      List<Prayer> updatedList = allPrayers;
+      updatedList.removeAt(index);
+      updatedList.insert(index, updatedPrayer);
+
+      await updatePrayerList(updatedList);
+      await getLikedPrayers();
+      state = PrayerState.success;
+    } else {
+      state = PrayerState.error;
+    }
+    notifyListeners();
+  }
+
+  Future<void> initStuff() async {
+    await getPrayers();
+    await getCurrentPrayer();
+    await getLikedPrayers();
+    await getTodaysPrayerIndex();
   }
 }

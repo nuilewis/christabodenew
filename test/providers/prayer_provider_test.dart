@@ -43,7 +43,7 @@ void main() {
           .thenAnswer((_) async => Right(returnedPrayerList));
 
       //act
-      await prayerProvider.getPrayer();
+      await prayerProvider.getPrayers();
 
       //assert
       expect(prayerProvider.allPrayers, returnedPrayerList);
@@ -63,7 +63,7 @@ void main() {
 
       //act
 
-      await prayerProvider.getPrayer();
+      await prayerProvider.getPrayers();
 
       //assert
       expect(prayerProvider.state, PrayerState.error);
@@ -111,86 +111,6 @@ void main() {
       expect(prayerProvider.errorMessage, "error message");
 
       verify(mockPrayerRepository.getCurrentPrayer()).called(1);
-      verifyNoMoreInteractions(mockPrayerRepository);
-    });
-  });
-  group("Test [getNextPrayer]", () {
-    test(
-        "Should return a [Prayer] obj and set the state to success when [getNextPrayer] is called successfully from the repository",
-        () async {
-      //arrange
-      when(mockPrayerRepository.getNextPrayer())
-          .thenAnswer((_) async => Right(returnedPrayer));
-
-      //act
-      await prayerProvider.getNextPrayer();
-
-      //assert
-      expect(prayerProvider.todaysPrayer, returnedPrayer);
-      expect(prayerProvider.state, PrayerState.success);
-
-      verify(mockPrayerRepository.getNextPrayer()).called(1);
-      verifyNoMoreInteractions(mockPrayerRepository);
-    });
-
-    test(
-        "Should return a [Failure] obj and set the state to success when [getNextPrayer] is called un successfully from the repository",
-        () async {
-      //arrange
-      when(mockPrayerRepository.getNextPrayer()).thenAnswer((_) async =>
-          Future.value(
-              const Left(FirebaseFailure(errorMessage: "error message"))));
-
-      //act
-
-      await prayerProvider.getNextPrayer();
-
-      //assert
-      expect(prayerProvider.state, PrayerState.error);
-      expect(prayerProvider.todaysPrayer, null);
-      expect(prayerProvider.errorMessage, "error message");
-
-      verify(mockPrayerRepository.getNextPrayer()).called(1);
-      verifyNoMoreInteractions(mockPrayerRepository);
-    });
-  });
-  group("Test [getPreviousPrayer]", () {
-    test(
-        "Should return a [Prayer] obj and set the state to success when [getPreviousPrayer] is called successfully from the repository",
-        () async {
-      //arrange
-      when(mockPrayerRepository.getPreviousPrayer())
-          .thenAnswer((_) async => Right(returnedPrayer));
-
-      //act
-      await prayerProvider.getPreviousPrayer();
-
-      //assert
-      expect(prayerProvider.todaysPrayer, returnedPrayer);
-      expect(prayerProvider.state, PrayerState.success);
-
-      verify(mockPrayerRepository.getPreviousPrayer()).called(1);
-      verifyNoMoreInteractions(mockPrayerRepository);
-    });
-
-    test(
-        "Should return a [Failure] obj and set the state to success when [getPreviousPrayer] is called un successfully from the repository",
-        () async {
-      //arrange
-      when(mockPrayerRepository.getPreviousPrayer()).thenAnswer((_) async =>
-          Future.value(
-              const Left(FirebaseFailure(errorMessage: "error message"))));
-
-      //act
-
-      await prayerProvider.getPreviousPrayer();
-
-      //assert
-      expect(prayerProvider.state, PrayerState.error);
-      expect(prayerProvider.todaysPrayer, null);
-      expect(prayerProvider.errorMessage, "error message");
-
-      verify(mockPrayerRepository.getPreviousPrayer()).called(1);
       verifyNoMoreInteractions(mockPrayerRepository);
     });
   });
