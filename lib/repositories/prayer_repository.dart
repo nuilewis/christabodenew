@@ -10,8 +10,8 @@ import '../services/prayer/prayer_firestore_service.dart';
 
 abstract class PrayerRepository {
   Future<Either<Failure, Prayer>> getCurrentPrayer();
-  Future<Either<Failure, Prayer>> getNextPrayer();
-  Future<Either<Failure, Prayer>> getPreviousPrayer();
+  Future<Either<Failure, int>> getCurrentPrayerIndex();
+
   Future<Either<Failure, List<Prayer>>> getPrayers();
 
   ///Liking Prayer Methods
@@ -34,8 +34,6 @@ class PrayerRepositoryImplementation implements PrayerRepository {
   List<Prayer> _likedPrayerList = [];
   final DateTime _today = DateTime(DateTime.now().year, DateTime.now().month,
       DateTime.now().day, 0, 0, 0, 0, 0);
-
-  int _currentPrayerIndex = 0;
 
   @override
   Future<Either<Failure, List<Prayer>>> getPrayers() async {
@@ -114,38 +112,31 @@ class PrayerRepositoryImplementation implements PrayerRepository {
   }
 
   @override
-  Future<Either<Failure, Prayer>> getNextPrayer() async {
+  Future<Either<Failure, int>> getCurrentPrayerIndex() async {
     if (_prayerList.isNotEmpty) {
-      //Get the index of the current prayer, then use it to get the next.
-      ///Get the element where the date is after today at 12, AM, 0 sec, 0 millisec
-      /// and is before tomorrow at 12 AM, O sec, O millisecond
-      _currentPrayerIndex = _prayerList.indexWhere(
+      int todaysDevotionalIndex = _prayerList.indexWhere(
         (element) =>
-            element.date.month == _today.month &&
-            element.date.day == _today.day,
+            _today.month == element.date.month &&
+            _today.day == element.date.day,
+
+        ///There is only one case here, since there are atlas 1 prayer each day
+        ///therefore no prayer repeats, or spans for multiple days, meaning
+        ///we can check the prayer whose date matches the day of today
+        ///
+        /// Now we compare only the days and months so we can exclude the years
+        /// since the prayers will be the same each year. Comparing the years
+        /// will mean that the prayers will only be valid for 1 year.
       );
 
-      Prayer nextPrayer = _prayerList[_currentPrayerIndex++];
-      _currentPrayerIndex = _currentPrayerIndex++;
-      return Right(nextPrayer);
-    } else {
-      return const Left(
-          FirebaseFailure(errorMessage: "Unable to get the next prayer"));
-    }
-  }
+      if (todaysDevotionalIndex == -1) {
+        ///Index being -1 means it did not get the prayer, or the prayer was not found
 
-  @override
-  Future<Either<Failure, Prayer>> getPreviousPrayer() async {
-    if (_prayerList.isNotEmpty) {
-      //Get the index of the current prayer, then use it to get the previous
-
-      Prayer previousPrayer = _prayerList[_currentPrayerIndex--];
-      //Making sure to update the index of the current prayer by subtracting 1;
-      _currentPrayerIndex = _currentPrayerIndex--;
-      return Right(previousPrayer);
+        return const Left(FirebaseFailure(errorMessage: "No Prayers"));
+      } else {
+        return Right(todaysDevotionalIndex);
+      }
     } else {
-      return const Left(
-          FirebaseFailure(errorMessage: "Unable to get the previous Prayer"));
+      return const Left(FirebaseFailure(errorMessage: "No Prayers found"));
     }
   }
 
@@ -165,10 +156,10 @@ class PrayerRepositoryImplementation implements PrayerRepository {
 
   @override
   Future<Either<Failure, void>> updatePrayerSavedList(
-      List<Prayer> updatedLIst) async {
+      List<Prayer> updatedList) async {
     final Box box = await prayerHiveService.openBox();
     try {
-      await prayerHiveService.addPrayers(box, updatedLIst);
+      await prayerHiveService.addPrayers(box, updatedList);
       return Right(Future.value());
     } catch (e) {
       return const Left(
