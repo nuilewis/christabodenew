@@ -15,16 +15,25 @@ class FeaturedImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        SizedBox.expand(
-          child: BlurHash(
-            imageFit: BoxFit.cover,
-            image: featuredImage.imgUrl,
-            hash: featuredImage.blurHash,
-          ),
-        ),
+        featuredImage.isEmpty
+            ? Container(
+                width: double.infinity,
+                height: double.infinity,
+                decoration: const BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage("assets/images/foam_image.jpg"),
+                        fit: BoxFit.cover)),
+              )
+            : SizedBox.expand(
+                child: BlurHash(
+                  imageFit: BoxFit.cover,
+                  image: featuredImage.imgUrl,
+                  hash: featuredImage.blurHash,
+                ),
+              ),
         Container(
           decoration: BoxDecoration(
-            color: Colors.black.withOpacity(.2),
+            color: Colors.black.withOpacity(.25),
           ),
         ),
         Positioned(

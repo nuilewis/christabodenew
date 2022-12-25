@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:christabodenew/models/unsplash_image.dart';
 import 'package:christabodenew/services/unsplash/.env.dart';
 import 'package:dio/dio.dart';
@@ -21,8 +23,11 @@ class UnsplashAPIClient {
   );
   Future<UnsplashImage> getRandomImage() async {
     try {
-      final response = await _dio.get(_randomImageEndpoint);
+      final response = await _dio.get(_randomImageEndpoint, queryParameters: {
+        "query": " ${photoCategories[Random().nextInt(18)]}"
+      });
 
+      ///Randomly picks from any of the categories each time
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseJson = response.data;
 
@@ -64,4 +69,26 @@ class UnsplashAPIClient {
       throw exception;
     }
   }
+
+  Map<int, String> photoCategories = {
+    0: "green grass",
+    1: "mountains",
+    2: "trees",
+    3: "water",
+    4: "ocean",
+    5: "forest",
+    6: "church",
+    7: "oceans",
+    8: "clouds",
+    9: "nature",
+    10: "landscape",
+    11: "snow",
+    12: "ice",
+    13: "landscape nature",
+    14: "flowers",
+    15: "leaves",
+    16: "rocks",
+    17: "lakes",
+    18: "foam water",
+  };
 }

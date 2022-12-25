@@ -27,11 +27,8 @@ class UnsplashImage extends Equatable {
         colour: json["color"]);
   }
 
-  static const UnsplashImage empty = UnsplashImage(
-      id: "",
-      imgUrl: "",
-      blurHash: "L00000fQfQfQfQfQfQfQfQfQfQfQ",
-      uploaderName: "");
+  static const UnsplashImage empty =
+      UnsplashImage(id: "", imgUrl: "", blurHash: "", uploaderName: "");
 
   bool get isEmpty => this == UnsplashImage.empty;
   bool get isNotEmpty => this != UnsplashImage.empty;
