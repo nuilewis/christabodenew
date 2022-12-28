@@ -62,55 +62,30 @@ class MockPrayerRepository extends _i1.Mock implements _i3.PrayerRepository {
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, _i6.Prayer>>);
   @override
-  _i4.Future<_i2.Either<_i5.Failure, _i6.Prayer>> getNextPrayer() =>
+  _i4.Future<_i2.Either<_i5.Failure, int>> getCurrentPrayerIndex() =>
       (super.noSuchMethod(
         Invocation.method(
-          #getNextPrayer,
+          #getCurrentPrayerIndex,
           [],
         ),
-        returnValue: _i4.Future<_i2.Either<_i5.Failure, _i6.Prayer>>.value(
-            _FakeEither_0<_i5.Failure, _i6.Prayer>(
+        returnValue: _i4.Future<_i2.Either<_i5.Failure, int>>.value(
+            _FakeEither_0<_i5.Failure, int>(
           this,
           Invocation.method(
-            #getNextPrayer,
+            #getCurrentPrayerIndex,
             [],
           ),
         )),
         returnValueForMissingStub:
-            _i4.Future<_i2.Either<_i5.Failure, _i6.Prayer>>.value(
-                _FakeEither_0<_i5.Failure, _i6.Prayer>(
+            _i4.Future<_i2.Either<_i5.Failure, int>>.value(
+                _FakeEither_0<_i5.Failure, int>(
           this,
           Invocation.method(
-            #getNextPrayer,
+            #getCurrentPrayerIndex,
             [],
           ),
         )),
-      ) as _i4.Future<_i2.Either<_i5.Failure, _i6.Prayer>>);
-  @override
-  _i4.Future<_i2.Either<_i5.Failure, _i6.Prayer>> getPreviousPrayer() =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #getPreviousPrayer,
-          [],
-        ),
-        returnValue: _i4.Future<_i2.Either<_i5.Failure, _i6.Prayer>>.value(
-            _FakeEither_0<_i5.Failure, _i6.Prayer>(
-          this,
-          Invocation.method(
-            #getPreviousPrayer,
-            [],
-          ),
-        )),
-        returnValueForMissingStub:
-            _i4.Future<_i2.Either<_i5.Failure, _i6.Prayer>>.value(
-                _FakeEither_0<_i5.Failure, _i6.Prayer>(
-          this,
-          Invocation.method(
-            #getPreviousPrayer,
-            [],
-          ),
-        )),
-      ) as _i4.Future<_i2.Either<_i5.Failure, _i6.Prayer>>);
+      ) as _i4.Future<_i2.Either<_i5.Failure, int>>);
   @override
   _i4.Future<_i2.Either<_i5.Failure, List<_i6.Prayer>>> getPrayers() =>
       (super.noSuchMethod(
