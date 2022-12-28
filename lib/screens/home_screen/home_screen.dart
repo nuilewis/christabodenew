@@ -2,8 +2,10 @@ import 'package:christabodenew/models/devotional_model.dart';
 import 'package:christabodenew/providers/events_provider.dart';
 import 'package:christabodenew/providers/messages_provider.dart';
 import 'package:christabodenew/providers/prayer_provider.dart';
+import 'package:christabodenew/providers/unsplash_image_provider.dart';
 import 'package:christabodenew/screens/home_screen/components/devotional_card.dart';
 import 'package:christabodenew/screens/messages_screen/messages_screen.dart';
+import 'package:christabodenew/screens/prayer_screen/prayer_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -56,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Text("Welcome to the Christ Abode Ministries",
                           style: Theme.of(context).textTheme.headline1),
                       const SizedBox(
-                        height: kDefaultPadding2x,
+                        height: kDefaultPadding * 3,
                       ),
                       Text(
                         "Next Up",
@@ -75,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                       const SizedBox(height: kDefaultPadding2x),
                       Text(
-                        "Today's Devotional",
+                        "Today's Huios Devotional",
                         style: Theme.of(context)
                             .textTheme
                             .headline2!
@@ -86,6 +88,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           devotional: devotionalData.todaysDevotional ??
                               Devotional.empty,
                           onPressed: () {
+                            devotionalData.getTodaysDevotionalIndex();
+                            Provider.of<UnsplashImageProvider>(context)
+                                .getRandomImage();
+
+                            /// running this method will ensure that the right index for the devotional
+                            /// of today is gotten and sent to the the current devotional index, even
+                            /// if the user was scrolling and changing devotionals indexes
+
                             Navigator.pushNamed(context, DevotionalScreen.id);
                           }),
                       const SizedBox(height: kDefaultPadding2x),
@@ -99,7 +109,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       const SizedBox(height: kDefaultPadding),
                       PrayerCard(
                         prayer: prayerData.todaysPrayer ?? Prayer.empty,
-                        onPressed: () {},
+                        onPressed: () {
+                          prayerData.getTodaysPrayerIndex();
+
+                          /// running this method will ensure that the right index for the prayer
+                          /// of today is gotten and sent to the the current prayer index, even
+                          /// if the user was scrolling and changing prayer indexes
+
+                          Navigator.pushNamed(context, PrayerScreen.id);
+                        },
                       ),
                       const SizedBox(height: kDefaultPadding2x),
                       // Text(

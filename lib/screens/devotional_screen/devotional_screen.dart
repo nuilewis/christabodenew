@@ -43,6 +43,7 @@ class _DevotionalScreenState extends State<DevotionalScreen>
       vsync: this,
       duration: const Duration(milliseconds: 300),
     );
+
     colorAnimation = ColorTween(begin: Colors.white, end: kDark)
         .animate(scrollAnimationController);
 
@@ -52,7 +53,8 @@ class _DevotionalScreenState extends State<DevotionalScreen>
   @override
   void didChangeDependencies() {
     _devotionalPageController = PageController(
-        initialPage: context.watch<DevotionalProvider>().todaysDevotionalIndex);
+        initialPage:
+            context.watch<DevotionalProvider>().currentDevotionalIndex);
 
     super.didChangeDependencies();
   }
@@ -60,7 +62,7 @@ class _DevotionalScreenState extends State<DevotionalScreen>
   @override
   void dispose() {
     _devotionalPageController.dispose();
-
+    scrollAnimationController.dispose();
     super.dispose();
   }
 
@@ -69,12 +71,14 @@ class _DevotionalScreenState extends State<DevotionalScreen>
     return Consumer2<DevotionalProvider, UnsplashImageProvider>(
       builder: ((context, devotionalData, unsplashImageData, child) {
         final UnsplashImage featuredImage = unsplashImageData.featuredImage;
+
         return Scaffold(
           body: PageView.builder(
             controller: _devotionalPageController,
             itemCount: devotionalData.allDevotionals.length,
             onPageChanged: (index) async {
               currentIndex = index;
+              devotionalData.updateCurrentDevotionalIndex(index);
               await unsplashImageData.getRandomImage();
             },
             itemBuilder: (context, index) {

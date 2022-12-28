@@ -22,17 +22,17 @@ class NextPreviousButton extends StatelessWidget {
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         padding: EdgeInsets.zero,
-        backgroundColor: bgColour ?? Theme.of(context).primaryColor,
+        backgroundColor: bgColour ?? Theme.of(context).iconTheme.color,
         elevation: elevation ?? 0,
         shape: const CircleBorder(),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.all(14),
         child: SvgPicture.asset(
             isNextButton!
                 ? "assets/svg/forward_icon.svg"
                 : "assets/svg/back_icon.svg",
-            color: iconColour ?? Colors.white),
+            color: iconColour ?? Theme.of(context).scaffoldBackgroundColor),
       ),
     );
   }
