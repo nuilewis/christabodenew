@@ -16,7 +16,7 @@ class PrayerProvider extends ChangeNotifier {
   List<Prayer> allPrayers = [];
   List<Prayer> likedPrayers = [];
 
-  int todaysPrayerIndex = 0;
+  int currentPrayerIndex = 0;
 
   PrayerProvider({required this.prayerRepository});
 
@@ -52,9 +52,14 @@ class PrayerProvider extends ChangeNotifier {
           "An error occurred while getting today's Prayer";
       state = PrayerState.error;
     }, (index) {
-      todaysPrayerIndex = index;
+      currentPrayerIndex = index;
       state = PrayerState.success;
     });
+  }
+
+  updateCurrentPrayerIndex(int value) {
+    currentPrayerIndex = value;
+    notifyListeners();
   }
 
   Future<void> getPrayers() async {

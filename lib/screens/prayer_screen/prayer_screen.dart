@@ -71,7 +71,7 @@ class _PrayerScreenState extends State<PrayerScreen>
   @override
   void didChangeDependencies() {
     _prayerPageController = PageController(
-        initialPage: context.watch<PrayerProvider>().todaysPrayerIndex);
+        initialPage: context.watch<PrayerProvider>().currentPrayerIndex);
 
     super.didChangeDependencies();
   }
@@ -95,6 +95,7 @@ class _PrayerScreenState extends State<PrayerScreen>
             onPageChanged: (index) async {
               currentIndex = index;
               await unsplashImageData.getRandomImage();
+              prayerData.updateCurrentPrayerIndex(index);
             },
             itemBuilder: (context, index) {
               return CustomScrollView(
