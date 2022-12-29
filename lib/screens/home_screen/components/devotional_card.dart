@@ -26,61 +26,66 @@ class _DevotionalCardState extends State<DevotionalCard> {
       borderRadius: BorderRadius.circular(kDefaultPadding2x),
       child: GestureDetector(
         onTap: widget.onPressed,
-        child: Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(kDefaultPadding2x),
-              gradient: LinearGradient(
-                  colors: [kPurple80, kFuchsiaLight],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight)),
-          child: Stack(
-            children: [
-              Positioned(
-                bottom: -21,
-                right: -21,
-                child: SvgPicture.asset(
-                  "assets/svg/read_icon.svg",
-                  color: Colors.white.withOpacity(.4),
-                  height: 150,
+        child: AspectRatio(
+          aspectRatio: 20.0 / 9.0,
+          child: Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(kDefaultPadding2x),
+                gradient: LinearGradient(
+                    colors: [kPurple80, kFuchsiaLight],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight)),
+            child: Stack(
+              children: [
+                Positioned(
+                  bottom: -21,
+                  right: -21,
+                  child: SvgPicture.asset(
+                    "assets/svg/read_icon.svg",
+                    color: Colors.white.withOpacity(.4),
+                    height: 150,
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(kDefaultPadding),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(width: double.infinity),
-                    Text(
-                      widget.devotional.title.toTitleCase(),
-                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                            fontSize: 24,
-                            color: Colors.white,
-                          ),
-                    ),
-                    const SizedBox(height: kDefaultPadding / 2),
-                    Text(widget.devotional.content,
-                        maxLines: 2,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyText2!
-                            .copyWith(color: Colors.white)),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(dateTimeFormatter(context, DateTime.now()),
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText2!
-                                .copyWith(color: Colors.white)),
-                        SvgPicture.asset("assets/svg/forward_icon.svg",
-                            //color: Theme.of(context).iconTheme.color
-                            color: Colors.white),
-                      ],
-                    )
-                  ],
+                Padding(
+                  padding: const EdgeInsets.all(kDefaultPadding),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      const SizedBox(width: double.infinity),
+                      Text(
+                        widget.devotional.title.toTitleCase(),
+                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                              fontSize: 24,
+                              color: Colors.white,
+                            ),
+                      ),
+                      const Spacer(),
+                      Text(widget.devotional.content,
+                          maxLines: 2,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText2!
+                              .copyWith(color: Colors.white)),
+                      const Spacer(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(dateTimeFormatter(context, DateTime.now()),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText2!
+                                  .copyWith(color: Colors.white)),
+                          SvgPicture.asset("assets/svg/forward_icon.svg",
+                              //color: Theme.of(context).iconTheme.color
+                              color: Colors.white),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

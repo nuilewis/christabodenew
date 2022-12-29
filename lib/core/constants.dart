@@ -19,6 +19,10 @@ Color kPurple60 = const Color(0xFF4C14F3).withOpacity(.6);
 Color kPurple40 = const Color(0xFF4C14F3).withOpacity(.4);
 Color kPurple20 = const Color(0xFF4C14F3).withOpacity(.2);
 
+Color kPurpleDark = const Color(0xFFB69DFF);
+Color kPurpleDark80 = const Color(0xFFB69DFF).withOpacity(.8);
+Color kPurpleDark60 = const Color(0xFFB69DFF).withOpacity(.6);
+
 const Color kDark = Color(0xFF2D2D2D);
 Color kDark80 = const Color(0xFF2D2D2D).withOpacity(.8);
 Color kDark60 = const Color(0xFF2D2D2D).withOpacity(.6);
@@ -26,6 +30,7 @@ Color kDark40 = const Color(0xFF2D2D2D).withOpacity(.4);
 Color kDark20 = const Color(0xFF2D2D2D).withOpacity(.2);
 
 const Color kCardColorDarkTheme = Color.fromARGB(255, 53, 53, 53);
+const Color kCardColorLightTheme = Color.fromARGB(255, 239, 239, 239);
 
 ///------Fuchsia-------///
 const Color kFuchsiaLight = Color(0xFFFFC1D8);
@@ -59,14 +64,6 @@ const TextStyle kButtonText =
     TextStyle(fontWeight: FontWeight.w600, fontSize: 16);
 const TextStyle kFootNote =
     TextStyle(fontWeight: FontWeight.normal, fontSize: 11);
-
-///----AppBar Style----///
-
-AppBarTheme appBarTheme = const AppBarTheme(
-  backgroundColor: Colors.transparent,
-  foregroundColor: Colors.transparent,
-  elevation: 0,
-);
 
 ///----------Text Form Field styles ---------////
 

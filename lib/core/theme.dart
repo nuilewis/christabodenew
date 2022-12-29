@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'constants.dart';
 
@@ -19,7 +20,7 @@ ThemeData lightThemeData(BuildContext context) {
       iconTheme: const IconThemeData(color: kDark),
       primaryIconTheme: const IconThemeData(color: kDark),
       cardTheme: CardTheme(
-        color: kDark20,
+        color: kCardColorLightTheme,
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(kDefaultPadding),
@@ -33,7 +34,7 @@ ThemeData lightThemeData(BuildContext context) {
         headline2: kHeadingLight.copyWith(color: kDark),
       ),
       colorScheme: const ColorScheme.light().copyWith(secondary: kLightBlue),
-      cardColor: kDark20);
+      cardColor: kCardColorLightTheme);
 }
 
 ///Dark Theme
@@ -41,16 +42,16 @@ ThemeData lightThemeData(BuildContext context) {
 ThemeData darkThemeData(BuildContext context) {
   return ThemeData(
       appBarTheme: appBarTheme,
-      primaryColor: kPurple80,
-      primaryColorLight: kPurple60,
-      primaryColorDark: kPurple,
+      primaryColor: kPurpleDark,
+      primaryColorLight: kPurpleDark60,
+      primaryColorDark: kPurpleDark,
       scaffoldBackgroundColor: const Color.fromARGB(255, 28, 28, 28),
       brightness: Brightness.dark,
       backgroundColor: kDark,
       iconTheme: const IconThemeData(color: Colors.white),
       primaryIconTheme: const IconThemeData(color: Colors.white),
       cardTheme: CardTheme(
-        color: kDark80,
+        color: kCardColorDarkTheme,
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(kDefaultPadding),
@@ -70,5 +71,7 @@ ThemeData darkThemeData(BuildContext context) {
 AppBarTheme appBarTheme = const AppBarTheme(
   backgroundColor: Colors.transparent,
   foregroundColor: Colors.transparent,
+  surfaceTintColor: Colors.transparent,
+  systemOverlayStyle: SystemUiOverlayStyle.light,
   elevation: 0,
 );

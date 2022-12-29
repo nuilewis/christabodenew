@@ -116,6 +116,9 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider<SettingsProvider>(
+            create: (context) =>
+            SettingsProvider(_settingsRepository)..getSettings()),
         ChangeNotifierProvider<PrayerProvider>(
             create: (context) =>
                 PrayerProvider(prayerRepository: _prayerRepository)
@@ -128,14 +131,12 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider<EventsProvider>(
             create: (context) =>
                 EventsProvider(eventsRepository: _eventsRepository)
-                  ..getEvents()),
+                  ..initStuff()),
         ChangeNotifierProvider<UnsplashImageProvider>(
             create: (context) => UnsplashImageProvider(
                 unsplashImageRepository: _unsplashImageRepository)
               ..getRandomImage()),
-        ChangeNotifierProvider<SettingsProvider>(
-            create: (context) =>
-                SettingsProvider(_settingsRepository)..getSettings())
+
       ],
       child: Builder(builder: (context) {
         return MaterialApp(

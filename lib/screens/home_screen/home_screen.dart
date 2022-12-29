@@ -89,7 +89,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               Devotional.empty,
                           onPressed: () {
                             devotionalData.getTodaysDevotionalIndex();
-                            Provider.of<UnsplashImageProvider>(context)
+                            Provider.of<UnsplashImageProvider>(context,
+                                    listen: false)
                                 .getRandomImage();
 
                             /// running this method will ensure that the right index for the devotional

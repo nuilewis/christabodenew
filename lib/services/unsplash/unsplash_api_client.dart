@@ -80,7 +80,7 @@ class UnsplashAPIClient {
     6: "church",
     7: "oceans",
     8: "clouds",
-    9: "nature",
+    9: "waterfall",
     10: "landscape",
     11: "snow",
     12: "ice",
