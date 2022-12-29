@@ -14,7 +14,7 @@ class EventsProvider extends ChangeNotifier {
 
   EventState state = EventState.initial;
   String errorMessage = "";
-  //List<Event> _allEvents = [];
+  List<Event> _allEvents = [];
   List<Event> monthlyEvents = [];
   List<Event> pastEvents = [];
   List<Event> upcomingEvents = [];
@@ -31,7 +31,7 @@ class EventsProvider extends ChangeNotifier {
           failure.errorMessage ?? "An error occurred while getting the events";
       state = EventState.error;
     }, (eventsList) {
-      monthlyEvents = eventsList;
+      _allEvents = eventsList;
       state = EventState.success;
     });
 
@@ -43,7 +43,8 @@ class EventsProvider extends ChangeNotifier {
     state = EventState.submitting;
     notifyListeners();
 
-    Either<Failure, List<Event>> response = await eventsRepository.getEvents();
+    Either<Failure, List<Event>> response =
+        await eventsRepository.getMonthlyEvents();
 
     response.fold((failure) {
       errorMessage =
@@ -83,8 +84,7 @@ class EventsProvider extends ChangeNotifier {
     notifyListeners();
 
     Either<Failure, List<Event>> response =
-        await eventsRepository.getUpcomingEvents();
-
+        await eventsRepository.getPastEvents();
     response.fold((failure) {
       errorMessage = failure.errorMessage ?? "There are no past events";
       state = EventState.error;
@@ -95,5 +95,12 @@ class EventsProvider extends ChangeNotifier {
     });
 
     notifyListeners();
+  }
+
+  Future<void> initStuff() async {
+    await getEvents();
+    await getMonthlyEvents();
+    await getUpcomingEvents();
+    await getPastEvents();
   }
 }

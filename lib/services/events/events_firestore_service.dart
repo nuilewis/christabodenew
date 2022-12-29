@@ -7,11 +7,10 @@ class EventsFirestoreService extends FirestoreService {
     final String currentYear = DateTime.now().year.toString();
 
     try {
-      QuerySnapshot<Map<String, dynamic>> result = await firestore
+    QuerySnapshot<Map<String, dynamic> >result = await firestore
           .collection(currentYear)
           .doc("events")
-          .collection("events")
-          .get();
+          .collection("events").get();
       return result;
     } on FirebaseException {
       rethrow;
