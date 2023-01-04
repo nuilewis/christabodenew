@@ -27,12 +27,14 @@ class NextPreviousButton extends StatelessWidget {
         shape: const CircleBorder(),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(14),
+        padding: const EdgeInsets.all(8),
         child: SvgPicture.asset(
-            isNextButton!
-                ? "assets/svg/forward_icon.svg"
-                : "assets/svg/back_icon.svg",
-            color: iconColour ?? Theme.of(context).scaffoldBackgroundColor),
+          isNextButton!
+              ? "assets/svg/chevron_forward_icon.svg"
+              : "assets/svg/chevron_backward_icon.svg",
+          color: iconColour ?? Theme.of(context).scaffoldBackgroundColor,
+          height: 16,
+        ),
       ),
     );
   }
