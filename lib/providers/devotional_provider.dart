@@ -12,7 +12,7 @@ class DevotionalProvider extends ChangeNotifier {
   DevotionalState state = DevotionalState.initial;
   String errorMessage = "";
   Devotional? todaysDevotional;
-  // late final int todaysDevotionalIndex;
+  //late final int todaysDevotionalIndex;
   int currentDevotionalIndex = 0;
 
   List<Devotional> allDevotionals = [];
@@ -53,7 +53,12 @@ class DevotionalProvider extends ChangeNotifier {
 
       state = DevotionalState.error;
     }, (index) {
+      ///Will use the index of the devotional for today to limit the total list to
+      ///all messages right unto this day, so that a user can page view scroll
       currentDevotionalIndex = index;
+
+      ///THe cut the total devotional list into half, right upto the day of today.
+      allDevotionals = allDevotionals.sublist(0, index);
 
       state = DevotionalState.success;
     });

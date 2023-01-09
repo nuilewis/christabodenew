@@ -76,6 +76,8 @@ class _DevotionalScreenState extends State<DevotionalScreen>
           body: PageView.builder(
             controller: _devotionalPageController,
             itemCount: devotionalData.allDevotionals.length,
+            //allDevotionals is not actually all the devotionals but
+            //it is all the devotionals right upto the today. Same with the prayers.
             onPageChanged: (index) async {
               currentIndex = index;
               devotionalData.updateCurrentDevotionalIndex(index);

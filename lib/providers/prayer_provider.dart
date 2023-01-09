@@ -53,6 +53,13 @@ class PrayerProvider extends ChangeNotifier {
       state = PrayerState.error;
     }, (index) {
       currentPrayerIndex = index;
+
+      ///Will use the index of the prayer for today to limit the total list to
+      ///all messages right unto this day, so that a user can page view scroll
+
+      ///THe cut the total prayer list into half, right upto the day of today.
+      allPrayers = allPrayers.sublist(0, index);
+
       state = PrayerState.success;
     });
   }
