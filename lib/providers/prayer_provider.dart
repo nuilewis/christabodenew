@@ -58,7 +58,10 @@ class PrayerProvider extends ChangeNotifier {
       ///all messages right unto this day, so that a user can page view scroll
 
       ///THe cut the total prayer list into half, right upto the day of today.
-      allPrayers = allPrayers.sublist(0, index);
+      ///Added +1 to the index cs the final list is actually from zero to the element at the index-1
+      ///or 1 less than the element we actually want.
+
+      allPrayers = allPrayers.sublist(0, index + 1);
 
       state = PrayerState.success;
     });

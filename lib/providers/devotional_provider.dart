@@ -40,9 +40,9 @@ class DevotionalProvider extends ChangeNotifier {
   }
 
   Future<void> getTodaysDevotionalIndex() async {
-    if (state == DevotionalState.submitting) return;
-    state = DevotionalState.submitting;
-    //notifyListeners();
+    // if (state == DevotionalState.submitting) return;
+    // state = DevotionalState.submitting;
+    // //notifyListeners();
 
     Either<Failure, int> response =
         await devotionalRepository.getCurrentDevotionalIndex();
@@ -56,9 +56,15 @@ class DevotionalProvider extends ChangeNotifier {
       ///Will use the index of the devotional for today to limit the total list to
       ///all messages right unto this day, so that a user can page view scroll
       currentDevotionalIndex = index;
+      print("current devotiona index is");
+      print(index);
+      print(currentDevotionalIndex);
 
       ///THe cut the total devotional list into half, right upto the day of today.
-      allDevotionals = allDevotionals.sublist(0, index);
+      ///Added +1 cs the final list is actually from zero to the element at the index-1
+      ///or 1 less than the element we actually want.
+
+      allDevotionals = allDevotionals.sublist(0, index + 1);
 
       state = DevotionalState.success;
     });
