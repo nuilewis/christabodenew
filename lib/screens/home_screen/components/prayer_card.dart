@@ -58,7 +58,7 @@ class _PrayerCardState extends State<PrayerCard> {
                           style: Theme.of(context)
                               .textTheme
                               .bodyText1!
-                              .copyWith(fontSize: 24),
+                              .copyWith(fontSize: 20),
                         ),
                         const Spacer(),
                         Text(widget.prayer.content,

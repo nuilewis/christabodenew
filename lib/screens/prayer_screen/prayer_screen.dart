@@ -58,7 +58,7 @@ class _PrayerScreenState extends State<PrayerScreen>
   void initState() {
     scrollAnimationController = AnimationController(
       lowerBound: 0,
-      upperBound: 280,
+      upperBound: 180,
       vsync: this,
       duration: const Duration(milliseconds: 300),
     );
