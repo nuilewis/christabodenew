@@ -26,59 +26,61 @@ class _PrayerCardState extends State<PrayerCard> {
       borderRadius: BorderRadius.circular(kDefaultPadding2x),
       child: GestureDetector(
         onTap: widget.onPressed,
-        child: AspectRatio(
-          aspectRatio: 20.0 / 9.0,
-          child: Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(kDefaultPadding2x),
-                color: kBlue40,
-                gradient: const LinearGradient(
-                    colors: [kBlue, kGreen],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight)),
-            child: Stack(
-                //  fit: StackFit.expand,
-                children: [
-                  Positioned(
-                    bottom: -20,
-                    right: -20,
-                    child: SvgPicture.asset(
-                      "assets/svg/prayer_icon.svg",
-                      color: Colors.white.withOpacity(.4),
-                      height: 150,
-                    ),
+        child: Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(kDefaultPadding2x),
+              color: kBlue40,
+              gradient: const LinearGradient(
+                  colors: [kBlue, kGreen],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight)),
+          child: Stack(
+              //  fit: StackFit.expand,
+              children: [
+                Positioned(
+                  bottom: -20,
+                  right: -20,
+                  child: SvgPicture.asset(
+                    "assets/svg/prayer_icon.svg",
+                    color: Colors.white.withOpacity(.4),
+                    height: 150,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(kDefaultPadding),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.prayer.title.toTitleCase(),
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1!
-                              .copyWith(fontSize: 20),
-                        ),
-                        const Spacer(),
-                        Text(widget.prayer.content,
-                            maxLines: 2,
-                            style: Theme.of(context).textTheme.bodyText2),
-                        const Spacer(),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(dateTimeFormatter(context, DateTime.now()),
-                                style: Theme.of(context).textTheme.bodyText2),
-                            SvgPicture.asset("assets/svg/forward_icon.svg",
-                                color: Theme.of(context).iconTheme.color),
-                          ],
-                        ),
-                      ],
-                    ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(kDefaultPadding),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        widget.prayer.title.toTitleCase(),
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyText1!
+                            .copyWith(fontSize: 20),
+                      ),
+                      const SizedBox(
+                        height: kDefaultPadding,
+                      ),
+                      Text(widget.prayer.content,
+                          maxLines: 2,
+                          style: Theme.of(context).textTheme.bodyText2),
+                      const SizedBox(
+                        height: kDefaultPadding,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(dateTimeFormatter(context, DateTime.now()),
+                              style: Theme.of(context).textTheme.bodyText2),
+                          SvgPicture.asset("assets/svg/forward_icon.svg",
+                              color: Theme.of(context).iconTheme.color),
+                        ],
+                      ),
+                    ],
                   ),
-                ]),
-          ),
+                ),
+              ]),
         ),
       ),
     );

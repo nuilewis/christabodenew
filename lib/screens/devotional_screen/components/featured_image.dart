@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
 
-import '../../../core/constants.dart';
 import '../../../models/unsplash_image.dart';
 
 class FeaturedImage extends StatelessWidget {
@@ -36,26 +35,26 @@ class FeaturedImage extends StatelessWidget {
             color: Colors.black.withOpacity(.25),
           ),
         ),
-        Positioned(
-          right: kDefaultPadding,
-          bottom: kDefaultPadding * 3,
-          child: RichText(
-            text: TextSpan(children: [
-              TextSpan(
-                  text: "Image by ",
-                  style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                      color: Colors.white.withOpacity(.7), fontSize: 9)),
-              TextSpan(
-                  text: featuredImage.uploaderName,
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                      color: Colors.white.withOpacity(.7), fontSize: 9)),
-              TextSpan(
-                  text: " - Unsplash",
-                  style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                      color: Colors.white.withOpacity(.7), fontSize: 9))
-            ]),
-          ),
-        )
+        // Positioned(
+        //   right: kDefaultPadding,
+        //   bottom: kDefaultPadding * 3,
+        //   child: RichText(
+        //     text: TextSpan(children: [
+        //       TextSpan(
+        //           text: "Image by ",
+        //           style: Theme.of(context).textTheme.bodyText2!.copyWith(
+        //               color: Colors.white.withOpacity(.7), fontSize: 9)),
+        //       TextSpan(
+        //           text: featuredImage.uploaderName,
+        //           style: Theme.of(context).textTheme.bodyText1!.copyWith(
+        //               color: Colors.white.withOpacity(.7), fontSize: 9)),
+        //       TextSpan(
+        //           text: " - Unsplash",
+        //           style: Theme.of(context).textTheme.bodyText2!.copyWith(
+        //               color: Colors.white.withOpacity(.7), fontSize: 9))
+        //     ]),
+        //   ),
+        // )
       ],
     );
   }

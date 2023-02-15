@@ -61,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         height: kDefaultPadding * 3,
                       ),
                       Text(
-                        "Next Up",
+                        "Upcoming Events",
                         style: Theme.of(context)
                             .textTheme
                             .headline2!
