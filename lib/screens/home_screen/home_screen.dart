@@ -55,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       const SizedBox(height: kDefaultPadding * 3),
-                      Text("Welcome to the Christ Abode Ministries",
+                      Text("Welcome to the\nChrist Abode Ministries",
                           style: Theme.of(context).textTheme.headline1),
                       const SizedBox(
                         height: kDefaultPadding * 3,
@@ -69,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       const SizedBox(height: kDefaultPadding),
                       eventData.upcomingEvents.isNotEmpty
-                          ? EventCard(event: eventData.monthlyEvents.first)
+                          ? EventCard(event: eventData.upcomingEvents.first)
                           : Text(
                               "There are no upcoming events scheduled for now.",
                               style: Theme.of(context).textTheme.bodyText2,
