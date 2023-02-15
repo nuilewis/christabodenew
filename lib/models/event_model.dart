@@ -63,12 +63,12 @@ class Event extends Equatable {
     required Map<String, dynamic> data,
   }) {
     Timestamp startDate = data["start"];
-    Timestamp endDate = data["end"];
+    Timestamp? endDate = data["end"];
     return Event(
       name: data["name"],
       description: data["description"],
       startDate: startDate.toDate(),
-      endDate: endDate.toDate(),
+      endDate: endDate?.toDate(),
     );
   }
   static Event empty = Event(
