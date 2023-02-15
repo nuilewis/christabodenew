@@ -56,7 +56,7 @@ class _DevotionalCardState extends State<DevotionalCard> {
                       Text(
                         widget.devotional.title.toTitleCase(),
                         style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                              fontSize: 24,
+                              fontSize: 20,
                               color: Colors.white,
                             ),
                       ),

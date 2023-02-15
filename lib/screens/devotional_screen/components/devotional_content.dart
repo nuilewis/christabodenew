@@ -65,13 +65,15 @@ class DevotionalContent extends StatelessWidget {
                     ],
                   ),
                   const Spacer(),
-                  IconButton(
-                    onPressed: onShareButtonPressed,
-                    icon: SvgPicture.asset(
-                      "assets/svg/share_icon.svg",
-                      color: Theme.of(context).iconTheme.color,
-                    ),
-                  ),
+
+                  ///Todo: add share button later
+                  // IconButton(
+                  //   onPressed: onShareButtonPressed,
+                  //   icon: SvgPicture.asset(
+                  //     "assets/svg/share_icon.svg",
+                  //     color: Theme.of(context).iconTheme.color,
+                  //   ),
+                  // ),
                   IconButton(
                     onPressed: onLikedButtonPressed,
                     icon: SvgPicture.asset(
@@ -117,6 +119,22 @@ class DevotionalContent extends StatelessWidget {
               ),
               Text(
                 currentDevotional.content,
+                textAlign: TextAlign.left,
+              ),
+              const SizedBox(height: kDefaultPadding),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Confession of faith, and Prayer",
+                  textAlign: TextAlign.left,
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
+              ),
+              const SizedBox(
+                height: kDefaultPadding,
+              ),
+              Text(
+                currentDevotional.confessionOfFaith,
                 textAlign: TextAlign.left,
               ),
               const SizedBox(height: kDefaultPadding),

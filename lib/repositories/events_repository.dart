@@ -100,7 +100,7 @@ class EventsRepositoryImplementation implements EventsRepository {
       return Right(_upcomingEvents);
     } else {
       return const Left(
-          FirebaseFailure(errorMessage: "There are no past events"));
+          FirebaseFailure(errorMessage: "There are no upcoming events"));
     }
   }
 
