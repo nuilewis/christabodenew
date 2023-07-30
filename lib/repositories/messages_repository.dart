@@ -3,20 +3,9 @@ import 'package:dartz/dartz.dart';
 
 import '../core/errors/failure.dart';
 
-abstract class MessagesRepository{
-
-  Future<Either<Failure, Message>> getMessage();
-
-}
-
-
-class MessagesRepositoryImplementation implements MessagesRepository{
-  @override
+class MessagesRepository {
   Future<Either<Failure, Message>> getMessage() {
     // TODO: implement getMessage
     throw UnimplementedError();
   }
- 
-
-
 }

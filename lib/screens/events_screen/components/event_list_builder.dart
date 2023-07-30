@@ -12,32 +12,34 @@ class BuildEventsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return events.isNotEmpty
-        ? ListView.builder(
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: events.length,
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              return EventCard(event: events[index]);
-            })
-        : Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                //  Spacer(),
-                Icon(
-                  Icons.notifications_off_outlined,
-                  size: MediaQuery.of(context).size.width * .3,
-                  color: Theme.of(context).primaryColor.withOpacity(.3),
-                ),
-                const SizedBox(height: kDefaultPadding),
-                Text(
-                  messageIfEmpty ?? "There are no events scheduled for now.",
-                  style: Theme.of(context).textTheme.bodyText2,
-                ),
-                //  Spacer(),
-              ],
+    if (events.isNotEmpty) {
+      return ListView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: events.length,
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            return EventCard(event: events[index]);
+          });
+    } else {
+      return Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            //  Spacer(),
+            Icon(
+              Icons.notifications_off_outlined,
+              size: MediaQuery.of(context).size.width * .3,
+              color: Theme.of(context).primaryColor.withOpacity(.3),
             ),
-          );
+            const SizedBox(height: kDefaultPadding),
+            Text(
+              messageIfEmpty ?? "There are no events scheduled for now.",
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+            //  Spacer(),
+          ],
+        ),
+      );
+    }
   }
 }

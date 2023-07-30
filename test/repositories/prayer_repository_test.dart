@@ -46,7 +46,7 @@ void main() {
     mockPrayerHiveService = MockPrayerHiveService();
     mockPrayerFirestoreService = MockPrayerFireStoreService();
     mockConnectionChecker = MockConnectionChecker();
-    prayerRepository = PrayerRepositoryImplementation(
+    prayerRepository = PrayerRepository(
       prayerHiveService: mockPrayerHiveService,
       prayerFirestoreService: mockPrayerFirestoreService,
       connectionChecker: mockConnectionChecker,

@@ -57,11 +57,17 @@ class _BottomNavBarState extends State<BottomNavBar> {
             icon: SvgPicture.asset(
               "assets/svg/home_icon.svg",
               height: 23,
-              color: Theme.of(context).iconTheme.color,
+              theme: SvgTheme(
+                currentColor: Theme.of(context).iconTheme.color!,
+              ),
+
             ),
             activeIcon: SvgPicture.asset(
               "assets/svg/home_icon.svg",
-              color: Theme.of(context).primaryColor,
+              theme: SvgTheme(
+                currentColor: Theme.of(context).primaryColor,
+              ),
+
               height: 23,
             ),
           ),
@@ -70,21 +76,35 @@ class _BottomNavBarState extends State<BottomNavBar> {
             icon: SvgPicture.asset(
               "assets/svg/read_icon.svg",
               height: 23,
-              color: Theme.of(context).iconTheme.color,
+              theme: SvgTheme(
+                currentColor: Theme.of(context).iconTheme.color!,
+              ),
+
             ),
             activeIcon: SvgPicture.asset(
               "assets/svg/read_icon.svg",
-              color: Theme.of(context).primaryColor,
+              theme: SvgTheme(
+                currentColor: Theme.of(context).primaryColor,
+              ),
+
               height: 23,
             ),
           ),
           BottomNavigationBarItem(
             label: "Prayer",
-            icon: SvgPicture.asset("assets/svg/prayer_icon.svg",
-                height: 24, color: Theme.of(context).iconTheme.color),
+            icon: SvgPicture.asset(
+              "assets/svg/prayer_icon.svg",
+              height: 24,
+              theme: SvgTheme(
+                  currentColor: Theme.of(context).iconTheme.color!,
+                  xHeight: 24),
+            ),
             activeIcon: SvgPicture.asset(
               "assets/svg/prayer_icon.svg",
-              color: Theme.of(context).primaryColor,
+              theme: SvgTheme(
+                currentColor: Theme.of(context).primaryColor
+              ),
+
               height: 24,
             ),
           ),
@@ -93,11 +113,17 @@ class _BottomNavBarState extends State<BottomNavBar> {
             icon: SvgPicture.asset(
               "assets/svg/notification_icon.svg",
               height: 23,
-              color: Theme.of(context).iconTheme.color,
+              theme: SvgTheme(
+                currentColor: Theme.of(context).iconTheme.color!,
+              ),
+
             ),
             activeIcon: SvgPicture.asset(
               "assets/svg/notification_icon.svg",
-              color: Theme.of(context).primaryColor,
+              theme: SvgTheme(
+                currentColor: Theme.of(context).primaryColor,
+              ),
+
               height: 23,
             ),
           ),

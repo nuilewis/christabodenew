@@ -5,22 +5,16 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import '../models/settings_model.dart';
 
-abstract class SettingsRepository {
-  Future<Either<Failure, void>> updateSettings(Settings settings);
-  Future<Either<Failure, void>> clearSettings();
-  Future<Either<Failure, Settings?>> getSettings();
-}
-
-class SettingsRepositoryImplementation implements SettingsRepository {
+class SettingsRepository {
   final SettingsHiveService settingsHiveService;
 
-  SettingsRepositoryImplementation(this.settingsHiveService);
-  @override
+  SettingsRepository(this.settingsHiveService);
+
   Future<Either<Failure, void>> updateSettings(Settings settings) async {
     final Box settingsBox = await settingsHiveService.openBox();
     try {
       await settingsHiveService.addSettings(settingsBox, settings);
-      return Right(Future.value());
+      return const Right(null);
     } catch (e) {
       rethrow;
       //   return const Left(LocalStorageFailure(
@@ -28,7 +22,6 @@ class SettingsRepositoryImplementation implements SettingsRepository {
     }
   }
 
-  @override
   Future<Either<Failure, Settings?>> getSettings() async {
     final Box settingsBox = await settingsHiveService.openBox();
     try {
@@ -41,12 +34,11 @@ class SettingsRepositoryImplementation implements SettingsRepository {
     }
   }
 
-  @override
   Future<Either<Failure, void>> clearSettings() async {
     final Box settingsBox = await settingsHiveService.openBox();
     try {
       await settingsHiveService.clearSettings(settingsBox);
-      return Right(Future.value());
+      return const Right(null);
     } catch (e) {
       return const Left(LocalStorageFailure(
           errorMessage: "An error occured while clearing your preferences"));

@@ -8,24 +8,12 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import '../core/errors/failure.dart';
 
-abstract class DevotionalRepository {
-  Future<Either<Failure, Devotional>> getCurrentDevotional();
-  Future<Either<Failure, int>> getCurrentDevotionalIndex();
-  Future<Either<Failure, List<Devotional>>> getDevotionals();
-
-  ///Liking Devotional Methods
-  Future<Either<Failure, List<Devotional>>> getLikedDevotionals();
-  Future<Either<Failure, void>> updateDevotionalSavedList(
-      List<Devotional> updatedList);
-  Future<Either<Failure, void>> clearDevotionals();
-}
-
-class DevotionalRepositoryImplementation implements DevotionalRepository {
+class DevotionalRepository {
   final DevotionalFirestoreService devotionalFirestoreService;
   final DevotionalHiveService devotionalHiveService;
   final ConnectionChecker connectionChecker;
 
-  DevotionalRepositoryImplementation(
+  DevotionalRepository(
       {required this.devotionalFirestoreService,
       required this.devotionalHiveService,
       required this.connectionChecker});
@@ -35,7 +23,6 @@ class DevotionalRepositoryImplementation implements DevotionalRepository {
   final DateTime _today = DateTime(DateTime.now().year, DateTime.now().month,
       DateTime.now().day, 0, 0, 0, 0, 0);
 
-  @override
   Future<Either<Failure, List<Devotional>>> getDevotionals() async {
     Devotional devotional = Devotional.empty;
 
@@ -87,7 +74,6 @@ class DevotionalRepositoryImplementation implements DevotionalRepository {
     }
   }
 
-  @override
   Future<Either<Failure, Devotional>> getCurrentDevotional() async {
     if (_devotionalList.isNotEmpty) {
       List<Devotional> todaysDevotional = _devotionalList
@@ -122,7 +108,6 @@ class DevotionalRepositoryImplementation implements DevotionalRepository {
     }
   }
 
-  @override
   Future<Either<Failure, int>> getCurrentDevotionalIndex() async {
     if (_devotionalList.isNotEmpty) {
       int todaysDevotionalIndex = _devotionalList.indexWhere((element) =>
@@ -158,7 +143,7 @@ class DevotionalRepositoryImplementation implements DevotionalRepository {
   }
 
   ///-------Liked Devotionals Methods--------///
-  @override
+
   Future<Either<Failure, List<Devotional>>> getLikedDevotionals() async {
     try {
       _likedDevotionalsList =
@@ -170,25 +155,23 @@ class DevotionalRepositoryImplementation implements DevotionalRepository {
     }
   }
 
-  @override
   Future<Either<Failure, void>> updateDevotionalSavedList(
       List<Devotional> updatedList) async {
     final Box box = await devotionalHiveService.openBox();
     try {
       await devotionalHiveService.addDevotional(box, updatedList);
-      return Right(Future.value());
+      return const Right(null);
     } catch (e) {
       return const Left(
           FirebaseFailure(errorMessage: "Unable to add to your favourites"));
     }
   }
 
-  @override
   Future<Either<Failure, void>> clearDevotionals() async {
     final Box box = await devotionalHiveService.openBox();
     try {
       await devotionalHiveService.clearDevotional(box);
-      return Right(Future.value());
+      return const Right(null);
     } catch (e) {
       return const Left(
           FirebaseFailure(errorMessage: "Unable to clear your favourites"));

@@ -11,14 +11,17 @@ class VideoCard extends StatelessWidget {
       aspectRatio: 16.0 / 9.0,
       child: Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(kDefaultPadding2x),
-            image: const DecorationImage(image: AssetImage("assets/images/road_image.jpg"), fit: BoxFit.cover),
-            gradient: LinearGradient(
-              colors: [Colors.transparent, kDark40],
+          borderRadius: BorderRadius.circular(kDefaultPadding2x),
+          image: const DecorationImage(
+              image: AssetImage("assets/images/road_image.jpg"),
+              fit: BoxFit.cover),
+          gradient: LinearGradient(
+            colors: [Colors.transparent, kDark40],
             //  stops: [0.3, 0.9 ],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),),
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
         child: Stack(
           children: [
             Positioned(
@@ -26,7 +29,10 @@ class VideoCard extends StatelessWidget {
               bottom: kDefaultPadding,
               child: Text(
                 "Video title",
-                style: Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 16, color: Colors.white),
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge!
+                    .copyWith(fontSize: 16, color: Colors.white),
               ),
             ),
             Center(
@@ -35,7 +41,9 @@ class VideoCard extends StatelessWidget {
                 icon: SvgPicture.asset(
                   "assets/svg/play_icon.svg",
                   height: kDefaultPadding2x,
-                  color: Colors.white,
+                  theme: const SvgTheme(
+                    currentColor: Colors.white,
+                  ),
                 ),
               ),
             )

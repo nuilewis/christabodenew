@@ -20,15 +20,19 @@ class MessagesScreen extends StatelessWidget {
           child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
         child: Column(
-          crossAxisAlignment:CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Salvation", style: Theme.of(context).textTheme.headline2,),
+            Text(
+              "Salvation",
+              style: Theme.of(context).textTheme.displayMedium,
+            ),
             const SizedBox(
               height: kDefaultPadding2x,
             ),
             MessageListItem(
               messageTitle: "message Title",
-              messageExcerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turp",
+              messageExcerpt:
+                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turp",
               onPressed: () {},
             ),
           ],
@@ -37,4 +41,3 @@ class MessagesScreen extends StatelessWidget {
     );
   }
 }
-

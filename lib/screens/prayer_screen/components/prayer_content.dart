@@ -49,14 +49,16 @@ class PrayerContent extends StatelessWidget {
                 children: [
                   Text(
                     "${dateTimeFormatter(context, prayer.date)} to ",
-                    style: Theme.of(context).textTheme.bodyText2,
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   const Spacer(),
                   IconButton(
                     onPressed: onShareButtonPressed,
                     icon: SvgPicture.asset(
                       "assets/svg/share_icon.svg",
-                      color: Theme.of(context).iconTheme.color,
+                      theme: SvgTheme(
+                        currentColor: Theme.of(context).iconTheme.color!,
+                      ),
                     ),
                   ),
                   IconButton(
@@ -65,7 +67,9 @@ class PrayerContent extends StatelessWidget {
                       prayer.isLiked
                           ? "assets/svg/heart_icon_filled.svg"
                           : "assets/svg/heart_icon.svg",
-                      color: Theme.of(context).iconTheme.color,
+                      theme: SvgTheme(
+                        currentColor: Theme.of(context).iconTheme.color!,
+                      ),
                     ),
                   ),
                   IconButton(
@@ -81,7 +85,9 @@ class PrayerContent extends StatelessWidget {
                       currentSettings.isDarkMode
                           ? "assets/svg/light_mode_icon.svg"
                           : "assets/svg/dark_mode_icon.svg",
-                      color: Theme.of(context).iconTheme.color,
+                      theme: SvgTheme(
+                        currentColor: Theme.of(context).iconTheme.color!,
+                      ),
                     ),
                   )
                 ],
@@ -91,7 +97,7 @@ class PrayerContent extends StatelessWidget {
               ),
               Text(prayer.scripture,
                   textAlign: TextAlign.left,
-                  style: Theme.of(context).textTheme.bodyText1),
+                  style: Theme.of(context).textTheme.bodyLarge),
               const SizedBox(
                 height: kDefaultPadding,
               ),
@@ -118,7 +124,7 @@ class PrayerContent extends StatelessWidget {
               const SizedBox(height: kDefaultPadding2x),
               Text(
                 "Christ Abode Ministries",
-                style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     fontSize: 12,
                     color: Theme.of(context).iconTheme.color!.withOpacity(.4)),
               ),

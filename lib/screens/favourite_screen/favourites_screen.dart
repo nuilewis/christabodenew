@@ -43,7 +43,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                 ),
                 Text(
                   "Favourites",
-                  style: Theme.of(context).textTheme.headline2,
+                  style: Theme.of(context).textTheme.displayMedium,
                 ),
                 const SizedBox(
                   height: kDefaultPadding2x,
@@ -65,16 +65,18 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                             children: [
                               SvgPicture.asset(
                                 "assets/svg/heart_icon.svg",
-                                color: Theme.of(context)
-                                    .primaryColor
-                                    .withOpacity(.3),
+                                theme: SvgTheme(
+                                  currentColor: Theme.of(context)
+                                      .primaryColor
+                                      .withOpacity(.3),
+                                ),
                                 width: MediaQuery.of(context).size.width * .3,
                               ),
                               const SizedBox(height: kDefaultPadding2x),
                               Text(
                                 "You haven't liked any Huios Epistolary Devotional message yet, once you do so, they'll appear here",
                                 textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.bodyText2,
+                                style: Theme.of(context).textTheme.bodyMedium,
                               ),
                             ],
                           ),

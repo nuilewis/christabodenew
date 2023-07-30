@@ -56,9 +56,6 @@ class DevotionalProvider extends ChangeNotifier {
       ///Will use the index of the devotional for today to limit the total list to
       ///all messages right unto this day, so that a user can page view scroll
       currentDevotionalIndex = index;
-      print("current devotiona index is");
-      print(index);
-      print(currentDevotionalIndex);
 
       ///THe cut the total devotional list into half, right upto the day of today.
       ///Added +1 cs the final list is actually from zero to the element at the index-1

@@ -15,56 +15,59 @@ class EventsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<EventsProvider>(builder: (context, eventData, child) {
-      return Scaffold(
-        extendBodyBehindAppBar: true,
-        body: SingleChildScrollView(
-          child: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: kDefaultPadding2x,
-                  ),
-                  Text(
-                    "Events",
-                    style: Theme.of(context).textTheme.headline2,
-                  ),
-                  const SizedBox(
-                    height: kDefaultPadding2x,
-                  ),
-                  Text(
-                    "Upcoming Events for ${monthsOfYear[DateTime.now().month]}",
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline2!
-                        .copyWith(fontSize: 20),
-                  ),
-                  const SizedBox(height: kDefaultPadding),
-                  BuildEventsList(events: eventData.upcomingEvents),
-                  const SizedBox(height: kDefaultPadding2x),
-                  Text(
-                    "Past Events",
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline2!
-                        .copyWith(fontSize: 20),
-                  ),
-                  BuildEventsList(
-                    events: eventData.pastEvents,
-                    messageIfEmpty: "There are no past events",
-                  ),
-                  SizedBox(height: kDefaultPadding2x),
-                ],
+    return Consumer<EventsProvider>(
+      builder: (context, eventData, child) {
+        return Scaffold(
+          extendBodyBehindAppBar: true,
+          body: SingleChildScrollView(
+            child: SafeArea(
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const SizedBox(
+                      height: kDefaultPadding2x,
+                    ),
+                    Text(
+                      "Events",
+                      style: Theme.of(context).textTheme.displayMedium,
+                    ),
+                    const SizedBox(
+                      height: kDefaultPadding2x,
+                    ),
+                    Text(
+                      "Upcoming Events for ${monthsOfYear[DateTime.now().month]}",
+                      style: Theme.of(context)
+                          .textTheme
+                          .displayMedium!
+                          .copyWith(fontSize: 20),
+                    ),
+                    const SizedBox(height: kDefaultPadding),
+                    BuildEventsList(events: eventData.upcomingEvents),
+                    const SizedBox(height: kDefaultPadding2x),
+                    Text(
+                      "Past Events",
+                      style: Theme.of(context)
+                          .textTheme
+                          .displayMedium!
+                          .copyWith(fontSize: 20),
+                    ),
+                    BuildEventsList(
+                      events: eventData.pastEvents,
+                      messageIfEmpty: "There are no past events",
+                    ),
+                    const SizedBox(height: kDefaultPadding2x),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }

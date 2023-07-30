@@ -50,18 +50,15 @@ class DevotionalContent extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        currentDevotional.author,
-                        style: Theme.of(context).textTheme.bodyText1,
-                      ),
+                      Text(currentDevotional.author,
+                          style: Theme.of(context).textTheme.bodyLarge),
                       Text(
                         "${dateTimeFormatter(context, currentDevotional.startDate)} to ",
-                        style: Theme.of(context).textTheme.bodyText2,
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
                       Text(
-                        dateTimeFormatter(context, currentDevotional.endDate),
-                        style: Theme.of(context).textTheme.bodyText2,
-                      ),
+                          dateTimeFormatter(context, currentDevotional.endDate),
+                          style: Theme.of(context).textTheme.bodyMedium),
                     ],
                   ),
                   const Spacer(),
@@ -80,7 +77,9 @@ class DevotionalContent extends StatelessWidget {
                       currentDevotional.isLiked
                           ? "assets/svg/heart_icon_filled.svg"
                           : "assets/svg/heart_icon.svg",
-                      color: Theme.of(context).iconTheme.color,
+                      theme: SvgTheme(
+                        currentColor: Theme.of(context).iconTheme.color!,
+                      ),
                     ),
                   ),
                   IconButton(
@@ -96,7 +95,9 @@ class DevotionalContent extends StatelessWidget {
                       currentSettings.isDarkMode
                           ? "assets/svg/light_mode_icon.svg"
                           : "assets/svg/dark_mode_icon.svg",
-                      color: Theme.of(context).iconTheme.color,
+                      theme: SvgTheme(
+                        currentColor: Theme.of(context).iconTheme.color!,
+                      ),
                     ),
                   )
                 ],
@@ -106,7 +107,7 @@ class DevotionalContent extends StatelessWidget {
               ),
               Text(currentDevotional.scripture,
                   textAlign: TextAlign.left,
-                  style: Theme.of(context).textTheme.bodyText1),
+                  style: Theme.of(context).textTheme.bodyLarge),
               const SizedBox(
                 height: kDefaultPadding,
               ),
@@ -127,7 +128,7 @@ class DevotionalContent extends StatelessWidget {
                 child: Text(
                   "Confession of faith, and Prayer",
                   textAlign: TextAlign.left,
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ),
               const SizedBox(
@@ -149,7 +150,7 @@ class DevotionalContent extends StatelessWidget {
               const SizedBox(height: kDefaultPadding2x),
               Text(
                 "Christ Abode Ministries",
-                style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     fontSize: 12,
                     color: Theme.of(context).iconTheme.color!.withOpacity(.4)),
               ),

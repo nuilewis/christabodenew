@@ -42,7 +42,9 @@ class _PrayerCardState extends State<PrayerCard> {
                   right: -20,
                   child: SvgPicture.asset(
                     "assets/svg/prayer_icon.svg",
-                    color: Colors.white.withOpacity(.4),
+                    theme: SvgTheme(
+                      currentColor: Colors.white.withOpacity(.4),
+                    ),
                     height: 150,
                   ),
                 ),
@@ -56,7 +58,7 @@ class _PrayerCardState extends State<PrayerCard> {
                         widget.prayer.title.toTitleCase(),
                         style: Theme.of(context)
                             .textTheme
-                            .bodyText1!
+                            .bodyLarge!
                             .copyWith(fontSize: 20),
                       ),
                       const SizedBox(
@@ -64,7 +66,7 @@ class _PrayerCardState extends State<PrayerCard> {
                       ),
                       Text(widget.prayer.content,
                           maxLines: 2,
-                          style: Theme.of(context).textTheme.bodyText2),
+                          style: Theme.of(context).textTheme.bodyMedium),
                       const SizedBox(
                         height: kDefaultPadding,
                       ),
@@ -72,9 +74,13 @@ class _PrayerCardState extends State<PrayerCard> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(dateTimeFormatter(context, DateTime.now()),
-                              style: Theme.of(context).textTheme.bodyText2),
-                          SvgPicture.asset("assets/svg/forward_icon.svg",
-                              color: Theme.of(context).iconTheme.color),
+                              style: Theme.of(context).textTheme.bodyMedium),
+                          SvgPicture.asset(
+                            "assets/svg/forward_icon.svg",
+                            theme: SvgTheme(
+                              currentColor: Theme.of(context).iconTheme.color!,
+                            ),
+                          ),
                         ],
                       ),
                     ],

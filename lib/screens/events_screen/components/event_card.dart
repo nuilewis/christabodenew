@@ -31,13 +31,13 @@ class EventCard extends StatelessWidget {
           children: [
             Text(
               event.name.toTitleCase(),
-              style: Theme.of(context).textTheme.bodyText1!.copyWith(
+              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                     fontSize: 18,
                   ),
             ),
             Text(
               event.description,
-              style: Theme.of(context).textTheme.bodyText2,
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
             const SizedBox(height: kDefaultPadding),
             Align(
@@ -46,7 +46,7 @@ class EventCard extends StatelessWidget {
                 dateTimeFormatter(context, event.startDate),
                 style: Theme.of(context)
                     .textTheme
-                    .bodyText2!
+                    .bodyMedium!
                     .copyWith(fontSize: 16),
               ),
             ),
@@ -57,7 +57,7 @@ class EventCard extends StatelessWidget {
                         "to ${dateTimeFormatter(context, event.endDate!)}",
                         style: Theme.of(context)
                             .textTheme
-                            .bodyText2!
+                            .bodyMedium!
                             .copyWith(fontSize: 16)),
                   )
                 : const SizedBox(),

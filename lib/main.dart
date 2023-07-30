@@ -87,28 +87,27 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    _prayerRepository = PrayerRepositoryImplementation(
+    _prayerRepository = PrayerRepository(
         prayerHiveService: _prayerHiveService,
         prayerFirestoreService: _prayerFireStoreService,
         connectionChecker: _connectionChecker);
 
-    _devotionalRepository = DevotionalRepositoryImplementation(
+    _devotionalRepository = DevotionalRepository(
         devotionalFirestoreService: _devotionalFirestoreService,
         devotionalHiveService: _devotionalHiveService,
         connectionChecker: _connectionChecker);
 
-    _messagesRepository = MessagesRepositoryImplementation();
+    _messagesRepository = MessagesRepository();
 
-    _eventsRepository = EventsRepositoryImplementation(
+    _eventsRepository = EventsRepository(
         eventsFirestoreService: _eventsFirestoreService,
         eventsHiveService: _eventsHiveService,
         connectionChecker: _connectionChecker);
 
-    _unsplashImageRepository = UnsplashImageRepositoryImplementation(
+    _unsplashImageRepository = UnsplashImageRepository(
         apiClient: _unsplashAPIClient, connectionChecker: _connectionChecker);
 
-    _settingsRepository =
-        SettingsRepositoryImplementation(_settingsHiveService);
+    _settingsRepository = SettingsRepository(_settingsHiveService);
     super.initState();
   }
 
@@ -118,7 +117,7 @@ class _MyAppState extends State<MyApp> {
       providers: [
         ChangeNotifierProvider<SettingsProvider>(
             create: (context) =>
-            SettingsProvider(_settingsRepository)..getSettings()),
+                SettingsProvider(_settingsRepository)..getSettings()),
         ChangeNotifierProvider<PrayerProvider>(
             create: (context) =>
                 PrayerProvider(prayerRepository: _prayerRepository)
@@ -136,7 +135,6 @@ class _MyAppState extends State<MyApp> {
             create: (context) => UnsplashImageProvider(
                 unsplashImageRepository: _unsplashImageRepository)
               ..getRandomImage()),
-
       ],
       child: Builder(builder: (context) {
         return MaterialApp(

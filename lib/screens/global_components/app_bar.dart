@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
+class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   final Size preferredSize;
   final bool isCalledFromNavBar;
@@ -24,8 +24,12 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
                 Feedback.forTap(context);
                 Navigator.pop(context);
               },
-              icon: SvgPicture.asset("assets/svg/back_icon.svg",
-                  color: Theme.of(context).iconTheme.color)),
+              icon: SvgPicture.asset(
+                "assets/svg/back_icon.svg",
+                theme: SvgTheme(
+                  currentColor: Theme.of(context).iconTheme.color!,
+                ),
+              )),
     );
   }
 }

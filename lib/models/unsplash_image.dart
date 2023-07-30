@@ -7,6 +7,7 @@ class UnsplashImage extends Equatable {
   final String? colour;
   final String? uploaderName;
   final String? uploaderUrl;
+  final DateTime? date;
 
   const UnsplashImage({
     required this.id,
@@ -15,16 +16,19 @@ class UnsplashImage extends Equatable {
     required this.uploaderName,
     this.colour,
     this.uploaderUrl,
+    this.date,
   });
 
   factory UnsplashImage.fromJson(Map<String, dynamic> json) {
     return UnsplashImage(
-        id: json["id"],
-        imgUrl: json["urls"]["regular"],
-        blurHash: json["blur_hash"],
-        uploaderName: json["user"]["name"],
-        uploaderUrl: json["user"]["portfolio_url"],
-        colour: json["color"]);
+      id: json["id"],
+      imgUrl: json["urls"]["regular"],
+      blurHash: json["blur_hash"],
+      uploaderName: json["user"]["name"],
+      uploaderUrl: json["user"]["portfolio_url"],
+      colour: json["color"],
+      date: DateTime.now(),
+    );
   }
 
   static const UnsplashImage empty =
@@ -35,5 +39,5 @@ class UnsplashImage extends Equatable {
 
   @override
   List<Object?> get props =>
-      [id, imgUrl, blurHash, colour, uploaderName, uploaderUrl];
+      [id, imgUrl, blurHash, colour, uploaderName, uploaderUrl, date];
 }

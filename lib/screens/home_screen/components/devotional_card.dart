@@ -40,7 +40,9 @@ class _DevotionalCardState extends State<DevotionalCard> {
                 right: -21,
                 child: SvgPicture.asset(
                   "assets/svg/read_icon.svg",
-                  color: Colors.white.withOpacity(.4),
+                  theme: SvgTheme(
+                    currentColor: Colors.white.withOpacity(.4),
+                  ),
                   height: 150,
                 ),
               ),
@@ -54,7 +56,7 @@ class _DevotionalCardState extends State<DevotionalCard> {
                     const SizedBox(width: double.infinity),
                     Text(
                       widget.devotional.title.toTitleCase(),
-                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                             fontSize: 20,
                             color: Colors.white,
                           ),
@@ -66,7 +68,7 @@ class _DevotionalCardState extends State<DevotionalCard> {
                         maxLines: 2,
                         style: Theme.of(context)
                             .textTheme
-                            .bodyText2!
+                            .bodyMedium!
                             .copyWith(color: Colors.white)),
                     const SizedBox(
                       height: kDefaultPadding,
@@ -77,11 +79,13 @@ class _DevotionalCardState extends State<DevotionalCard> {
                         Text(dateTimeFormatter(context, DateTime.now()),
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText2!
+                                .bodyMedium!
                                 .copyWith(color: Colors.white)),
-                        SvgPicture.asset("assets/svg/forward_icon.svg",
-                            //color: Theme.of(context).iconTheme.color
-                            color: Colors.white),
+                        SvgPicture.asset(
+                          "assets/svg/forward_icon.svg",
+                          //color: Theme.of(context).iconTheme.color
+                          theme: const SvgTheme(currentColor: Colors.white),
+                        ),
                       ],
                     )
                   ],

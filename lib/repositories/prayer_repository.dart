@@ -8,23 +8,11 @@ import '../core/errors/failure.dart';
 import '../models/prayer_model.dart';
 import '../services/prayer/prayer_firestore_service.dart';
 
-abstract class PrayerRepository {
-  Future<Either<Failure, Prayer>> getCurrentPrayer();
-  Future<Either<Failure, int>> getCurrentPrayerIndex();
-
-  Future<Either<Failure, List<Prayer>>> getPrayers();
-
-  ///Liking Prayer Methods
-  Future<Either<Failure, List<Prayer>>> getLikedPrayers();
-  Future<Either<Failure, void>> updatePrayerSavedList(List<Prayer> updatedList);
-  Future<Either<Failure, void>> clearPrayers();
-}
-
-class PrayerRepositoryImplementation implements PrayerRepository {
+class PrayerRepository {
   final PrayerFireStoreService prayerFirestoreService;
   final PrayerHiveService prayerHiveService;
   final ConnectionChecker connectionChecker;
-  PrayerRepositoryImplementation({
+  PrayerRepository({
     required this.prayerHiveService,
     required this.prayerFirestoreService,
     required this.connectionChecker,
@@ -35,7 +23,6 @@ class PrayerRepositoryImplementation implements PrayerRepository {
   final DateTime _today = DateTime(DateTime.now().year, DateTime.now().month,
       DateTime.now().day, 0, 0, 0, 0, 0);
 
-  @override
   Future<Either<Failure, List<Prayer>>> getPrayers() async {
     Prayer prayer = Prayer.empty;
 
@@ -86,7 +73,6 @@ class PrayerRepositoryImplementation implements PrayerRepository {
     }
   }
 
-  @override
   Future<Either<Failure, Prayer>> getCurrentPrayer() async {
     if (_prayerList.isNotEmpty) {
       ///Gates the prayers whose dates and months are equal
@@ -111,7 +97,6 @@ class PrayerRepositoryImplementation implements PrayerRepository {
     }
   }
 
-  @override
   Future<Either<Failure, int>> getCurrentPrayerIndex() async {
     if (_prayerList.isNotEmpty) {
       int todaysDevotionalIndex = _prayerList.indexWhere(
@@ -141,7 +126,7 @@ class PrayerRepositoryImplementation implements PrayerRepository {
   }
 
   ///-------Liked Prayer Methods--------///
-  @override
+
   Future<Either<Failure, List<Prayer>>> getLikedPrayers() async {
     try {
       _likedPrayerList =
@@ -154,25 +139,23 @@ class PrayerRepositoryImplementation implements PrayerRepository {
     }
   }
 
-  @override
   Future<Either<Failure, void>> updatePrayerSavedList(
       List<Prayer> updatedList) async {
     final Box box = await prayerHiveService.openBox();
     try {
       await prayerHiveService.addPrayers(box, updatedList);
-      return Right(Future.value());
+      return const Right(null);
     } catch (e) {
       return const Left(
           FirebaseFailure(errorMessage: "Unable to add to your favourites"));
     }
   }
 
-  @override
   Future<Either<Failure, void>> clearPrayers() async {
     final Box box = await prayerHiveService.openBox();
     try {
       await prayerHiveService.clearPrayers(box);
-      return Right(Future.value());
+      return const Right(null);
     } catch (e) {
       return const Left(
           FirebaseFailure(errorMessage: "Unable to clear your favourites"));

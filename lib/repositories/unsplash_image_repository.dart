@@ -6,19 +6,14 @@ import 'package:dartz/dartz.dart';
 import '../core/connection_checker/connection_checker.dart';
 import '../core/errors/failure.dart';
 
-abstract class UnsplashImageRepository {
-  Future<Either<Failure, UnsplashImage>> getRandomImage();
-  Future<Either<Failure, UnsplashImage>> getImage(String category);
-}
-
-class UnsplashImageRepositoryImplementation implements UnsplashImageRepository {
+class UnsplashImageRepository {
   final UnsplashAPIClient apiClient;
   final ConnectionChecker connectionChecker;
 
-  UnsplashImageRepositoryImplementation(
+  UnsplashImageRepository(
       {required this.apiClient, required this.connectionChecker});
 
-  @override
+
   Future<Either<Failure, UnsplashImage>> getImage(String category) async {
     if (await connectionChecker.isConnected) {
       try {
@@ -32,7 +27,6 @@ class UnsplashImageRepositoryImplementation implements UnsplashImageRepository {
     }
   }
 
-  @override
   Future<Either<Failure, UnsplashImage>> getRandomImage() async {
     if (await connectionChecker.isConnected) {
       try {

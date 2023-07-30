@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       const SizedBox(height: kDefaultPadding * 3),
                       Text("Welcome to the\nChrist Abode Ministries",
-                          style: Theme.of(context).textTheme.headline1),
+                          style: Theme.of(context).textTheme.displayLarge),
                       const SizedBox(
                         height: kDefaultPadding * 3,
                       ),
@@ -64,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         "Upcoming Events",
                         style: Theme.of(context)
                             .textTheme
-                            .headline2!
+                            .displayMedium!
                             .copyWith(fontSize: 24),
                       ),
                       const SizedBox(height: kDefaultPadding),
@@ -72,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ? EventCard(event: eventData.upcomingEvents.first)
                           : Text(
                               "There are no upcoming events scheduled for now.",
-                              style: Theme.of(context).textTheme.bodyText2,
+                              style: Theme.of(context).textTheme.bodyMedium,
                             ),
 
                       const SizedBox(height: kDefaultPadding2x),
@@ -80,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         "Today's Huios Devotional",
                         style: Theme.of(context)
                             .textTheme
-                            .headline2!
+                            .displayMedium!
                             .copyWith(fontSize: 24),
                       ),
                       const SizedBox(height: kDefaultPadding),
@@ -104,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         "Today's Prayer Fragrance",
                         style: Theme.of(context)
                             .textTheme
-                            .headline2!
+                            .displayMedium!
                             .copyWith(fontSize: 24),
                       ),
                       const SizedBox(height: kDefaultPadding),
@@ -174,7 +174,7 @@ class MessagesCategoryItem extends StatelessWidget {
             color: kBlue60),
         child: Text(
           "Category",
-          style: Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 18),
+          style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 18),
         ),
       ),
     );

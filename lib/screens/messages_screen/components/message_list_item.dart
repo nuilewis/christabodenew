@@ -31,17 +31,20 @@ class MessageListItem extends StatelessWidget {
           Text(
             messageTitle,
             style:
-                Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 18),
+                Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 18),
           ),
           const SizedBox(height: kDefaultPadding / 2),
-          Text(messageExcerpt, maxLines: 2, style: Theme.of(context).textTheme.bodyText2),
+          Text(messageExcerpt,
+              maxLines: 2, style: Theme.of(context).textTheme.bodyMedium),
           Align(
             alignment: Alignment.centerRight,
             child: IconButton(
               onPressed: onPressed,
               icon: SvgPicture.asset(
                 "assets/svg/forward_icon.svg",
-                color: Theme.of(context).iconTheme.color,
+                theme: SvgTheme(
+                  currentColor: Theme.of(context).iconTheme.color!,
+                ),
               ),
             ),
           )

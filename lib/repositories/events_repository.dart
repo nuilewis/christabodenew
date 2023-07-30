@@ -8,19 +8,12 @@ import '../models/event_model.dart';
 import '../services/events/event_hive_service.dart';
 import '../services/events/events_firestore_service.dart';
 
-abstract class EventsRepository {
-  Future<Either<Failure, List<Event>>> getEvents();
-  Future<Either<Failure, List<Event>>> getUpcomingEvents();
-  Future<Either<Failure, List<Event>>> getPastEvents();
-  Future<Either<Failure, List<Event>>> getMonthlyEvents();
-}
-
-class EventsRepositoryImplementation implements EventsRepository {
+class EventsRepository {
   final EventsFirestoreService eventsFirestoreService;
   final EventsHiveService eventsHiveService;
   final ConnectionChecker connectionChecker;
 
-  EventsRepositoryImplementation(
+  EventsRepository(
       {required this.eventsFirestoreService,
       required this.eventsHiveService,
       required this.connectionChecker});
@@ -33,7 +26,6 @@ class EventsRepositoryImplementation implements EventsRepository {
   final DateTime _today = DateTime(DateTime.now().year, DateTime.now().month,
       DateTime.now().day, 0, 0, 0, 0, 0);
 
-  @override
   Future<Either<Failure, List<Event>>> getEvents() async {
     final Box eventBox = await eventsHiveService.openBox();
     _eventsList = await eventsHiveService.getData(eventBox);
@@ -70,7 +62,6 @@ class EventsRepositoryImplementation implements EventsRepository {
     }
   }
 
-  @override
   Future<Either<Failure, List<Event>>> getPastEvents() async {
     ///We now find our past and present events for the month rather than for all time.
     if (_eventsList.isNotEmpty) {
@@ -85,7 +76,6 @@ class EventsRepositoryImplementation implements EventsRepository {
     }
   }
 
-  @override
   Future<Either<Failure, List<Event>>> getUpcomingEvents() async {
     if (_eventsList.isNotEmpty) {
       ///We now find our past and present events for the month rather than for all time.
@@ -104,7 +94,6 @@ class EventsRepositoryImplementation implements EventsRepository {
     }
   }
 
-  @override
   Future<Either<Failure, List<Event>>> getMonthlyEvents() async {
     if (_eventsList.isNotEmpty) {
       _monthlyEvents = _eventsList

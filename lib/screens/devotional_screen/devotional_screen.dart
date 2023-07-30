@@ -130,11 +130,14 @@ class _DevotionalScreenState extends State<DevotionalScreen>
                                 ///and the isDarkMode variable. If true then always keep the text white,
                                 ///if false (ie it is in light mode, )
                                 ///then animate the text colour as user scrolls
-                                color: Provider.of<SettingsProvider>(context)
-                                        .userSettings
-                                        .isDarkMode
-                                    ? Colors.white
-                                    : colorAnimation.value,
+
+                                theme: SvgTheme(
+                                    currentColor:
+                                        Provider.of<SettingsProvider>(context)
+                                                .userSettings
+                                                .isDarkMode
+                                            ? Colors.white
+                                            : colorAnimation.value!),
                               ),
                             ),
                       floating: true,
@@ -156,7 +159,7 @@ class _DevotionalScreenState extends State<DevotionalScreen>
                               textAlign: TextAlign.center,
                               style: Theme.of(context)
                                   .textTheme
-                                  .headline1!
+                                  .displayLarge!
                                   .copyWith(
                                       color:
                                           Provider.of<SettingsProvider>(context)
