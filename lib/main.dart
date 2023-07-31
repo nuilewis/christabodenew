@@ -134,7 +134,7 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider<UnsplashImageProvider>(
             create: (context) => UnsplashImageProvider(
                 unsplashImageRepository: _unsplashImageRepository)
-              ..getRandomImage()),
+              ..getFeaturedImages()),
       ],
       child: Builder(builder: (context) {
         return MaterialApp(

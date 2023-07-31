@@ -19,10 +19,6 @@ Color kPurple60 = const Color(0xFF4C14F3).withOpacity(.6);
 Color kPurple40 = const Color(0xFF4C14F3).withOpacity(.4);
 Color kPurple20 = const Color(0xFF4C14F3).withOpacity(.2);
 
-Color kPurpleDark = const Color(0xFFB69DFF);
-Color kPurpleDark80 = const Color(0xFFB69DFF).withOpacity(.8);
-Color kPurpleDark60 = const Color(0xFFB69DFF).withOpacity(.6);
-
 const Color kDark = Color(0xFF2D2D2D);
 Color kDark80 = const Color(0xFF2D2D2D).withOpacity(.8);
 Color kDark60 = const Color(0xFF2D2D2D).withOpacity(.6);

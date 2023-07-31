@@ -119,7 +119,7 @@ class DevotionalAndPrayerCard extends StatelessWidget {
                     Row(
                       children: [
                         Expanded(
-                          child: Text(devotional?.content ?? prayer!.title,
+                          child: Text(devotional?.content ?? prayer!.content,
                               maxLines: 2,
                               style: Theme.of(context)
                                   .textTheme
