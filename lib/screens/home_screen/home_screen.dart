@@ -1,19 +1,28 @@
+import 'package:christabodenew/core/extensions/string_extension.dart';
 import 'package:christabodenew/models/devotional_model.dart';
+import 'package:christabodenew/models/event_model.dart';
+import 'package:christabodenew/models/unsplash_image.dart';
 import 'package:christabodenew/providers/events_provider.dart';
 import 'package:christabodenew/providers/messages_provider.dart';
 import 'package:christabodenew/providers/prayer_provider.dart';
 import 'package:christabodenew/providers/unsplash_image_provider.dart';
+import 'package:christabodenew/screens/devotional_screen/components/featured_image.dart';
 import 'package:christabodenew/screens/home_screen/components/devotional_card.dart';
 import 'package:christabodenew/screens/messages_screen/messages_screen.dart';
 import 'package:christabodenew/screens/prayer_screen/prayer_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_blurhash/flutter_blurhash.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/constants.dart';
+import '../../core/date_time_formatter.dart';
 import '../../models/prayer_model.dart';
 import '../../providers/devotional_provider.dart';
 import '../devotional_screen/devotional_screen.dart';
 import '../events_screen/components/event_card.dart';
+import 'components/devotional_and_prayer_card.dart';
+import 'components/featured_event_card.dart';
 import 'components/prayer_card.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -39,112 +48,112 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer4<DevotionalProvider, PrayerProvider, MessagesProvider,
-        EventsProvider>(
-      builder: ((context, devotionalData, prayerData, messagesData, eventData,
+    return Consumer4<DevotionalProvider, PrayerProvider, EventsProvider,
+        UnsplashImageProvider>(
+      builder: ((context, devotionalData, prayerData, eventData, unsplashData,
           child) {
         return Scaffold(
-          body: SafeArea(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: kDefaultPadding),
-                child: SizedBox(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const SizedBox(height: kDefaultPadding * 3),
-                      Text("Welcome to the\nChrist Abode Ministries",
-                          style: Theme.of(context).textTheme.displayLarge),
-                      const SizedBox(
-                        height: kDefaultPadding * 3,
-                      ),
-                      Text(
-                        "Upcoming Events",
+          body: SingleChildScrollView(
+            child: SafeArea(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(height: kDefaultPadding2x),
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                    child: Text("Christ Abode Ministries",
                         style: Theme.of(context)
                             .textTheme
-                            .displayMedium!
-                            .copyWith(fontSize: 24),
-                      ),
-                      const SizedBox(height: kDefaultPadding),
-                      eventData.upcomingEvents.isNotEmpty
-                          ? EventCard(event: eventData.upcomingEvents.first)
-                          : Text(
-                              "There are no upcoming events scheduled for now.",
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-
-                      const SizedBox(height: kDefaultPadding2x),
-                      Text(
-                        "Today's Huios Devotional",
-                        style: Theme.of(context)
-                            .textTheme
-                            .displayMedium!
-                            .copyWith(fontSize: 24),
-                      ),
-                      const SizedBox(height: kDefaultPadding),
-                      DevotionalCard(
-                          devotional: devotionalData.todaysDevotional ??
-                              Devotional.empty,
-                          onPressed: () {
-                            devotionalData.getTodaysDevotionalIndex();
-                            Provider.of<UnsplashImageProvider>(context,
-                                    listen: false)
-                                .getRandomImage();
-
-                            /// running this method will ensure that the right index for the devotional
-                            /// of today is gotten and sent to the the current devotional index, even
-                            /// if the user was scrolling and changing devotionals indexes
-
-                            Navigator.pushNamed(context, DevotionalScreen.id);
-                          }),
-                      const SizedBox(height: kDefaultPadding2x),
-                      Text(
-                        "Today's Prayer Fragrance",
-                        style: Theme.of(context)
-                            .textTheme
-                            .displayMedium!
-                            .copyWith(fontSize: 24),
-                      ),
-                      const SizedBox(height: kDefaultPadding),
-                      PrayerCard(
-                        prayer: prayerData.todaysPrayer ?? Prayer.empty,
-                        onPressed: () {
-                          prayerData.getTodaysPrayerIndex();
-
-                          /// running this method will ensure that the right index for the prayer
-                          /// of today is gotten and sent to the the current prayer index, even
-                          /// if the user was scrolling and changing prayer indexes
-
-                          Navigator.pushNamed(context, PrayerScreen.id);
-                        },
-                      ),
-                      const SizedBox(height: kDefaultPadding2x),
-                      // Text(
-                      //   "Videos",
-                      //   style: Theme.of(context)
-                      //       .textTheme
-                      //       .headline2!
-                      //       .copyWith(fontSize: 24),
-                      // ),
-                      // const SizedBox(height: kDefaultPadding),
-                      // const VideoCard(),
-                      // const SizedBox(height: kDefaultPadding2x),
-
-                      // Text(
-                      //   "Messages",
-                      //   style: Theme.of(context)
-                      //       .textTheme
-                      //       .headline2!
-                      //       .copyWith(fontSize: 24),
-                      // ),
-                      // const SizedBox(height: kDefaultPadding),
-                      // const MessagesCategoryItem(),
-                      const SizedBox(height: kDefaultPadding2x),
-                    ],
+                            .bodyLarge!
+                            .copyWith(fontSize: 20)),
                   ),
-                ),
+                  const SizedBox(
+                    height: kDefaultPadding,
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Upcoming Events",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(fontSize: 20),
+                        ),
+                        const SizedBox(height: kDefaultPadding),
+                        eventData.upcomingEvents.isNotEmpty
+                            ? FeaturedEventCard(
+                                event: eventData.upcomingEvents.first,
+                                featuredImage:
+                                    unsplashData.devotionalFeaturedImage)
+                            : Text(
+                                "There are no upcoming events scheduled for now.",
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: kDefaultPadding2x),
+                  Padding(
+                    padding: const EdgeInsets.only(left: kDefaultPadding),
+                    child: Text(
+                      "Devotional & Prayer",
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .copyWith(fontSize: 20),
+                    ),
+                  ),
+                  SizedBox(height: kDefaultPadding),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        const SizedBox(width: kDefaultPadding),
+                        DevotionalAndPrayerCard(
+                            onPressed: () async {
+                              await devotionalData
+                                  .getTodaysDevotionalIndex()
+                                  .whenComplete(() {
+                                Navigator.pushNamed(
+                                    context, DevotionalScreen.id);
+                              });
+
+                              /// running this method will ensure that the right index for the devotional
+                              /// of today is gotten and sent to the the current devotional index, even
+                              /// if the user was scrolling and changing devotionals indexes
+                            },
+                            featuredImage: unsplashData.devotionalFeaturedImage,
+                            devotional: devotionalData.todaysDevotional ??
+                                Devotional.empty),
+                        const SizedBox(width: kDefaultPadding),
+                        DevotionalAndPrayerCard(
+                            onPressed: () async {
+                              await prayerData
+                                  .getTodaysPrayerIndex()
+                                  .whenComplete(() {
+                                Navigator.pushNamed(context, PrayerScreen.id);
+                              });
+
+                              /// running this method will ensure that the right index for the prayer
+                              /// of today is gotten and sent to the the current prayer index, even
+                              /// if the user was scrolling and changing prayer indexes
+                            },
+                            featuredImage: unsplashData.prayerFeaturedImage,
+                            prayer: prayerData.todaysPrayer ?? Prayer.empty),
+                        const SizedBox(width: kDefaultPadding),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: kDefaultPadding),
+                ],
               ),
             ),
           ),
