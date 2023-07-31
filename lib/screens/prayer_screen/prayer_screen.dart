@@ -79,6 +79,7 @@ class _PrayerScreenState extends State<PrayerScreen>
   @override
   void dispose() {
     _prayerPageController.dispose();
+    scrollAnimationController.dispose();
 
     super.dispose();
   }
@@ -87,14 +88,14 @@ class _PrayerScreenState extends State<PrayerScreen>
   Widget build(BuildContext context) {
     return Consumer2<PrayerProvider, UnsplashImageProvider>(
       builder: ((context, prayerData, unsplashImageData, child) {
-        final UnsplashImage featuredImage = unsplashImageData.featuredImage;
+        final UnsplashImage featuredImage =
+            unsplashImageData.prayerFeaturedImage;
         return Scaffold(
           body: PageView.builder(
             controller: _prayerPageController,
             itemCount: prayerData.allPrayers.length,
             onPageChanged: (index) async {
               currentIndex = index;
-              await unsplashImageData.getRandomImage();
               prayerData.updateCurrentPrayerIndex(index);
             },
             itemBuilder: (context, index) {
@@ -144,15 +145,13 @@ class _PrayerScreenState extends State<PrayerScreen>
                                 ///and the isDarkMode variable. If true then always keep the text white,
                                 ///if false (ie it is in light mode, )
                                 ///then animate the text colour as user scrolls
-                                theme: SvgTheme(
-                                  currentColor:
-                                      Provider.of<SettingsProvider>(context)
-                                              .userSettings
-                                              .isDarkMode
-                                          ? Colors.white
-                                          : colorAnimation.value!,
-                                ),
-                              )),
+                                color: Provider.of<SettingsProvider>(context)
+                                        .userSettings
+                                        .isDarkMode
+                                    ? Colors.white
+                                    : colorAnimation.value!,
+                              ),
+                            ),
                       floating: true,
                       pinned: true,
                       backgroundColor:

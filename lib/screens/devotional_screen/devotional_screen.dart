@@ -70,7 +70,8 @@ class _DevotionalScreenState extends State<DevotionalScreen>
   Widget build(BuildContext context) {
     return Consumer2<DevotionalProvider, UnsplashImageProvider>(
       builder: ((context, devotionalData, unsplashImageData, child) {
-        final UnsplashImage featuredImage = unsplashImageData.featuredImage;
+        final UnsplashImage featuredImage =
+            unsplashImageData.devotionalFeaturedImage;
 
         return Scaffold(
           body: PageView.builder(
@@ -81,7 +82,6 @@ class _DevotionalScreenState extends State<DevotionalScreen>
             onPageChanged: (index) async {
               currentIndex = index;
               devotionalData.updateCurrentDevotionalIndex(index);
-              await unsplashImageData.getRandomImage();
             },
             itemBuilder: (context, index) {
               return CustomScrollView(
@@ -123,22 +123,17 @@ class _DevotionalScreenState extends State<DevotionalScreen>
                               onPressed: () {
                                 Navigator.pop(context);
                               },
-                              icon: SvgPicture.asset(
-                                "assets/svg/back_icon.svg",
+                              icon: SvgPicture.asset("assets/svg/back_icon.svg",
 
-                                ///Check if it is in dark mode or light mode by checking the settings provider
-                                ///and the isDarkMode variable. If true then always keep the text white,
-                                ///if false (ie it is in light mode, )
-                                ///then animate the text colour as user scrolls
-
-                                theme: SvgTheme(
-                                    currentColor:
-                                        Provider.of<SettingsProvider>(context)
-                                                .userSettings
-                                                .isDarkMode
-                                            ? Colors.white
-                                            : colorAnimation.value!),
-                              ),
+                                  ///Check if it is in dark mode or light mode by checking the settings provider
+                                  ///and the isDarkMode variable. If true then always keep the text white,
+                                  ///if false (ie it is in light mode, )
+                                  ///then animate the text colour as user scrolls
+                                  color: Provider.of<SettingsProvider>(context)
+                                          .userSettings
+                                          .isDarkMode
+                                      ? Colors.white
+                                      : colorAnimation.value!),
                             ),
                       floating: true,
                       pinned: true,

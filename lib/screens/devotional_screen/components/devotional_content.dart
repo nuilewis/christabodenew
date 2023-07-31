@@ -77,9 +77,7 @@ class DevotionalContent extends StatelessWidget {
                       currentDevotional.isLiked
                           ? "assets/svg/heart_icon_filled.svg"
                           : "assets/svg/heart_icon.svg",
-                      theme: SvgTheme(
-                        currentColor: Theme.of(context).iconTheme.color!,
-                      ),
+                      color: Theme.of(context).iconTheme.color!.withOpacity(.9),
                     ),
                   ),
                   IconButton(
@@ -95,9 +93,7 @@ class DevotionalContent extends StatelessWidget {
                       currentSettings.isDarkMode
                           ? "assets/svg/light_mode_icon.svg"
                           : "assets/svg/dark_mode_icon.svg",
-                      theme: SvgTheme(
-                        currentColor: Theme.of(context).iconTheme.color!,
-                      ),
+                      color: Theme.of(context).iconTheme.color!.withOpacity(.9),
                     ),
                   )
                 ],

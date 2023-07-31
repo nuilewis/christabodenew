@@ -52,24 +52,20 @@ class PrayerContent extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   const Spacer(),
-                  IconButton(
-                    onPressed: onShareButtonPressed,
-                    icon: SvgPicture.asset(
-                      "assets/svg/share_icon.svg",
-                      theme: SvgTheme(
-                        currentColor: Theme.of(context).iconTheme.color!,
-                      ),
-                    ),
-                  ),
+                  // IconButton(
+                  //   onPressed: onShareButtonPressed,
+                  //   icon: SvgPicture.asset(
+                  //     "assets/svg/share_icon.svg",
+                  //     color: Theme.of(context).iconTheme.color!.withOpacity(.9),
+                  //   ),
+                  // ),
                   IconButton(
                     onPressed: onLikedButtonPressed,
                     icon: SvgPicture.asset(
                       prayer.isLiked
                           ? "assets/svg/heart_icon_filled.svg"
                           : "assets/svg/heart_icon.svg",
-                      theme: SvgTheme(
-                        currentColor: Theme.of(context).iconTheme.color!,
-                      ),
+                      color: Theme.of(context).iconTheme.color!.withOpacity(.9),
                     ),
                   ),
                   IconButton(
@@ -85,9 +81,7 @@ class PrayerContent extends StatelessWidget {
                       currentSettings.isDarkMode
                           ? "assets/svg/light_mode_icon.svg"
                           : "assets/svg/dark_mode_icon.svg",
-                      theme: SvgTheme(
-                        currentColor: Theme.of(context).iconTheme.color!,
-                      ),
+                      color: Theme.of(context).iconTheme.color!.withOpacity(.9),
                     ),
                   )
                 ],
