@@ -1,7 +1,9 @@
 import 'package:christabodenew/screens/home_screen/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/settings_provider.dart';
 import 'devotional_screen/devotional_screen.dart';
 import 'events_screen/events_screen.dart';
 import 'prayer_screen/prayer_screen.dart';
@@ -33,8 +35,10 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   int _selectedIndex = 0;
 
-  Widget _bottomNavBar(int selectedIndex) {
+  Widget _bottomNavBar(
+      {required int selectedIndex, required Color selectedItemColor}) {
     return BottomNavigationBar(
+        useLegacyColorScheme: false,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         type: BottomNavigationBarType.fixed,
         // landscapeLayout: BottomNavigationBarLandscapeLayout.spread,
@@ -45,11 +49,11 @@ class _BottomNavBarState extends State<BottomNavBar> {
         },
         elevation: 0,
         enableFeedback: true,
-        showSelectedLabels: true,
-        showUnselectedLabels: true,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
         unselectedFontSize: 12,
         selectedFontSize: 12,
-        selectedItemColor: Theme.of(context).primaryColor,
+        selectedItemColor: selectedItemColor,
         currentIndex: selectedIndex,
         items: [
           BottomNavigationBarItem(
@@ -57,17 +61,11 @@ class _BottomNavBarState extends State<BottomNavBar> {
             icon: SvgPicture.asset(
               "assets/svg/home_icon.svg",
               height: 23,
-              theme: SvgTheme(
-                currentColor: Theme.of(context).iconTheme.color!,
-              ),
-
+              color: Theme.of(context).iconTheme.color,
             ),
             activeIcon: SvgPicture.asset(
               "assets/svg/home_icon.svg",
-              theme: SvgTheme(
-                currentColor: Theme.of(context).primaryColor,
-              ),
-
+              color: selectedItemColor,
               height: 23,
             ),
           ),
@@ -76,17 +74,11 @@ class _BottomNavBarState extends State<BottomNavBar> {
             icon: SvgPicture.asset(
               "assets/svg/read_icon.svg",
               height: 23,
-              theme: SvgTheme(
-                currentColor: Theme.of(context).iconTheme.color!,
-              ),
-
+              color: Theme.of(context).iconTheme.color,
             ),
             activeIcon: SvgPicture.asset(
               "assets/svg/read_icon.svg",
-              theme: SvgTheme(
-                currentColor: Theme.of(context).primaryColor,
-              ),
-
+              color: selectedItemColor,
               height: 23,
             ),
           ),
@@ -95,16 +87,11 @@ class _BottomNavBarState extends State<BottomNavBar> {
             icon: SvgPicture.asset(
               "assets/svg/prayer_icon.svg",
               height: 24,
-              theme: SvgTheme(
-                  currentColor: Theme.of(context).iconTheme.color!,
-                  xHeight: 24),
+              color: Theme.of(context).iconTheme.color,
             ),
             activeIcon: SvgPicture.asset(
               "assets/svg/prayer_icon.svg",
-              theme: SvgTheme(
-                currentColor: Theme.of(context).primaryColor
-              ),
-
+              color: selectedItemColor,
               height: 24,
             ),
           ),
@@ -113,17 +100,11 @@ class _BottomNavBarState extends State<BottomNavBar> {
             icon: SvgPicture.asset(
               "assets/svg/notification_icon.svg",
               height: 23,
-              theme: SvgTheme(
-                currentColor: Theme.of(context).iconTheme.color!,
-              ),
-
+              color: Theme.of(context).iconTheme.color,
             ),
             activeIcon: SvgPicture.asset(
               "assets/svg/notification_icon.svg",
-              theme: SvgTheme(
-                currentColor: Theme.of(context).primaryColor,
-              ),
-
+              color: selectedItemColor,
               height: 23,
             ),
           ),
@@ -132,12 +113,20 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: _bottomNavBar(_selectedIndex),
-      body: PageStorage(
-        bucket: bucket,
-        child: pages[_selectedIndex],
-      ),
+    return Consumer<SettingsProvider>(
+      builder: (context, settingsData, child) {
+        return Scaffold(
+          bottomNavigationBar: _bottomNavBar(
+              selectedIndex: _selectedIndex,
+              selectedItemColor: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.white
+                  : Theme.of(context).primaryColor),
+          body: PageStorage(
+            bucket: bucket,
+            child: pages[_selectedIndex],
+          ),
+        );
+      },
     );
   }
 }

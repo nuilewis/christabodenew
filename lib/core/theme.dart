@@ -13,8 +13,8 @@ ThemeData lightThemeData(BuildContext context) {
     appBarTheme: appBarTheme,
     primaryColor: kPurple80,
     scaffoldBackgroundColor: Colors.white,
-    iconTheme: IconThemeData(color: kDark60),
-    primaryIconTheme: IconThemeData(color: kDark60),
+    iconTheme: IconThemeData(color: kDark40),
+    primaryIconTheme: IconThemeData(color: kDark40),
     cardTheme: CardTheme(
       color: kCardColorLightTheme,
       elevation: 0,
@@ -29,8 +29,11 @@ ThemeData lightThemeData(BuildContext context) {
       displayLarge: kHeading.copyWith(color: kDark),
       displayMedium: kHeadingLight.copyWith(color: kDark),
     ),
-    colorScheme:
-        ColorScheme.fromSeed(seedColor: kPurple, brightness: Brightness.light),
+    colorScheme: ColorScheme.fromSeed(
+        seedColor: kPurple,
+        brightness: Brightness.light,
+        primary: kPurple80,
+        secondary: kGreen),
   );
 }
 
@@ -39,10 +42,10 @@ ThemeData lightThemeData(BuildContext context) {
 ThemeData darkThemeData(BuildContext context) {
   return ThemeData(
       appBarTheme: appBarTheme,
-      primaryColor: kPurpleDark,
-      scaffoldBackgroundColor: kDark,
-      iconTheme: const IconThemeData(color: Colors.white),
-      primaryIconTheme: const IconThemeData(color: Colors.white),
+      scaffoldBackgroundColor: Colors.black,
+      primaryColor: kPurple,
+      iconTheme: IconThemeData(color: Colors.white.withOpacity(.6)),
+      primaryIconTheme: IconThemeData(color: Colors.white.withOpacity(.6)),
       cardTheme: CardTheme(
         color: kCardColorDarkTheme,
         elevation: 0,
@@ -59,7 +62,11 @@ ThemeData darkThemeData(BuildContext context) {
       ),
       cardColor: kCardColorDarkTheme,
       colorScheme: ColorScheme.fromSeed(
-          seedColor: kPurple, brightness: Brightness.dark));
+        seedColor: kPurple80,
+        brightness: Brightness.dark,
+        primary: kPurple80,
+        secondary: kGreen,
+      ));
 }
 
 AppBarTheme appBarTheme = const AppBarTheme(

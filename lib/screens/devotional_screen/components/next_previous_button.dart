@@ -22,7 +22,8 @@ class NextPreviousButton extends StatelessWidget {
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         padding: EdgeInsets.zero,
-        backgroundColor: bgColour ?? Theme.of(context).iconTheme.color,
+        backgroundColor:
+            bgColour ?? Theme.of(context).iconTheme.color!.withOpacity(1),
         elevation: elevation ?? 0,
         shape: const CircleBorder(),
       ),
@@ -32,10 +33,7 @@ class NextPreviousButton extends StatelessWidget {
           isNextButton!
               ? "assets/svg/chevron_forward_icon.svg"
               : "assets/svg/chevron_backward_icon.svg",
-          theme: SvgTheme(
-            currentColor:
-                iconColour ?? Theme.of(context).scaffoldBackgroundColor,
-          ),
+          color: iconColour ?? Theme.of(context).scaffoldBackgroundColor,
           height: 16,
         ),
       ),

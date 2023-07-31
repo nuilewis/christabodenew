@@ -16,49 +16,35 @@ class EventCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: kDefaultPadding / 2),
+      padding: const EdgeInsets.symmetric(vertical: 4),
       child: Container(
-        padding: const EdgeInsets.all(kDefaultPadding),
+        padding: const EdgeInsets.symmetric(
+            horizontal: kDefaultPadding, vertical: kDefaultPadding / 2),
         decoration: BoxDecoration(
-          color: Theme.of(context).brightness == Brightness.light
-              ? Theme.of(context).primaryColor.withOpacity(.1)
-              : Theme.of(context).cardColor,
-          borderRadius: BorderRadius.circular(kDefaultPadding2x),
+          color: Theme.of(context).cardColor,
+          borderRadius: BorderRadius.circular(kDefaultPadding + 8),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              event.name.toTitleCase(),
-              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                    fontSize: 18,
-                  ),
-            ),
+            Text(event.name.toTitleCase(),
+                style: Theme.of(context).textTheme.bodyLarge),
             Text(
               event.description,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
-            const SizedBox(height: kDefaultPadding),
             Align(
               alignment: Alignment.centerRight,
-              child: Text(
-                dateTimeFormatter(context, event.startDate),
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium!
-                    .copyWith(fontSize: 16),
-              ),
+              child: Text(dateTimeFormatter(context, event.startDate),
+                  style: Theme.of(context).textTheme.bodyMedium),
             ),
             event.endDate != null
                 ? Align(
                     alignment: Alignment.centerRight,
                     child: Text(
                         "to ${dateTimeFormatter(context, event.endDate!)}",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyMedium!
-                            .copyWith(fontSize: 16)),
+                        style: Theme.of(context).textTheme.bodyMedium),
                   )
                 : const SizedBox(),
           ],

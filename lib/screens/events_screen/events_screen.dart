@@ -56,6 +56,7 @@ class EventsScreen extends StatelessWidget {
                           .displayMedium!
                           .copyWith(fontSize: 20),
                     ),
+                    const SizedBox(height: kDefaultPadding),
                     BuildEventsList(
                       events: eventData.pastEvents,
                       messageIfEmpty: "There are no past events",
