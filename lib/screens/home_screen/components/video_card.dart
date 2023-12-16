@@ -16,7 +16,7 @@ class VideoCard extends StatelessWidget {
               image: AssetImage("assets/images/road_image.jpg"),
               fit: BoxFit.cover),
           gradient: LinearGradient(
-            colors: [Colors.transparent, kDark40],
+            colors: [Colors.transparent, AppColours.neutral50],
             //  stops: [0.3, 0.9 ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,

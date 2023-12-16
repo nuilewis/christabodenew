@@ -79,7 +79,7 @@ class DevotionalAndPrayerCard extends StatelessWidget {
                         Colors.black.withOpacity(.4),
                         devotional != null
                             ? Theme.of(context).primaryColor
-                            : kGreen80,
+                            : AppColours.green80,
                       ]),
                 ),
               ),

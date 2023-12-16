@@ -139,12 +139,10 @@ class _MyAppState extends State<MyApp> {
       child: Builder(builder: (context) {
         return MaterialApp(
           title: 'Christ Abode Ministries',
-          theme: lightThemeData(context),
-          darkTheme: darkThemeData(context),
-          themeMode:
-              Provider.of<SettingsProvider>(context).userSettings.isDarkMode
-                  ? ThemeMode.dark
-                  : ThemeMode.light,
+          theme: AppThemeData.lightTheme,
+          darkTheme: AppThemeData.darkTheme,
+          themeMode: ThemeMode.system,
+
           debugShowCheckedModeBanner: false,
           home: const BottomNavBar(),
           routes: {

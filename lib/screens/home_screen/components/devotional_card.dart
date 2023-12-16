@@ -30,7 +30,7 @@ class _DevotionalCardState extends State<DevotionalCard> {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(kDefaultPadding2x),
               gradient: LinearGradient(
-                  colors: [kPurple60, kFuchsia80],
+                  colors: [AppColours.blueSeed  , AppColours.redSeed],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight)),
           child: Stack(

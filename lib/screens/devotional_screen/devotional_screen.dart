@@ -44,7 +44,7 @@ class _DevotionalScreenState extends State<DevotionalScreen>
       duration: const Duration(milliseconds: 300),
     );
 
-    colorAnimation = ColorTween(begin: Colors.white, end: kDark)
+    colorAnimation = ColorTween(begin: Colors.white, end: AppColours.black)
         .animate(scrollAnimationController);
 
     super.initState();

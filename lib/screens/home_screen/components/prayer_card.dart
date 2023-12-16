@@ -29,9 +29,9 @@ class _PrayerCardState extends State<PrayerCard> {
         child: Container(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(kDefaultPadding2x),
-              color: kBlue40,
-              gradient: const LinearGradient(
-                  colors: [kBlue, kGreen],
+              color: Theme.of(context).colorScheme.primary,
+              gradient:  LinearGradient(
+                  colors: [Theme.of(context).colorScheme.primary, AppColours.green80],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight)),
           child: Stack(

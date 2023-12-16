@@ -31,7 +31,7 @@ class HomeScreen extends StatefulWidget {
     return MaterialPageRoute(builder: (context) => const HomeScreen());
   }
 
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -66,8 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Text("Christ Abode Ministries",
                         style: Theme.of(context)
                             .textTheme
-                            .bodyLarge!
-                            .copyWith(fontSize: 20)),
+                            .headlineSmall),
                   ),
                   const SizedBox(
                     height: kDefaultPadding,
@@ -180,7 +179,7 @@ class MessagesCategoryItem extends StatelessWidget {
             horizontal: kDefaultPadding2x + 8, vertical: kDefaultPadding + 8),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(kDefaultPadding + 8),
-            color: kBlue60),
+            color: AppColours.blue70),
         child: Text(
           "Category",
           style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 18),
