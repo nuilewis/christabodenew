@@ -1,6 +1,5 @@
 import 'package:christabodenew/models/devotional_model.dart';
 import 'package:christabodenew/providers/events_provider.dart';
-import 'package:christabodenew/providers/hymn_provider.dart';
 import 'package:christabodenew/providers/prayer_provider.dart';
 import 'package:christabodenew/providers/unsplash_image_provider.dart';
 import 'package:christabodenew/screens/messages_screen/messages_screen.dart';

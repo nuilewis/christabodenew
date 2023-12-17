@@ -1,14 +1,11 @@
-import 'package:christabodenew/core/extensions/string_extension.dart';
 import 'package:christabodenew/providers/devotional_provider.dart';
 import 'package:christabodenew/providers/hymn_provider.dart';
 import 'package:christabodenew/providers/unsplash_image_provider.dart';
 import 'package:christabodenew/screens/global_components/content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
-import '../../core/constants.dart';
 import '../../models/models.dart';
 
 import 'package:christabodenew/core/core.dart';
@@ -76,14 +73,14 @@ _hymnPageController.dispose();
                   HapticFeedback.lightImpact();
                   Feedback.forTap(context);
                   _hymnPageController.nextPage(
-                      duration: Duration(milliseconds: 250),
+                      duration: const Duration(milliseconds: 250),
                       curve: Curves.easeInOut);
                 },
                 onPreviousButtonPressed: () {
                   HapticFeedback.lightImpact();
                   Feedback.forTap(context);
                   _hymnPageController.previousPage(
-                      duration: Duration(milliseconds: 250),
+                      duration: const Duration(milliseconds: 250),
                       curve: Curves.easeInOut);
                 },
               );

@@ -59,7 +59,7 @@ class DevotionalAndPrayerCard extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(24),
             // color: Theme.of(context).primaryColor,
-            image: DecorationImage(
+            image: const DecorationImage(
               fit: BoxFit.cover,
               image: AssetImage("assets/images/foam_image.jpg"),
             ),

@@ -1,18 +1,11 @@
 import 'package:christabodenew/core/enum/content_type.dart';
-import 'package:christabodenew/core/extensions/string_extension.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
-import '../../core/constants.dart';
 import '../../models/models.dart';
-import '../../models/unsplash_image.dart';
 import '../../providers/prayer_provider.dart';
-import '../../providers/settings_provider.dart';
 import '../../providers/unsplash_image_provider.dart';
 import '../global_components/content.dart';
-import '../global_components/featured_image.dart';
 
 
 class PrayerScreen extends StatefulWidget {
@@ -82,12 +75,12 @@ super.dispose();
                 },
                 onNextButtonPressed: () {
                   _prayerPageController.nextPage(
-                      duration: Duration(milliseconds: 250),
+                      duration: const Duration(milliseconds: 250),
                       curve: Curves.easeInOut);
                 },
                 onPreviousButtonPressed: () {
                   _prayerPageController.previousPage(
-                      duration: Duration(milliseconds: 250),
+                      duration: const Duration(milliseconds: 250),
                       curve: Curves.easeInOut);
                 },
               );
