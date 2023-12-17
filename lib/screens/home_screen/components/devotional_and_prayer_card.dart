@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:christabodenew/core/extensions/string_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
@@ -46,15 +48,16 @@ class DevotionalAndPrayerCard extends StatelessWidget {
           "Cannot provide both a Devotional and Prayer at the same time, please supply only one parameter");
     }
 
-    double width = MediaQuery.sizeOf(context).width * .9;
+    Size screenSize = MediaQuery.sizeOf(context);
     return ClipRRect(
-      borderRadius: BorderRadius.circular(kDefaultPadding2x),
+      borderRadius: BorderRadius.circular(24),
       child: InkWell(
         onTap: onPressed,
-        child: Container(
-          width: width,
-          height: (width / 5) * 6.5,
-          decoration: const BoxDecoration(
+        child: Ink(
+          width: screenSize.width * .65,
+          height: screenSize.width * .8,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(24),
             // color: Theme.of(context).primaryColor,
             image: DecorationImage(
               fit: BoxFit.cover,
@@ -71,60 +74,77 @@ class DevotionalAndPrayerCard extends StatelessWidget {
                     )
                   : const SizedBox(),
               Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomLeft,
-                      colors: [
-                        Colors.black.withOpacity(.4),
-                        devotional != null
-                            ? Theme.of(context).primaryColor
-                            : AppColours.green80,
-                      ]),
-                ),
+                decoration:
+                    BoxDecoration(color: AppColours.black.withOpacity(.4)),
               ),
               Padding(
-                padding: const EdgeInsets.all(kDefaultPadding + 8),
+                padding: const EdgeInsets.all(kDefaultPadding),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
-                      devotional != null
-                          ? "Today's Huios Devotional"
-                          : "Today's Prayer Fragrance",
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyMedium!
-                          .copyWith(color: Colors.white),
-                    ),
-                    const SizedBox(
-                      height: kDefaultPadding / 2,
-                    ),
-                    Text(dateTimeFormatter(context, DateTime.now()),
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            color: Colors.white, fontWeight: FontWeight.bold)),
-                    const Spacer(),
-                    Text(
-                        devotional?.title.toTitleCase() ??
-                            prayer!.title.toTitleCase(),
-                        style: Theme.of(context)
-                            .textTheme
-                            .displayLarge!
-                            .copyWith(color: Colors.white)),
-                    const SizedBox(
-                      height: kDefaultPadding,
-                    ),
                     Row(
                       children: [
                         Expanded(
-                          child: Text(devotional?.content ?? prayer!.content,
-                              maxLines: 2,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                devotional != null
+                                    ? "Today's Huios Devotional"
+                                    : "Today's Prayer Fragrance",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(color: Colors.white),
+                              ),
+                              const SizedBox(
+                                height: 4,
+                              ),
+                              Text(dateTimeFormatter(context, DateTime.now()),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold)),
+                            ],
+                          ),
+                        ),
+                        ClipRect(
+                          child: BackdropFilter(
+                            filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+                            child: IconButton(
+                              style: IconButton.styleFrom(
+                                backgroundColor: Colors.white.withOpacity(.1),
+                                fixedSize: const Size(48, 48),
+                              ),
+                              onPressed: onPressed,
+                              icon: SvgPicture.asset(
+                                "assets/svg/heart_icon.svg",
+                                colorFilter: const ColorFilter.mode(
+                                    AppColours.white, BlendMode.srcIn),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const Spacer(),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                              devotional?.title.toTitleCase() ??
+                                  prayer!.title.toTitleCase(),
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyMedium!
-                                  .copyWith(color: Colors.white)),
+                                  .headlineSmall!
+                                  .copyWith(color: Colors.white, height: 1.3)),
+                        ),
+                        const SizedBox(
+                          height: kDefaultPadding,
                         ),
                         const SizedBox(width: kDefaultPadding),
                         SvgPicture.asset(

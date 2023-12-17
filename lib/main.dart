@@ -1,38 +1,25 @@
-import 'package:christabodenew/core/connection_checker/connection_checker.dart';
 import 'package:christabodenew/firebase_options.dart';
-import 'package:christabodenew/providers/devotional_provider.dart';
-import 'package:christabodenew/providers/messages_provider.dart';
-import 'package:christabodenew/providers/prayer_provider.dart';
-import 'package:christabodenew/providers/settings_provider.dart';
-import 'package:christabodenew/providers/unsplash_image_provider.dart';
-import 'package:christabodenew/repositories/devotional_repository.dart';
 import 'package:christabodenew/repositories/events_repository.dart';
-import 'package:christabodenew/repositories/messages_repository.dart';
-import 'package:christabodenew/repositories/prayer_repository.dart';
-import 'package:christabodenew/repositories/settings_repository.dart';
 import 'package:christabodenew/screens/bottom_nav_bar.dart';
 import 'package:christabodenew/screens/devotional_screen/devotional_screen.dart';
 import 'package:christabodenew/screens/events_screen/events_screen.dart';
 import 'package:christabodenew/screens/favourite_screen/favourites_screen.dart';
+import 'package:christabodenew/screens/hymn_screen/hymn_screen.dart';
+import 'package:christabodenew/screens/hymn_screen/hymn_screen_details.dart';
 import 'package:christabodenew/screens/messages_screen/messages_screen.dart';
 import 'package:christabodenew/screens/prayer_screen/prayer_screen.dart';
-import 'package:christabodenew/services/devotional/devotional_firestore_service.dart';
-import 'package:christabodenew/services/devotional/devotional_hive_service.dart';
 import 'package:christabodenew/services/events/event_hive_service.dart';
 import 'package:christabodenew/services/events/events_firestore_service.dart';
-import 'package:christabodenew/services/hive_base_service.dart';
-import 'package:christabodenew/services/prayer/prayer_firestore_service.dart';
-import 'package:christabodenew/services/prayer/prayer_hive_service.dart';
-import 'package:christabodenew/services/settings/settings_hive_service.dart';
-import 'package:christabodenew/services/unsplash/unsplash_api_client.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
 
+import 'repositories/repositories.dart';
+import 'providers/providers.dart';
+import 'services/services.dart';
+import 'core/core.dart';
+
 import 'core/theme.dart';
-import 'providers/events_provider.dart';
-import 'repositories/unsplash_image_repository.dart';
 import 'screens/home_screen/home.dart';
 
 void main() async {
@@ -58,8 +45,7 @@ class _MyAppState extends State<MyApp> {
 
   final PrayerFireStoreService _prayerFireStoreService =
       PrayerFireStoreService();
-  final ConnectionChecker _connectionChecker =
-      ConnectionCheckerImplementation(InternetConnectionChecker());
+
   late PrayerRepository _prayerRepository;
 
   ///Creating and Injecting Devotional Dependencies
@@ -85,29 +71,40 @@ class _MyAppState extends State<MyApp> {
   late SettingsRepository _settingsRepository;
   final SettingsHiveService _settingsHiveService = SettingsHiveService();
 
+  ///Creating and Injectig Hymns Depedecies
+
+  late HymnRepository _hymnRepository;
+  final HymnHiveService _hymnHiveService = HymnHiveService();
+  final HymnFireStoreService _hymnFireStoreService = HymnFireStoreService();
+
   @override
   void initState() {
     _prayerRepository = PrayerRepository(
-        prayerHiveService: _prayerHiveService,
-        prayerFirestoreService: _prayerFireStoreService,
-        connectionChecker: _connectionChecker);
+      prayerHiveService: _prayerHiveService,
+      prayerFirestoreService: _prayerFireStoreService,
+    );
 
     _devotionalRepository = DevotionalRepository(
-        devotionalFirestoreService: _devotionalFirestoreService,
-        devotionalHiveService: _devotionalHiveService,
-        connectionChecker: _connectionChecker);
+      devotionalFirestoreService: _devotionalFirestoreService,
+      devotionalHiveService: _devotionalHiveService,
+    );
 
     _messagesRepository = MessagesRepository();
 
     _eventsRepository = EventsRepository(
-        eventsFirestoreService: _eventsFirestoreService,
-        eventsHiveService: _eventsHiveService,
-        connectionChecker: _connectionChecker);
+      eventsFirestoreService: _eventsFirestoreService,
+      eventsHiveService: _eventsHiveService,
+    );
 
     _unsplashImageRepository = UnsplashImageRepository(
-        apiClient: _unsplashAPIClient, connectionChecker: _connectionChecker);
+      apiClient: _unsplashAPIClient,
+    );
 
     _settingsRepository = SettingsRepository(_settingsHiveService);
+
+    _hymnRepository = HymnRepository(
+        hymnHiveService: _hymnHiveService,
+        hymnFirestoreService: _hymnFireStoreService);
     super.initState();
   }
 
@@ -135,6 +132,7 @@ class _MyAppState extends State<MyApp> {
             create: (context) => UnsplashImageProvider(
                 unsplashImageRepository: _unsplashImageRepository)
               ..getFeaturedImages()),
+ChangeNotifierProvider<HymnProvider>(create: (context)=> HymnProvider(hymnRepository: _hymnRepository)..getHymns())
       ],
       child: Builder(builder: (context) {
         return MaterialApp(
@@ -142,7 +140,6 @@ class _MyAppState extends State<MyApp> {
           theme: AppThemeData.lightTheme,
           darkTheme: AppThemeData.darkTheme,
           themeMode: ThemeMode.system,
-
           debugShowCheckedModeBanner: false,
           home: const BottomNavBar(),
           routes: {
@@ -152,6 +149,8 @@ class _MyAppState extends State<MyApp> {
             EventsScreen.id: (context) => const EventsScreen(),
             MessagesScreen.id: (context) => const MessagesScreen(),
             FavouritesScreen.id: (context) => const FavouritesScreen(),
+            HymnScreen.id: (context)=> const HymnScreen(),
+            HymnScreenDetails.id: (context)=> const HymnScreenDetails()
           },
         );
       }),

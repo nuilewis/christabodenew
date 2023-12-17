@@ -7,11 +7,11 @@ class MessageListItem extends StatelessWidget {
   final String messageExcerpt;
   final VoidCallback onPressed;
   const MessageListItem({
-    Key? key,
+    super.key,
     required this.messageTitle,
     required this.messageExcerpt,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

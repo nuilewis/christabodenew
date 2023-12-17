@@ -15,12 +15,12 @@ class FeaturedEventCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.sizeOf(context).width;
+    Size screenSize = MediaQuery.sizeOf(context);
     return ClipRRect(
-      borderRadius: BorderRadius.circular(kDefaultPadding2x),
+      borderRadius: BorderRadius.circular(24),
       child: Container(
-        width: width,
-        height: (width) * .5,
+        width: screenSize.width,
+        height: screenSize.width/2.5,
         decoration: const BoxDecoration(
           // color: Theme.of(context).primaryColor,
           image: DecorationImage(
@@ -41,7 +41,7 @@ class FeaturedEventCard extends StatelessWidget {
               decoration: BoxDecoration(color: Colors.black.withOpacity(.4)),
             ),
             Padding(
-              padding: const EdgeInsets.all(kDefaultPadding + 8),
+              padding: const EdgeInsets.all(kDefaultPadding),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -61,14 +61,14 @@ class FeaturedEventCard extends StatelessWidget {
                                   .textTheme
                                   .bodyMedium!
                                   .copyWith(color: Colors.white))
-                          : SizedBox(),
+                          : const SizedBox(),
                     ],
                   ),
                   const Spacer(),
                   Text(event.name.toTitleCase(),
                       style: Theme.of(context)
                           .textTheme
-                          .displayLarge!
+                          .headlineSmall!
                           .copyWith(color: Colors.white)),
                 ],
               ),

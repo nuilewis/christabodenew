@@ -7,8 +7,7 @@ import 'event_card.dart';
 class BuildEventsList extends StatelessWidget {
   final List<Event> events;
   final String? messageIfEmpty;
-  const BuildEventsList({Key? key, required this.events, this.messageIfEmpty})
-      : super(key: key);
+  const BuildEventsList({super.key, required this.events, this.messageIfEmpty});
 
   @override
   Widget build(BuildContext context) {

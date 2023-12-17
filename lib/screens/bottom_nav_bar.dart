@@ -1,4 +1,5 @@
 import 'package:christabodenew/screens/home_screen/home.dart';
+import 'package:christabodenew/screens/hymn_screen/hymn_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -9,7 +10,7 @@ import 'events_screen/events_screen.dart';
 import 'prayer_screen/prayer_screen.dart';
 
 class BottomNavBar extends StatefulWidget {
-  const BottomNavBar({Key? key}) : super(key: key);
+  const BottomNavBar({super.key});
 
   @override
   State<BottomNavBar> createState() => _BottomNavBarState();
@@ -28,7 +29,12 @@ class _BottomNavBarState extends State<BottomNavBar> {
       isCalledFromNavBar: true,
       key: PageStorageKey(PrayerScreen.id),
     ),
-    const EventsScreen(key: PageStorageKey(EventsScreen.id)),
+    const EventsScreen(
+      key: PageStorageKey(EventsScreen.id),
+    ),
+   const HymnScreen(
+      key: PageStorageKey(HymnScreen.id),
+    ),
   ];
 
   final PageStorageBucket bucket = PageStorageBucket();
@@ -38,77 +44,91 @@ class _BottomNavBarState extends State<BottomNavBar> {
   Widget _bottomNavBar(
       {required int selectedIndex, required Color selectedItemColor}) {
     return BottomNavigationBar(
-        useLegacyColorScheme: false,
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        type: BottomNavigationBarType.fixed,
-        // landscapeLayout: BottomNavigationBarLandscapeLayout.spread,
-        onTap: (int index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
-        elevation: 0,
-        enableFeedback: true,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        unselectedFontSize: 12,
-        selectedFontSize: 12,
-        selectedItemColor: selectedItemColor,
-        currentIndex: selectedIndex,
-        items: [
-          BottomNavigationBarItem(
-            label: "Home",
-            icon: SvgPicture.asset(
-              "assets/svg/home_icon.svg",
-              height: 23,
-              color: Theme.of(context).iconTheme.color,
-            ),
-            activeIcon: SvgPicture.asset(
-              "assets/svg/home_icon.svg",
-              color: selectedItemColor,
-              height: 23,
-            ),
+      useLegacyColorScheme: false,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      type: BottomNavigationBarType.fixed,
+      // landscapeLayout: BottomNavigationBarLandscapeLayout.spread,
+      onTap: (int index) {
+        setState(() {
+          _selectedIndex = index;
+        });
+      },
+      elevation: 0,
+      enableFeedback: true,
+      showSelectedLabels: false,
+      showUnselectedLabels: false,
+      unselectedFontSize: 12,
+      selectedFontSize: 12,
+      selectedItemColor: selectedItemColor,
+      currentIndex: selectedIndex,
+      items: [
+        BottomNavigationBarItem(
+          label: "Home",
+          icon: SvgPicture.asset(
+            "assets/svg/home_icon.svg",
+            height: 23,
+            color: Theme.of(context).iconTheme.color,
           ),
-          BottomNavigationBarItem(
-            label: "Devotional",
-            icon: SvgPicture.asset(
-              "assets/svg/read_icon.svg",
-              height: 23,
-              color: Theme.of(context).iconTheme.color,
-            ),
-            activeIcon: SvgPicture.asset(
-              "assets/svg/read_icon.svg",
-              color: selectedItemColor,
-              height: 23,
-            ),
+          activeIcon: SvgPicture.asset(
+            "assets/svg/home_icon.svg",
+            color: selectedItemColor,
+            height: 23,
           ),
-          BottomNavigationBarItem(
-            label: "Prayer",
-            icon: SvgPicture.asset(
-              "assets/svg/prayer_icon.svg",
-              height: 24,
-              color: Theme.of(context).iconTheme.color,
-            ),
-            activeIcon: SvgPicture.asset(
-              "assets/svg/prayer_icon.svg",
-              color: selectedItemColor,
-              height: 24,
-            ),
+        ),
+        BottomNavigationBarItem(
+          label: "Devotional",
+          icon: SvgPicture.asset(
+            "assets/svg/read_icon.svg",
+            height: 23,
+            color: Theme.of(context).iconTheme.color,
           ),
-          BottomNavigationBarItem(
-            label: "Events",
-            icon: SvgPicture.asset(
-              "assets/svg/notification_icon.svg",
-              height: 23,
-              color: Theme.of(context).iconTheme.color,
-            ),
-            activeIcon: SvgPicture.asset(
-              "assets/svg/notification_icon.svg",
-              color: selectedItemColor,
-              height: 23,
-            ),
+          activeIcon: SvgPicture.asset(
+            "assets/svg/read_icon.svg",
+            color: selectedItemColor,
+            height: 23,
           ),
-        ]);
+        ),
+        BottomNavigationBarItem(
+          label: "Prayer",
+          icon: SvgPicture.asset(
+            "assets/svg/prayer_icon.svg",
+            height: 24,
+            color: Theme.of(context).iconTheme.color,
+          ),
+          activeIcon: SvgPicture.asset(
+            "assets/svg/prayer_icon.svg",
+            color: selectedItemColor,
+            height: 24,
+          ),
+        ),
+        BottomNavigationBarItem(
+          label: "Events",
+          icon: SvgPicture.asset(
+            "assets/svg/notification_icon.svg",
+            height: 23,
+            color: Theme.of(context).iconTheme.color,
+          ),
+          activeIcon: SvgPicture.asset(
+            "assets/svg/notification_icon.svg",
+            color: selectedItemColor,
+            height: 23,
+          ),
+        ),
+        BottomNavigationBarItem(
+          label: "Hymns",
+          icon: SvgPicture.asset(
+            "assets/svg/music_icon.svg",
+            height: 23,
+            color: Theme.of(context).iconTheme.color,
+          ),
+          activeIcon: SvgPicture.asset(
+            "assets/svg/music_icon.svg",
+            color: selectedItemColor,
+            height: 23,
+          ),
+        ),
+      ],
+    );
   }
 
   @override

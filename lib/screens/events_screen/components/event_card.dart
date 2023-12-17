@@ -9,9 +9,9 @@ class EventCard extends StatelessWidget {
   final Event event;
 
   const EventCard({
-    Key? key,
+    super.key,
     required this.event,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class EventCard extends StatelessWidget {
             horizontal: kDefaultPadding, vertical: kDefaultPadding / 2),
         decoration: BoxDecoration(
           color: Theme.of(context).cardColor,
-          borderRadius: BorderRadius.circular(kDefaultPadding + 8),
+          borderRadius: BorderRadius.circular(kDefaultPadding),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

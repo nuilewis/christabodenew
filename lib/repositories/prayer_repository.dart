@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import '../core/connection_checker/connection_checker.dart';
 import '../core/errors/failure.dart';
 import '../models/prayer_model.dart';
 import '../services/prayer/prayer_firestore_service.dart';
@@ -11,17 +10,17 @@ import '../services/prayer/prayer_firestore_service.dart';
 class PrayerRepository {
   final PrayerFireStoreService prayerFirestoreService;
   final PrayerHiveService prayerHiveService;
-  final ConnectionChecker connectionChecker;
   PrayerRepository({
     required this.prayerHiveService,
     required this.prayerFirestoreService,
-    required this.connectionChecker,
+
   });
 
   List<Prayer> _prayerList = [];
   List<Prayer> _likedPrayerList = [];
   final DateTime _today = DateTime(DateTime.now().year, DateTime.now().month,
       DateTime.now().day, 0, 0, 0, 0, 0);
+
 
   Future<Either<Failure, List<Prayer>>> getPrayers() async {
     Prayer prayer = Prayer.empty;
@@ -34,7 +33,7 @@ class PrayerRepository {
     if (_prayerList.isEmpty) {
       ///If the prayer list from local storage is empty, then try to get
       ///a new list from firestore;
-      if (await connectionChecker.isConnected) {
+
         ///If there is a network connection, then make request to firebase to
         ///get the data.
         try {
@@ -62,15 +61,13 @@ class PrayerRepository {
           return Right(_prayerList);
         } on FirebaseException catch (e) {
           ///If a Firebase error has occurred, then return a [FirebaseFailure]
-          return Left(FirebaseFailure(errorMessage: e.message, code: e.code));
+          return Left(Failure(errorMessage: e.message, code: e.code));
         }
       } else {
         ///If there is no connection, then return a [NetworkFailure]
-        return const Left(NetworkFailure());
+        return const Left(Failure.generic());
       }
-    } else {
-      return Right(_prayerList);
-    }
+
   }
 
   Future<Either<Failure, Prayer>> getCurrentPrayer() async {
@@ -88,12 +85,12 @@ class PrayerRepository {
               )
           .toList();
       if (todaysPrayer.isEmpty) {
-        return const Left(FirebaseFailure(errorMessage: "No Prayers Found"));
+        return const Left(Failure(errorMessage: "No Prayers Found"));
       } else {
         return Right(todaysPrayer.first);
       }
     } else {
-      return const Left(FirebaseFailure(errorMessage: "No prayers found"));
+      return const Left(Failure(errorMessage: "No prayers found"));
     }
   }
 
@@ -116,12 +113,12 @@ class PrayerRepository {
       if (todaysDevotionalIndex == -1) {
         ///Index being -1 means it did not get the prayer, or the prayer was not found
 
-        return const Left(FirebaseFailure(errorMessage: "No Prayers"));
+        return const Left(Failure(errorMessage: "No Prayers"));
       } else {
         return Right(todaysDevotionalIndex);
       }
     } else {
-      return const Left(FirebaseFailure(errorMessage: "No Prayers found"));
+      return const Left(Failure(errorMessage: "No Prayers found"));
     }
   }
 
@@ -135,7 +132,7 @@ class PrayerRepository {
       return Right(_likedPrayerList);
     } catch (e) {
       return const Left(
-          FirebaseFailure(errorMessage: "Unable to get your liked prayers"));
+          Failure(errorMessage: "Unable to get your liked prayers"));
     }
   }
 
@@ -147,7 +144,7 @@ class PrayerRepository {
       return const Right(null);
     } catch (e) {
       return const Left(
-          FirebaseFailure(errorMessage: "Unable to add to your favourites"));
+          Failure(errorMessage: "Unable to add to your favourites"));
     }
   }
 
@@ -158,7 +155,7 @@ class PrayerRepository {
       return const Right(null);
     } catch (e) {
       return const Left(
-          FirebaseFailure(errorMessage: "Unable to clear your favourites"));
+          Failure(errorMessage: "Unable to clear your favourites"));
     }
   }
 }

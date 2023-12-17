@@ -1,4 +1,4 @@
-import 'package:christabodenew/core/errors/failure.dart';
+import 'package:christabodenew/core/core.dart';
 import 'package:christabodenew/models/message_model.dart';
 import 'package:christabodenew/providers/messages_provider.dart';
 import 'package:christabodenew/repositories/messages_repository.dart';
@@ -35,7 +35,7 @@ void main() {
 
       //assert
       expect(messagesProvider.message, returnedMessage);
-      expect(messagesProvider.state, MessageState.success);
+      expect(messagesProvider.state, AppState.success);
 
       verify(mockMessagesRepository.getMessage()).called(1);
       verifyNoMoreInteractions(mockMessagesRepository);
@@ -45,7 +45,7 @@ void main() {
         "Should return a [Failure] obj and set the state to success when [getMessages] is called un successfully from the repository",
         () async {
       when(mockMessagesRepository.getMessage()).thenAnswer((_) async =>
-          const Left(FirebaseFailure(errorMessage: "error message")));
+          const Left(Failure(errorMessage: "error message")));
 
       //act
       await messagesProvider.getMessage();
@@ -53,7 +53,7 @@ void main() {
       //assert
       expect(messagesProvider.message, null);
       expect(messagesProvider.errorMessage, "error message");
-      expect(messagesProvider.state, MessageState.error);
+      expect(messagesProvider.state, AppState.error);
 
       verify(mockMessagesRepository.getMessage()).called(1);
       verifyNoMoreInteractions(mockMessagesRepository);

@@ -1,4 +1,4 @@
-import 'package:christabodenew/core/errors/failure.dart';
+import 'package:christabodenew/core/core.dart';
 import 'package:christabodenew/models/devotional_model.dart';
 import 'package:christabodenew/providers/devotional_provider.dart';
 import 'package:christabodenew/repositories/devotional_repository.dart';
@@ -52,7 +52,7 @@ void main() {
 
   test("verify initial values of Devotional provider", () {
     expect(devotionalProvider.errorMessage, "");
-    expect(devotionalProvider.state, DevotionalState.initial);
+    expect(devotionalProvider.state, AppState.initial);
     expect(devotionalProvider.todaysDevotional, null);
   });
 
@@ -69,7 +69,7 @@ void main() {
 
       //assert
       expect(devotionalProvider.allDevotionals, returnedDevotionalList);
-      expect(devotionalProvider.state, DevotionalState.success);
+      expect(devotionalProvider.state, AppState.success);
 
       verify(mockDevotionalRepository.getDevotionals()).called(1);
       verifyNoMoreInteractions(mockDevotionalRepository);
@@ -81,7 +81,7 @@ void main() {
       //arrange
       when(mockDevotionalRepository.getDevotionals()).thenAnswer((_) async =>
           Future.value(
-              const Left(FirebaseFailure(errorMessage: "error message"))));
+              const Left(Failure(errorMessage: "error message"))));
 
       //act
 
@@ -90,7 +90,7 @@ void main() {
       //assert
       expect(devotionalProvider.todaysDevotional, null);
       expect(devotionalProvider.errorMessage, "error message");
-      expect(devotionalProvider.state, DevotionalState.error);
+      expect(devotionalProvider.state, AppState.error);
 
       verify(mockDevotionalRepository.getDevotionals()).called(1);
       verifyNoMoreInteractions(mockDevotionalRepository);
@@ -109,7 +109,7 @@ void main() {
 
       //assert
       expect(devotionalProvider.todaysDevotional, returnedDevotional);
-      expect(devotionalProvider.state, DevotionalState.success);
+      expect(devotionalProvider.state, AppState.success);
 
       verify(mockDevotionalRepository.getCurrentDevotional()).called(1);
       verifyNoMoreInteractions(mockDevotionalRepository);
@@ -121,7 +121,7 @@ void main() {
       //arrange
       when(mockDevotionalRepository.getCurrentDevotional()).thenAnswer(
           (_) async => Future.value(
-              const Left(FirebaseFailure(errorMessage: "error message"))));
+              const Left(Failure(errorMessage: "error message"))));
 
       //act
 
@@ -130,7 +130,7 @@ void main() {
       //assert
       expect(devotionalProvider.todaysDevotional, null);
       expect(devotionalProvider.errorMessage, "error message");
-      expect(devotionalProvider.state, DevotionalState.error);
+      expect(devotionalProvider.state, AppState.error);
 
       verify(mockDevotionalRepository.getCurrentDevotional()).called(1);
       verifyNoMoreInteractions(mockDevotionalRepository);

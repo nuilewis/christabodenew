@@ -6,9 +6,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   final Size preferredSize;
   final bool isCalledFromNavBar;
-  const CustomAppBar({Key? key, this.isCalledFromNavBar = false})
-      : preferredSize = const Size.fromHeight(60),
-        super(key: key);
+  const CustomAppBar({super.key, this.isCalledFromNavBar = false})
+      : preferredSize = const Size.fromHeight(60);
 
   @override
   Widget build(BuildContext context) {

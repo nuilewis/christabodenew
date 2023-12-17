@@ -1,4 +1,4 @@
-import 'package:christabodenew/core/errors/failure.dart';
+import 'package:christabodenew/core/core.dart';
 import 'package:christabodenew/models/prayer_model.dart';
 import 'package:christabodenew/providers/prayer_provider.dart';
 import 'package:christabodenew/repositories/prayer_repository.dart';
@@ -28,7 +28,7 @@ void main() {
   });
 
   test("Verify initial values of the Prayer Provider", () {
-    expect(prayerProvider.state, PrayerState.initial);
+    expect(prayerProvider.state, AppState.initial);
     expect(prayerProvider.errorMessage, "");
     expect(prayerProvider.todaysPrayer, null);
     expect(prayerProvider.allPrayers, []);
@@ -47,7 +47,7 @@ void main() {
 
       //assert
       expect(prayerProvider.allPrayers, returnedPrayerList);
-      expect(prayerProvider.state, PrayerState.success);
+      expect(prayerProvider.state, AppState.success);
 
       verify(mockPrayerRepository.getPrayers()).called(1);
       verifyNoMoreInteractions(mockPrayerRepository);
@@ -59,14 +59,14 @@ void main() {
       //arrange
       when(mockPrayerRepository.getPrayers()).thenAnswer((_) async =>
           Future.value(
-              const Left(FirebaseFailure(errorMessage: "error message"))));
+              const Left(Failure(errorMessage: "error message"))));
 
       //act
 
       await prayerProvider.getPrayers();
 
       //assert
-      expect(prayerProvider.state, PrayerState.error);
+      expect(prayerProvider.state, AppState.error);
       expect(prayerProvider.todaysPrayer, null);
       expect(prayerProvider.errorMessage, "error message");
 
@@ -87,7 +87,7 @@ void main() {
 
       //assert
       expect(prayerProvider.todaysPrayer, returnedPrayer);
-      expect(prayerProvider.state, PrayerState.success);
+      expect(prayerProvider.state, AppState.success);
 
       verify(mockPrayerRepository.getCurrentPrayer()).called(1);
       verifyNoMoreInteractions(mockPrayerRepository);
@@ -99,14 +99,14 @@ void main() {
       //arrange
       when(mockPrayerRepository.getCurrentPrayer()).thenAnswer((_) async =>
           Future.value(
-              const Left(FirebaseFailure(errorMessage: "error message"))));
+              const Left(Failure(errorMessage: "error message"))));
 
       //act
 
       await prayerProvider.getCurrentPrayer();
 
       //assert
-      expect(prayerProvider.state, PrayerState.error);
+      expect(prayerProvider.state, AppState.error);
       expect(prayerProvider.todaysPrayer, null);
       expect(prayerProvider.errorMessage, "error message");
 

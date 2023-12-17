@@ -1,15 +1,14 @@
-import 'package:christabodenew/core/errors/failure.dart';
 import 'package:christabodenew/repositories/prayer_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 
+import '../core/core.dart';
 import '../models/prayer_model.dart';
 
-enum PrayerState { initial, submitting, success, error }
 
 class PrayerProvider extends ChangeNotifier {
   final PrayerRepository prayerRepository;
-  PrayerState state = PrayerState.initial;
+  AppState state = AppState.initial;
   String errorMessage = "";
   Prayer? todaysPrayer;
 
@@ -21,9 +20,9 @@ class PrayerProvider extends ChangeNotifier {
   PrayerProvider({required this.prayerRepository});
 
   Future<void> getCurrentPrayer() async {
-    if (state == PrayerState.submitting) return;
+    if (state == AppState.submitting) return;
 
-    state = PrayerState.submitting;
+    state = AppState.submitting;
     // notifyListeners();
 
     Either<Failure, Prayer> response =
@@ -32,17 +31,17 @@ class PrayerProvider extends ChangeNotifier {
     response.fold((failure) {
       errorMessage = failure.errorMessage ??
           "An error occurred while getting today's prayer";
-      state = PrayerState.error;
+      state = AppState.error;
     }, (prayer) {
       todaysPrayer = prayer;
-      state = PrayerState.success;
+      state = AppState.success;
     });
     //   notifyListeners();
   }
 
   Future<void> getTodaysPrayerIndex() async {
-    if (state == PrayerState.submitting) return;
-    state = PrayerState.submitting;
+    if (state == AppState.submitting) return;
+    state = AppState.submitting;
 
     Either<Failure, int> response =
         await prayerRepository.getCurrentPrayerIndex();
@@ -50,7 +49,7 @@ class PrayerProvider extends ChangeNotifier {
     response.fold((failure) {
       errorMessage = failure.errorMessage ??
           "An error occurred while getting today's Prayer";
-      state = PrayerState.error;
+      state = AppState.error;
     }, (index) {
       currentPrayerIndex = index;
 
@@ -63,7 +62,7 @@ class PrayerProvider extends ChangeNotifier {
 
       allPrayers = allPrayers.sublist(0, index + 1);
 
-      state = PrayerState.success;
+      state = AppState.success;
     });
   }
 
@@ -73,8 +72,8 @@ class PrayerProvider extends ChangeNotifier {
   }
 
   Future<void> getPrayers() async {
-    if (state == PrayerState.submitting) return;
-    state = PrayerState.submitting;
+    if (state == AppState.submitting) return;
+    state = AppState.submitting;
     notifyListeners();
 
     Either<Failure, List<Prayer>> response =
@@ -82,17 +81,17 @@ class PrayerProvider extends ChangeNotifier {
     response.fold((failure) {
       errorMessage = failure.errorMessage ??
           "An error occurred while getting today's prayer";
-      state = PrayerState.error;
+      state = AppState.error;
     }, (prayer) {
       allPrayers = prayer;
-      state = PrayerState.success;
+      state = AppState.success;
     });
     notifyListeners();
   }
 
   Future<void> getLikedPrayers() async {
-    if (state == PrayerState.submitting) return;
-    state = PrayerState.submitting;
+    if (state == AppState.submitting) return;
+    state = AppState.submitting;
     notifyListeners();
     Either<Failure, List<Prayer>> response =
         await prayerRepository.getLikedPrayers();
@@ -101,10 +100,10 @@ class PrayerProvider extends ChangeNotifier {
       errorMessage = failure.errorMessage ??
           "An error occurred while getting your favourite Prayers";
 
-      state = PrayerState.error;
+      state = AppState.error;
     }, (likedPrayer) {
       likedPrayers = likedPrayer;
-      state = PrayerState.success;
+      state = AppState.success;
     });
 
     notifyListeners();
@@ -118,9 +117,9 @@ class PrayerProvider extends ChangeNotifier {
     response.fold((failure) {
       errorMessage = failure.errorMessage ??
           "An error occurred while getting today's prayer";
-      state = PrayerState.error;
+      state = AppState.error;
     }, (nothing) {
-      state = PrayerState.success;
+      state = AppState.success;
     });
     notifyListeners();
   }
@@ -130,9 +129,9 @@ class PrayerProvider extends ChangeNotifier {
     response.fold((failure) {
       errorMessage = failure.errorMessage ??
           "An error occurred while getting today's prayer";
-      state = PrayerState.error;
+      state = AppState.error;
     }, (nothing) {
-      state = PrayerState.success;
+      state = AppState.success;
     });
     notifyListeners();
   }
@@ -148,9 +147,9 @@ class PrayerProvider extends ChangeNotifier {
 
       await updatePrayerList(updatedList);
       await getLikedPrayers();
-      state = PrayerState.success;
+      state = AppState.success;
     } else {
-      state = PrayerState.error;
+      state = AppState.error;
     }
     notifyListeners();
   }

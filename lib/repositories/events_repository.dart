@@ -1,4 +1,3 @@
-import 'package:christabodenew/core/connection_checker/connection_checker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:hive/hive.dart';
@@ -11,12 +10,11 @@ import '../services/events/events_firestore_service.dart';
 class EventsRepository {
   final EventsFirestoreService eventsFirestoreService;
   final EventsHiveService eventsHiveService;
-  final ConnectionChecker connectionChecker;
 
   EventsRepository(
       {required this.eventsFirestoreService,
       required this.eventsHiveService,
-      required this.connectionChecker});
+});
 
   List<Event> _eventsList = [];
   List<Event> _monthlyEvents = [];
@@ -31,7 +29,7 @@ class EventsRepository {
     _eventsList = await eventsHiveService.getData(eventBox);
 
     if (_eventsList.isEmpty) {
-      if (await connectionChecker.isConnected) {
+
         try {
           QuerySnapshot querySnapshot =
               await eventsFirestoreService.getEvents();
@@ -52,14 +50,12 @@ class EventsRepository {
           await eventsHiveService.addEvents(eventBox, _eventsList);
           return Right(_eventsList);
         } on FirebaseException catch (e) {
-          return Left(FirebaseFailure(errorMessage: e.message, code: e.code));
+          return Left(Failure(errorMessage: e.message, code: e.code));
         }
       } else {
-        return const Left(NetworkFailure());
+        return const Left(Failure(errorMessage: "An error has occurred"));
       }
-    } else {
-      return Right(_eventsList);
-    }
+
   }
 
   Future<Either<Failure, List<Event>>> getPastEvents() async {
@@ -72,7 +68,7 @@ class EventsRepository {
       return Right(_pastEvents);
     } else {
       return const Left(
-          FirebaseFailure(errorMessage: "There are no past events"));
+     Failure(errorMessage: "There are no past events"));
     }
   }
 
@@ -90,7 +86,7 @@ class EventsRepository {
       return Right(_upcomingEvents);
     } else {
       return const Left(
-          FirebaseFailure(errorMessage: "There are no upcoming events"));
+          Failure(errorMessage: "There are no upcoming events"));
     }
   }
 
@@ -104,7 +100,7 @@ class EventsRepository {
       _monthlyEvents.sort((a, b) => a.startDate.compareTo(b.startDate));
       return Right(_monthlyEvents);
     } else {
-      return const Left(FirebaseFailure(
+      return const Left(Failure(
           errorMessage: "There are no events scheduled this month"));
     }
   }

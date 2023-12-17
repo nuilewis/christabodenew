@@ -16,9 +16,9 @@ class SettingsRepository {
       await settingsHiveService.addSettings(settingsBox, settings);
       return const Right(null);
     } catch (e) {
-      rethrow;
-      //   return const Left(LocalStorageFailure(
-      //       errorMessage: "An error occurred while updating your preferences"));
+
+        return const Left(Failure(
+            errorMessage: "An error occurred while updating your preferences"));
     }
   }
 
@@ -29,7 +29,7 @@ class SettingsRepository {
           await settingsHiveService.getData(settingsBox);
       return Right(userSettings);
     } catch (e) {
-      return const Left(LocalStorageFailure(
+      return const Left(Failure(
           errorMessage: "An error occurred while getting your preferences"));
     }
   }
@@ -40,8 +40,8 @@ class SettingsRepository {
       await settingsHiveService.clearSettings(settingsBox);
       return const Right(null);
     } catch (e) {
-      return const Left(LocalStorageFailure(
-          errorMessage: "An error occured while clearing your preferences"));
+      return const Left(Failure(
+          errorMessage: "An error occurred while clearing your preferences"));
     }
   }
 }

@@ -10,10 +10,10 @@ class DevotionalCard extends StatefulWidget {
   final Devotional devotional;
   final VoidCallback onPressed;
   const DevotionalCard({
-    Key? key,
+    super.key,
     required this.devotional,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   State<DevotionalCard> createState() => _DevotionalCardState();
@@ -29,7 +29,7 @@ class _DevotionalCardState extends State<DevotionalCard> {
         child: Container(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(kDefaultPadding2x),
-              gradient: LinearGradient(
+              gradient: const LinearGradient(
                   colors: [AppColours.blueSeed  , AppColours.redSeed],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight)),

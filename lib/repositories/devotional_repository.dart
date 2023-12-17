@@ -1,4 +1,3 @@
-import 'package:christabodenew/core/connection_checker/connection_checker.dart';
 import 'package:christabodenew/models/devotional_model.dart';
 import 'package:christabodenew/services/devotional/devotional_firestore_service.dart';
 import 'package:christabodenew/services/devotional/devotional_hive_service.dart';
@@ -11,12 +10,11 @@ import '../core/errors/failure.dart';
 class DevotionalRepository {
   final DevotionalFirestoreService devotionalFirestoreService;
   final DevotionalHiveService devotionalHiveService;
-  final ConnectionChecker connectionChecker;
 
-  DevotionalRepository(
-      {required this.devotionalFirestoreService,
-      required this.devotionalHiveService,
-      required this.connectionChecker});
+  DevotionalRepository({
+    required this.devotionalFirestoreService,
+    required this.devotionalHiveService,
+  });
 
   List<Devotional> _devotionalList = [];
   List<Devotional> _likedDevotionalsList = [];
@@ -25,52 +23,32 @@ class DevotionalRepository {
 
   Future<Either<Failure, List<Devotional>>> getDevotionals() async {
     Devotional devotional = Devotional.empty;
-
-    /// try to get from offline
-    /// if offline is empty, then check for network connectivity, if network is not there, throw a network error
-    /// if network is there, then try to get from offline.
     final Box devotionalBox = await devotionalHiveService.openBox();
-
     _devotionalList = await devotionalHiveService.getData(devotionalBox);
+    try {
+      QuerySnapshot querySnapshot =
+          await devotionalFirestoreService.getDevotionals();
 
-    if (_devotionalList.isEmpty) {
-      ///If the devotional list from local storage is empty, then try to get
-      ///a new list from firestore;
-      if (await connectionChecker.isConnected) {
-        ///If there is a network connection, then make request to firebase to
-        ///get the data.
-        try {
-          QuerySnapshot querySnapshot =
-              await devotionalFirestoreService.getDevotionals();
-
-          if (querySnapshot.docs.isNotEmpty) {
-            for (DocumentSnapshot element in querySnapshot.docs) {
-              Map<String, dynamic> documentData =
-                  element.data() as Map<String, dynamic>;
-              devotional = Devotional.fromMap(data: documentData);
-
-              _devotionalList.add(devotional);
-            }
-          }
-
-          ///Sorting the list in order according to their star dates before adding to the database
-          _devotionalList.sort((a, b) => a.startDate.compareTo(b.startDate));
-
-          ///Now add the list of devotionals to the hive database
-          await devotionalHiveService.addDevotional(
-              devotionalBox, _devotionalList);
-
-          return Right(_devotionalList);
-        } on FirebaseException catch (e) {
-          ///If a Firebase error has occurred, then return a [FirebaseFailure]
-          return Left(FirebaseFailure(errorMessage: e.message, code: e.code));
+      if (querySnapshot.docs.isNotEmpty) {
+        for (DocumentSnapshot element in querySnapshot.docs) {
+          Map<String, dynamic> documentData =
+              element.data() as Map<String, dynamic>;
+          devotional = Devotional.fromMap(data: documentData);
+          _devotionalList.add(devotional);
         }
-      } else {
-        ///If there is no connection, then return a [NetworkFailure]
-        return const Left(NetworkFailure());
       }
-    } else {
+
+      ///Sorting the list in order according to their star dates before adding to the database
+      _devotionalList.sort((a, b) => a.startDate.compareTo(b.startDate));
+
+      ///Now add the list of devotionals to the hive database
+      await devotionalHiveService.addDevotional(devotionalBox, _devotionalList);
+
       return Right(_devotionalList);
+    } on FirebaseException catch (e) {
+      return Left(Failure(errorMessage: e.message, code: e.code));
+    } catch (e) {
+      return const Left(Failure(errorMessage: "An error has occurred"));
     }
   }
 
@@ -98,13 +76,12 @@ class DevotionalRepository {
           .toList();
 
       if (todaysDevotional.isEmpty) {
-        return const Left(
-            FirebaseFailure(errorMessage: "No Devotional message found"));
+        return const Left(Failure(errorMessage: "No Devotional message found"));
       } else {
         return Right(todaysDevotional.first);
       }
     } else {
-      return const Left(FirebaseFailure(errorMessage: "No Devotional found"));
+      return const Left(Failure(errorMessage: "No Devotional found"));
     }
   }
 
@@ -132,13 +109,12 @@ class DevotionalRepository {
       if (todaysDevotionalIndex == -1) {
         ///Index being -1 means it did not get the devotional, or the devotional was not found
 
-        return const Left(
-            FirebaseFailure(errorMessage: "No Devotional message found"));
+        return const Left(Failure(errorMessage: "No Devotional message found"));
       } else {
         return Right(todaysDevotionalIndex);
       }
     } else {
-      return const Left(FirebaseFailure(errorMessage: "No Devotional found"));
+      return const Left(Failure(errorMessage: "No Devotional found"));
     }
   }
 
@@ -150,7 +126,7 @@ class DevotionalRepository {
           _devotionalList.where((element) => element.isLiked == true).toList();
       return Right(_likedDevotionalsList);
     } catch (e) {
-      return const Left(FirebaseFailure(
+      return const Left(Failure(
           errorMessage: "Unable to get your favourite devotional messages"));
     }
   }
@@ -163,7 +139,7 @@ class DevotionalRepository {
       return const Right(null);
     } catch (e) {
       return const Left(
-          FirebaseFailure(errorMessage: "Unable to add to your favourites"));
+          Failure(errorMessage: "Unable to add to your favourites"));
     }
   }
 
@@ -174,7 +150,7 @@ class DevotionalRepository {
       return const Right(null);
     } catch (e) {
       return const Left(
-          FirebaseFailure(errorMessage: "Unable to clear your favourites"));
+          Failure(errorMessage: "Unable to clear your favourites"));
     }
   }
 }

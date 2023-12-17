@@ -2,14 +2,13 @@ import 'package:christabodenew/repositories/settings_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../core/errors/failure.dart';
+import '../core/core.dart';
 import '../models/settings_model.dart';
 
-enum SettingsSate { initial, submitting, success, error }
 
 class SettingsProvider extends ChangeNotifier {
   final SettingsRepository settingsRepository;
-  SettingsSate state = SettingsSate.initial;
+  AppState state = AppState.initial;
   String errorMessage = "";
   Settings userSettings = const Settings(isDarkMode: false, fontSize: 14);
 
@@ -20,11 +19,11 @@ class SettingsProvider extends ChangeNotifier {
         await settingsRepository.getSettings();
 
     response.fold((failure) {
-      state = SettingsSate.error;
+      state = AppState.error;
       errorMessage = failure.errorMessage ??
           "An error occurred while trying to get your preferences";
     }, (settings) {
-      state = SettingsSate.success;
+      state = AppState.success;
       userSettings =
           settings ?? const Settings(isDarkMode: false, fontSize: 14);
     });
@@ -37,11 +36,11 @@ class SettingsProvider extends ChangeNotifier {
         await settingsRepository.updateSettings(settings);
 
     response.fold((failure) {
-      state = SettingsSate.error;
+      state = AppState.error;
       errorMessage = failure.errorMessage ??
           "An error occurred while trying to get your preferences";
     }, (success) {
-      state = SettingsSate.success;
+      state = AppState.success;
     });
     getSettings();
   }
@@ -50,11 +49,11 @@ class SettingsProvider extends ChangeNotifier {
     Either<Failure, void> response = await settingsRepository.clearSettings();
 
     response.fold((failure) {
-      state = SettingsSate.error;
+      state = AppState.error;
       errorMessage = failure.errorMessage ??
           "An error occurred while trying to clear your preferences";
     }, (success) {
-      state = SettingsSate.success;
+      state = AppState.success;
     });
     notifyListeners();
   }

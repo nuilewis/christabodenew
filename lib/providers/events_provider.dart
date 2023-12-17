@@ -1,18 +1,17 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../core/errors/failure.dart';
+import '../core/core.dart';
 import '../models/event_model.dart';
 import '../repositories/events_repository.dart';
 
-enum EventState { initial, submitting, success, error }
 
 class EventsProvider extends ChangeNotifier {
   final EventsRepository eventsRepository;
 
   EventsProvider({required this.eventsRepository});
 
-  EventState state = EventState.initial;
+  AppState state = AppState.initial;
   String errorMessage = "";
   List<Event> _allEvents = [];
   List<Event> monthlyEvents = [];
@@ -20,8 +19,8 @@ class EventsProvider extends ChangeNotifier {
   List<Event> upcomingEvents = [];
 
   Future<void> getEvents() async {
-    if (state == EventState.submitting) return;
-    state = EventState.submitting;
+    if (state == AppState.submitting) return;
+    state = AppState.submitting;
     notifyListeners();
 
     Either<Failure, List<Event>> response = await eventsRepository.getEvents();
@@ -29,18 +28,18 @@ class EventsProvider extends ChangeNotifier {
     response.fold((failure) {
       errorMessage =
           failure.errorMessage ?? "An error occurred while getting the events";
-      state = EventState.error;
+      state = AppState.error;
     }, (eventsList) {
       _allEvents = eventsList;
-      state = EventState.success;
+      state = AppState.success;
     });
 
     notifyListeners();
   }
 
   Future<void> getMonthlyEvents() async {
-    if (state == EventState.submitting) return;
-    state = EventState.submitting;
+    if (state == AppState.submitting) return;
+    state = AppState.submitting;
     notifyListeners();
 
     Either<Failure, List<Event>> response =
@@ -49,18 +48,18 @@ class EventsProvider extends ChangeNotifier {
     response.fold((failure) {
       errorMessage =
           failure.errorMessage ?? "An error occurred while getting the events";
-      state = EventState.error;
+      state = AppState.error;
     }, (eventsList) {
       monthlyEvents = eventsList;
-      state = EventState.success;
+      state = AppState.success;
     });
 
     notifyListeners();
   }
 
   Future<void> getUpcomingEvents() async {
-    if (state == EventState.submitting) return;
-    state = EventState.submitting;
+    if (state == AppState.submitting) return;
+    state = AppState.submitting;
     //  notifyListeners();
 
     Either<Failure, List<Event>> response =
@@ -68,30 +67,30 @@ class EventsProvider extends ChangeNotifier {
 
     response.fold((failure) {
       errorMessage = failure.errorMessage ?? "There are no upcoming events";
-      state = EventState.error;
+      state = AppState.error;
       upcomingEvents = [];
     }, (upcomingEventsList) {
       upcomingEvents = upcomingEventsList;
-      state = EventState.success;
+      state = AppState.success;
     });
 
     //notifyListeners();
   }
 
   Future<void> getPastEvents() async {
-    if (state == EventState.submitting) return;
-    state = EventState.submitting;
+    if (state == AppState.submitting) return;
+    state = AppState.submitting;
     notifyListeners();
 
     Either<Failure, List<Event>> response =
         await eventsRepository.getPastEvents();
     response.fold((failure) {
       errorMessage = failure.errorMessage ?? "There are no past events";
-      state = EventState.error;
+      state = AppState.error;
       pastEvents = [];
     }, (pastEventsList) {
       pastEvents = pastEventsList;
-      state = EventState.success;
+      state = AppState.success;
     });
 
     notifyListeners();

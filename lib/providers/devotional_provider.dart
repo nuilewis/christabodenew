@@ -3,13 +3,12 @@ import 'package:christabodenew/repositories/devotional_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 
-import '../core/errors/failure.dart';
 
-enum DevotionalState { initial, submitting, success, error }
+import 'package:christabodenew/core/core.dart';
 
 class DevotionalProvider extends ChangeNotifier {
   final DevotionalRepository devotionalRepository;
-  DevotionalState state = DevotionalState.initial;
+  AppState state = AppState.initial;
   String errorMessage = "";
   Devotional? todaysDevotional;
   //late final int todaysDevotionalIndex;
@@ -21,8 +20,8 @@ class DevotionalProvider extends ChangeNotifier {
   DevotionalProvider(this.devotionalRepository);
 
   Future<void> getCurrentDevotional() async {
-    if (state == DevotionalState.submitting) return;
-    state = DevotionalState.submitting;
+    if (state == AppState.submitting) return;
+    state = AppState.submitting;
     //notifyListeners();
     Either<Failure, Devotional> response =
         await devotionalRepository.getCurrentDevotional();
@@ -30,10 +29,10 @@ class DevotionalProvider extends ChangeNotifier {
     response.fold((failure) {
       errorMessage = failure.errorMessage ??
           "An error occurred while getting today's Devotional";
-      state = DevotionalState.error;
+      state = AppState.error;
     }, (devotional) {
       todaysDevotional = devotional;
-      state = DevotionalState.success;
+      state = AppState.success;
     });
 
     // notifyListeners();
@@ -51,7 +50,7 @@ class DevotionalProvider extends ChangeNotifier {
       errorMessage = failure.errorMessage ??
           "An error occurred while getting today's Devotional";
 
-      state = DevotionalState.error;
+      state = AppState.error;
     }, (index) {
       ///Will use the index of the devotional for today to limit the total list to
       ///all messages right unto this day, so that a user can page view scroll
@@ -63,7 +62,7 @@ class DevotionalProvider extends ChangeNotifier {
 
       allDevotionals = allDevotionals.sublist(0, index + 1);
 
-      state = DevotionalState.success;
+      state = AppState.success;
     });
 
     // notifyListeners();
@@ -75,8 +74,8 @@ class DevotionalProvider extends ChangeNotifier {
   }
 
   Future<void> getDevotionals() async {
-    if (state == DevotionalState.submitting) return;
-    state = DevotionalState.submitting;
+    if (state == AppState.submitting) return;
+    state = AppState.submitting;
     notifyListeners();
     Either<Failure, List<Devotional>> response =
         await devotionalRepository.getDevotionals();
@@ -85,19 +84,19 @@ class DevotionalProvider extends ChangeNotifier {
       errorMessage = failure.errorMessage ??
           "An error occurred while getting today's Devotional";
 
-      state = DevotionalState.error;
+      state = AppState.error;
     }, (devotional) {
       allDevotionals = devotional;
 
-      state = DevotionalState.success;
+      state = AppState.success;
     });
 
     notifyListeners();
   }
 
   Future<void> getLikedDevotionals() async {
-    if (state == DevotionalState.submitting) return;
-    state = DevotionalState.submitting;
+    if (state == AppState.submitting) return;
+    state = AppState.submitting;
     notifyListeners();
     Either<Failure, List<Devotional>> response =
         await devotionalRepository.getLikedDevotionals();
@@ -106,10 +105,10 @@ class DevotionalProvider extends ChangeNotifier {
       errorMessage = failure.errorMessage ??
           "An error occurred while getting your favourite Devotional messages";
 
-      state = DevotionalState.error;
+      state = AppState.error;
     }, (likedDevotional) {
       likedDevotionals = likedDevotional;
-      state = DevotionalState.success;
+      state = AppState.success;
     });
 
     notifyListeners();
@@ -124,9 +123,9 @@ class DevotionalProvider extends ChangeNotifier {
     response.fold((failure) {
       errorMessage = failure.errorMessage ??
           "An error occurred while saving your favourite Devotional messages";
-      state = DevotionalState.error;
+      state = AppState.error;
     }, (nothing) {
-      state = DevotionalState.success;
+      state = AppState.success;
     });
 
     notifyListeners();
@@ -139,9 +138,9 @@ class DevotionalProvider extends ChangeNotifier {
     response.fold((failure) {
       errorMessage = failure.errorMessage ??
           "An error occurred while clearing Devotional messages";
-      state = DevotionalState.error;
+      state = AppState.error;
     }, (nothing) {
-      state = DevotionalState.success;
+      state = AppState.success;
     });
 
     notifyListeners();
@@ -158,9 +157,9 @@ class DevotionalProvider extends ChangeNotifier {
 
       await updateDevotionalList(updatedList);
       await getLikedDevotionals();
-      state = DevotionalState.success;
+      state = AppState.success;
     } else {
-      state = DevotionalState.error;
+      state = AppState.error;
     }
     notifyListeners();
   }

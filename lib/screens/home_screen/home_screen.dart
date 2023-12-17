@@ -1,29 +1,19 @@
-import 'package:christabodenew/core/extensions/string_extension.dart';
 import 'package:christabodenew/models/devotional_model.dart';
-import 'package:christabodenew/models/event_model.dart';
-import 'package:christabodenew/models/unsplash_image.dart';
 import 'package:christabodenew/providers/events_provider.dart';
-import 'package:christabodenew/providers/messages_provider.dart';
+import 'package:christabodenew/providers/hymn_provider.dart';
 import 'package:christabodenew/providers/prayer_provider.dart';
 import 'package:christabodenew/providers/unsplash_image_provider.dart';
-import 'package:christabodenew/screens/devotional_screen/components/featured_image.dart';
-import 'package:christabodenew/screens/home_screen/components/devotional_card.dart';
 import 'package:christabodenew/screens/messages_screen/messages_screen.dart';
 import 'package:christabodenew/screens/prayer_screen/prayer_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_blurhash/flutter_blurhash.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/constants.dart';
-import '../../core/date_time_formatter.dart';
 import '../../models/prayer_model.dart';
 import '../../providers/devotional_provider.dart';
 import '../devotional_screen/devotional_screen.dart';
-import '../events_screen/components/event_card.dart';
 import 'components/devotional_and_prayer_card.dart';
 import 'components/featured_event_card.dart';
-import 'components/prayer_card.dart';
 
 class HomeScreen extends StatefulWidget {
   static const id = "home_screen";
@@ -43,6 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Provider.of<DevotionalProvider>(context).getCurrentDevotional();
     Provider.of<PrayerProvider>(context).getCurrentPrayer();
     Provider.of<EventsProvider>(context).getUpcomingEvents();
+   // Provider.of<HymnProvider>(context).getHymns();
     super.didChangeDependencies();
   }
 
@@ -63,13 +54,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   Padding(
                     padding:
                         const EdgeInsets.symmetric(horizontal: kDefaultPadding),
-                    child: Text("Christ Abode Ministries",
+                    child: Text("Christ Abode\nMinistries",
                         style: Theme.of(context)
                             .textTheme
-                            .headlineSmall),
+                            .headlineLarge),
                   ),
                   const SizedBox(
-                    height: kDefaultPadding,
+                    height: 48
                   ),
                   Padding(
                     padding:
@@ -79,18 +70,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Upcoming Events",
+                          "Upcoming Services",
                           style: Theme.of(context)
                               .textTheme
-                              .bodyMedium!
-                              .copyWith(fontSize: 20),
+                              .bodyLarge!.copyWith(fontFamily: 'Gloock'),
                         ),
                         const SizedBox(height: kDefaultPadding),
                         eventData.upcomingEvents.isNotEmpty
                             ? FeaturedEventCard(
                                 event: eventData.upcomingEvents.first,
                                 featuredImage:
-                                    unsplashData.devotionalFeaturedImage)
+                                    unsplashData.eventFeaturedImage )
                             : Text(
                                 "There are no upcoming events scheduled for now.",
                                 textAlign: TextAlign.center,
@@ -106,11 +96,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       "Devotional & Prayer",
                       style: Theme.of(context)
                           .textTheme
-                          .bodyMedium!
-                          .copyWith(fontSize: 20),
+                          .bodyLarge!.copyWith(fontFamily: 'Gloock'),
                     ),
                   ),
-                  SizedBox(height: kDefaultPadding),
+                  const SizedBox(height: kDefaultPadding),
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
@@ -151,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: kDefaultPadding),
+                  const SizedBox(height: kDefaultPadding2x),
                 ],
               ),
             ),
@@ -164,8 +153,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
 class MessagesCategoryItem extends StatelessWidget {
   const MessagesCategoryItem({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

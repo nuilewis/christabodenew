@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
 
-import '../../../models/unsplash_image.dart';
+import '../../models/unsplash_image.dart';
 
 class FeaturedImage extends StatelessWidget {
   final UnsplashImage featuredImage;
   const FeaturedImage({
-    Key? key,
+    super.key,
     required this.featuredImage,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

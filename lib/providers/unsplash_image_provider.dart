@@ -1,17 +1,18 @@
-import 'package:christabodenew/core/errors/failure.dart';
 import 'package:christabodenew/repositories/unsplash_image_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../core/core.dart';
 import '../models/unsplash_image.dart';
 
-enum UnsplashImageState { initial, submitting, success, error }
+
 
 class UnsplashImageProvider extends ChangeNotifier {
   final UnsplashImageRepository unsplashImageRepository;
-  UnsplashImageState state = UnsplashImageState.initial;
+  AppState state = AppState.initial;
   String errorMessage = "";
   UnsplashImage devotionalFeaturedImage = UnsplashImage.empty;
+  UnsplashImage hymnFeaturedImage = UnsplashImage.empty;
   UnsplashImage prayerFeaturedImage = UnsplashImage.empty;
   UnsplashImage eventFeaturedImage = UnsplashImage.empty;
 
@@ -43,8 +44,8 @@ class UnsplashImageProvider extends ChangeNotifier {
   }
 
   Future<void> getDevotionalFeaturedImage() async {
-    if (state == UnsplashImageState.submitting) return;
-    state = UnsplashImageState.submitting;
+    if (state == AppState.submitting) return;
+    state = AppState.submitting;
     notifyListeners();
     Either<Failure, UnsplashImage> response =
         await unsplashImageRepository.getRandomImage();
@@ -52,18 +53,18 @@ class UnsplashImageProvider extends ChangeNotifier {
     response.fold((failure) {
       errorMessage = failure.errorMessage ??
           "An error occurred while getting the featured image";
-      state = UnsplashImageState.error;
+      state = AppState.error;
     }, (image) {
       devotionalFeaturedImage = image;
-      state = UnsplashImageState.success;
+      state = AppState.success;
     });
 
     notifyListeners();
   }
 
   Future<void> getEventFeaturedImage() async {
-    if (state == UnsplashImageState.submitting) return;
-    state = UnsplashImageState.submitting;
+    if (state == AppState.submitting) return;
+    state = AppState.submitting;
     notifyListeners();
     Either<Failure, UnsplashImage> response =
         await unsplashImageRepository.getRandomImage();
@@ -71,18 +72,36 @@ class UnsplashImageProvider extends ChangeNotifier {
     response.fold((failure) {
       errorMessage = failure.errorMessage ??
           "An error occurred while getting the featured image";
-      state = UnsplashImageState.error;
+      state = AppState.error;
     }, (image) {
       eventFeaturedImage = image;
-      state = UnsplashImageState.success;
+      state = AppState.success;
+    });
+
+    notifyListeners();
+  }
+  Future<void> getHymnFeaturedImage() async {
+    if (state == AppState.submitting) return;
+    state = AppState.submitting;
+    notifyListeners();
+    Either<Failure, UnsplashImage> response =
+    await unsplashImageRepository.getRandomImage();
+
+    response.fold((failure) {
+      errorMessage = failure.errorMessage ??
+          "An error occurred while getting the featured image";
+      state = AppState.error;
+    }, (image) {
+      hymnFeaturedImage = image;
+      state = AppState.success;
     });
 
     notifyListeners();
   }
 
   Future<void> getPrayerFeaturedImage() async {
-    if (state == UnsplashImageState.submitting) return;
-    state = UnsplashImageState.submitting;
+    if (state == AppState.submitting) return;
+    state = AppState.submitting;
     notifyListeners();
     Either<Failure, UnsplashImage> response =
         await unsplashImageRepository.getRandomImage();
@@ -90,10 +109,10 @@ class UnsplashImageProvider extends ChangeNotifier {
     response.fold((failure) {
       errorMessage = failure.errorMessage ??
           "An error occurred while getting the featured image";
-      state = UnsplashImageState.error;
+      state = AppState.error;
     }, (image) {
       prayerFeaturedImage = image;
-      state = UnsplashImageState.success;
+      state = AppState.success;
     });
 
     notifyListeners();

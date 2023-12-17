@@ -8,13 +8,12 @@ class NextPreviousButton extends StatelessWidget {
   final Color? bgColour;
   final Color? iconColour;
   const NextPreviousButton(
-      {Key? key,
+      {super.key,
       required this.onPressed,
       this.isNextButton = true,
       this.elevation,
       this.bgColour,
-      this.iconColour})
-      : super(key: key);
+      this.iconColour});
 
   @override
   Widget build(BuildContext context) {

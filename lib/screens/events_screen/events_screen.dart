@@ -34,7 +34,7 @@ class EventsScreen extends StatelessWidget {
                     ),
                     Text(
                       "Events",
-                      style: Theme.of(context).textTheme.displayMedium,
+                      style: Theme.of(context).textTheme.headlineSmall,
                     ),
                     const SizedBox(
                       height: kDefaultPadding2x,
@@ -43,8 +43,7 @@ class EventsScreen extends StatelessWidget {
                       "Upcoming Events for ${monthsOfYear[DateTime.now().month]}",
                       style: Theme.of(context)
                           .textTheme
-                          .displayMedium!
-                          .copyWith(fontSize: 20),
+                          .bodyLarge!.copyWith(fontFamily: "Gloock")
                     ),
                     const SizedBox(height: kDefaultPadding),
                     BuildEventsList(events: eventData.upcomingEvents),
@@ -53,8 +52,7 @@ class EventsScreen extends StatelessWidget {
                       "Past Events",
                       style: Theme.of(context)
                           .textTheme
-                          .displayMedium!
-                          .copyWith(fontSize: 20),
+                          .bodyLarge!.copyWith(fontFamily: "Gloock")
                     ),
                     const SizedBox(height: kDefaultPadding),
                     BuildEventsList(

@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../core/constants.dart';
 
 class VideoCard extends StatelessWidget {
-  const VideoCard({Key? key}) : super(key: key);
+  const VideoCard({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class VideoCard extends StatelessWidget {
           image: const DecorationImage(
               image: AssetImage("assets/images/road_image.jpg"),
               fit: BoxFit.cover),
-          gradient: LinearGradient(
+          gradient: const LinearGradient(
             colors: [Colors.transparent, AppColours.neutral50],
             //  stops: [0.3, 0.9 ],
             begin: Alignment.topCenter,

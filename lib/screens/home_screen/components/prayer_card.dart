@@ -10,10 +10,10 @@ class PrayerCard extends StatefulWidget {
   final Prayer prayer;
   final VoidCallback onPressed;
   const PrayerCard({
-    Key? key,
+    super.key,
     required this.prayer,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   State<PrayerCard> createState() => _PrayerCardState();
