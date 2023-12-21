@@ -1,3 +1,5 @@
+import 'package:christabodenew/core/constants.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -23,12 +25,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 Feedback.forTap(context);
                 Navigator.pop(context);
               },
-              icon: SvgPicture.asset(
-                "assets/svg/back_icon.svg",
-                theme: SvgTheme(
-                  currentColor: Theme.of(context).iconTheme.color!,
-                ),
-              )),
+              icon: Icon(FluentIcons.arrow_left_24_regular, color: AppColours.white,)),
     );
   }
 }

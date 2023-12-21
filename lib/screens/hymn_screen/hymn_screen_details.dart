@@ -13,12 +13,13 @@ import 'package:christabodenew/core/core.dart';
 class HymnScreenDetails extends StatefulWidget {
   static const id = "hymn_screen_details";
   final bool isCalledFromNavBar;
+  final int? index;
 
   static Route route() {
     return MaterialPageRoute(builder: (context) => const HymnScreenDetails());
   }
 
-  const HymnScreenDetails({super.key, this.isCalledFromNavBar = false});
+  const HymnScreenDetails({super.key, this.isCalledFromNavBar = false,  this.index});
 
   @override
   State<HymnScreenDetails> createState() => _HymnScreenDetailsState();
@@ -34,7 +35,7 @@ class _HymnScreenDetailsState extends State<HymnScreenDetails>
   void didChangeDependencies() {
     _hymnPageController = PageController(
         initialPage:
-        context.watch<DevotionalProvider>().currentDevotionalIndex);
+        context.watch<HymnProvider>().currentHymnIndex);
 
     super.didChangeDependencies();
   }
@@ -57,10 +58,14 @@ _hymnPageController.dispose();
             itemCount: hymnData.allHymns.length,
             onPageChanged: (index) async {
               currentIndex = index;
+              hymnData.setHymnIndex(index);
             },
             itemBuilder: (context, index) {
               Hymn hymn = hymnData.allHymns[index];
               return Content(
+                onShareButtonPressed:(){
+                  hymnData.shareHymn(hymn);
+                },
                 contentType: ContentType.devotional,
                 title: hymn.title,
                 content: hymn.content,

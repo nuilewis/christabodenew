@@ -1,6 +1,6 @@
 import 'package:christabodenew/firebase_options.dart';
 import 'package:christabodenew/repositories/events_repository.dart';
-import 'package:christabodenew/screens/bottom_nav_bar.dart';
+import 'package:christabodenew/screens/global_components/bottom_nav_bar.dart';
 import 'package:christabodenew/screens/devotional_screen/devotional_screen.dart';
 import 'package:christabodenew/screens/events_screen/events_screen.dart';
 import 'package:christabodenew/screens/favourite_screen/favourites_screen.dart';
@@ -54,9 +54,6 @@ class _MyAppState extends State<MyApp> {
   final DevotionalHiveService _devotionalHiveService = DevotionalHiveService();
   late DevotionalRepository _devotionalRepository;
 
-  ///Creating and Injecting Messages Dependencies
-  late MessagesRepository _messagesRepository;
-
   ///Creating and Injecting Events Dependencies
   final EventsFirestoreService _eventsFirestoreService =
       EventsFirestoreService();
@@ -89,8 +86,6 @@ class _MyAppState extends State<MyApp> {
       devotionalHiveService: _devotionalHiveService,
     );
 
-    _messagesRepository = MessagesRepository();
-
     _eventsRepository = EventsRepository(
       eventsFirestoreService: _eventsFirestoreService,
       eventsHiveService: _eventsHiveService,
@@ -118,21 +113,21 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider<PrayerProvider>(
             create: (context) =>
                 PrayerProvider(prayerRepository: _prayerRepository)
-                  ..initStuff()),
+                  ..initialise()),
         ChangeNotifierProvider<DevotionalProvider>(
-            create: (context) =>
-                DevotionalProvider(_devotionalRepository)..initStuff()),
-        ChangeNotifierProvider<MessagesProvider>(
-            create: (context) => MessagesProvider(_messagesRepository)),
+            create: (context) => DevotionalProvider(_devotionalRepository)
+              ..initialise(devotionalYear: "2024")),
         ChangeNotifierProvider<EventsProvider>(
             create: (context) =>
                 EventsProvider(eventsRepository: _eventsRepository)
-                  ..initStuff()),
+                  ..initialise(eventsYear: "2024")),
         ChangeNotifierProvider<UnsplashImageProvider>(
             create: (context) => UnsplashImageProvider(
                 unsplashImageRepository: _unsplashImageRepository)
-              ..getFeaturedImages()),
-ChangeNotifierProvider<HymnProvider>(create: (context)=> HymnProvider(hymnRepository: _hymnRepository)..getHymns())
+              ),
+        ChangeNotifierProvider<HymnProvider>(
+            create: (context) =>
+                HymnProvider(hymnRepository: _hymnRepository)..initialise())
       ],
       child: Builder(builder: (context) {
         return MaterialApp(
@@ -149,8 +144,8 @@ ChangeNotifierProvider<HymnProvider>(create: (context)=> HymnProvider(hymnReposi
             EventsScreen.id: (context) => const EventsScreen(),
             MessagesScreen.id: (context) => const MessagesScreen(),
             FavouritesScreen.id: (context) => const FavouritesScreen(),
-            HymnScreen.id: (context)=> const HymnScreen(),
-            HymnScreenDetails.id: (context)=> const HymnScreenDetails()
+            HymnScreen.id: (context) => const HymnScreen(),
+            HymnScreenDetails.id: (context) => const HymnScreenDetails()
           },
         );
       }),

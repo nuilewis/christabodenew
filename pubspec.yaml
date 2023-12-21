@@ -48,6 +48,9 @@ dependencies:
   hive_flutter: ^1.1.0
   flutter_blurhash: ^0.8.2
   dio: ^5.3.0
+  fluentui_system_icons: ^1.1.223
+  gap: ^3.0.1
+  share_plus: ^7.2.1
   
 
 dev_dependencies:

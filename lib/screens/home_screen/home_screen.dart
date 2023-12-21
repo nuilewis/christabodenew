@@ -2,9 +2,12 @@ import 'package:christabodenew/models/devotional_model.dart';
 import 'package:christabodenew/providers/events_provider.dart';
 import 'package:christabodenew/providers/prayer_provider.dart';
 import 'package:christabodenew/providers/unsplash_image_provider.dart';
+import 'package:christabodenew/screens/hymn_screen/hymn_screen.dart';
 import 'package:christabodenew/screens/messages_screen/messages_screen.dart';
 import 'package:christabodenew/screens/prayer_screen/prayer_screen.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/constants.dart';
@@ -32,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Provider.of<DevotionalProvider>(context).getCurrentDevotional();
     Provider.of<PrayerProvider>(context).getCurrentPrayer();
     Provider.of<EventsProvider>(context).getUpcomingEvents();
-   // Provider.of<HymnProvider>(context).getHymns();
+    // Provider.of<HymnProvider>(context).getHymns();
     super.didChangeDependencies();
   }
 
@@ -49,18 +52,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const SizedBox(height: kDefaultPadding2x),
+                  Gap(kDefaultPadding2x),
                   Padding(
                     padding:
                         const EdgeInsets.symmetric(horizontal: kDefaultPadding),
                     child: Text("Christ Abode\nMinistries",
-                        style: Theme.of(context)
-                            .textTheme
-                            .headlineLarge),
+                        style: Theme.of(context).textTheme.headlineLarge),
                   ),
-                  const SizedBox(
-                    height: 48
-                  ),
+                  const SizedBox(height: 48),
                   Padding(
                     padding:
                         const EdgeInsets.symmetric(horizontal: kDefaultPadding),
@@ -72,38 +71,49 @@ class _HomeScreenState extends State<HomeScreen> {
                           "Upcoming Services",
                           style: Theme.of(context)
                               .textTheme
-                              .bodyLarge!.copyWith(fontFamily: 'Gloock'),
+                              .bodyLarge!
+                              .copyWith(fontFamily: 'Gloock'),
                         ),
-                        const SizedBox(height: kDefaultPadding),
-                        eventData.upcomingEvents.isNotEmpty
-                            ? FeaturedEventCard(
-                                event: eventData.upcomingEvents.first,
-                                featuredImage:
-                                    unsplashData.eventFeaturedImage )
-                            : Text(
-                                "There are no upcoming events scheduled for now.",
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.bodyMedium,
-                              ),
+                        Gap(kDefaultPadding),
+                        Visibility(
+                            //visible: eventData.upcomingEvents.isNotEmpty,
+                          visible: true,
+                            child: FeaturedEventCard(
+                            onSharePressed: (){
+                              eventData.shareEvent(context, eventData.allEvents.first);
+                            },
+                            event: eventData.allEvents.first,
+                            featuredImage: unsplashData.eventFeaturedImage),
+                          replacement: Center(
+                            child: Text(
+                              "There are no upcoming events scheduled for now.",
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                          ),
+
+                        )
+
                       ],
                     ),
                   ),
-                  const SizedBox(height: kDefaultPadding2x),
+                  Gap(kDefaultPadding2x),
                   Padding(
                     padding: const EdgeInsets.only(left: kDefaultPadding),
                     child: Text(
                       "Devotional & Prayer",
                       style: Theme.of(context)
                           .textTheme
-                          .bodyLarge!.copyWith(fontFamily: 'Gloock'),
+                          .bodyLarge!
+                          .copyWith(fontFamily: 'Gloock'),
                     ),
                   ),
-                  const SizedBox(height: kDefaultPadding),
+                  Gap(kDefaultPadding),
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: [
-                        const SizedBox(width: kDefaultPadding),
+                        Gap(kDefaultPadding),
                         DevotionalAndPrayerCard(
                             onPressed: () async {
                               await devotionalData
@@ -120,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             featuredImage: unsplashData.devotionalFeaturedImage,
                             devotional: devotionalData.todaysDevotional ??
                                 Devotional.empty),
-                        const SizedBox(width: kDefaultPadding),
+                        Gap(kDefaultPadding),
                         DevotionalAndPrayerCard(
                             onPressed: () async {
                               await prayerData
@@ -135,11 +145,54 @@ class _HomeScreenState extends State<HomeScreen> {
                             },
                             featuredImage: unsplashData.prayerFeaturedImage,
                             prayer: prayerData.todaysPrayer ?? Prayer.empty),
-                        const SizedBox(width: kDefaultPadding),
+                        Gap(kDefaultPadding),
                       ],
                     ),
                   ),
-                  const SizedBox(height: kDefaultPadding2x),
+                  Gap(kDefaultPadding2x),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: InkWell(
+                      splashFactory: InkSparkle.splashFactory,
+                      splashColor: AppColours.blue90,
+                      borderRadius: BorderRadius.circular(24),
+                      onTap: (){
+                        Navigator.pushNamed(context, HymnScreen.id);
+                      },
+                      child: Ink(
+                        width: double.infinity,
+                        padding: EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(24),
+                          color: Theme.of(context).cardColor,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Get Spirit Inspired\nHymns to lift your soul",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headlineSmall!
+                                    .copyWith(
+                                  height: 1.2,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onPrimaryContainer,
+                                    )),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: IconButton(
+                                onPressed: () {},
+                                icon: Icon(
+                                  FluentIcons.arrow_right_24_regular,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

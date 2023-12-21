@@ -93,11 +93,13 @@ class MockDevotionalRepository extends _i1.Mock
       ) as _i3.DevotionalHiveService);
 
   @override
-  _i6.Future<_i4.Either<_i7.Failure, List<_i8.Devotional>>> getDevotionals() =>
+  _i6.Future<_i4.Either<_i7.Failure, List<_i8.Devotional>>> getDevotionals(
+          {String? year}) =>
       (super.noSuchMethod(
         Invocation.method(
           #getDevotionals,
           [],
+          {#year: year},
         ),
         returnValue:
             _i6.Future<_i4.Either<_i7.Failure, List<_i8.Devotional>>>.value(
@@ -106,6 +108,7 @@ class MockDevotionalRepository extends _i1.Mock
           Invocation.method(
             #getDevotionals,
             [],
+            {#year: year},
           ),
         )),
         returnValueForMissingStub:
@@ -115,6 +118,7 @@ class MockDevotionalRepository extends _i1.Mock
           Invocation.method(
             #getDevotionals,
             [],
+            {#year: year},
           ),
         )),
       ) as _i6.Future<_i4.Either<_i7.Failure, List<_i8.Devotional>>>);

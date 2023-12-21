@@ -149,7 +149,7 @@ class AppColours {
   static const Color white = Color(0xFFFFFBFF);
 
   ///-----------Purple---------///
-  static const Color blueSeed = Color(0xFF001B3E);
+  static const Color blueSeed = Color(0xFF1F84FB);
   static const Color blue10 = Color(0xFF002F64);
   static const Color blue20 = Color(0xFF002F64);
   static const Color blue30 = Color(0xFF00458D);
@@ -313,35 +313,35 @@ class AppTextStyles {
   static TextStyle titleMediumBold = const TextStyle(
     fontWeight: FontWeight.w800,
     fontSize: 16,
-    height: 1,
+  //  height: 1,
   );
   static TextStyle titleMedium = const TextStyle(
     fontWeight: FontWeight.normal,
     fontSize: 16,
-    height: 1,
+ //   height: 1,
   );
 
   static TextStyle titleSmallBold = const TextStyle(
     fontWeight: FontWeight.w800,
     fontSize: 14,
-    height: 1,
+ //   height: 1,
   );
   static TextStyle titleSmall = const TextStyle(
     fontWeight: FontWeight.normal,
     fontSize: 14,
-    height: 1,
+ //   height: 1,
   );
 
   ///---Body---///
   static TextStyle bodyLargeBold = const TextStyle(
     fontWeight: FontWeight.w800,
     fontSize: 16,
-    height: 1,
+   // height: 1,
   );
   static TextStyle bodyLarge = const TextStyle(
     fontWeight: FontWeight.normal,
     fontSize: 16,
-    height: 1,
+   // height: 1,
   );
 
   static TextStyle bodyMediumBold = const TextStyle(
@@ -356,11 +356,11 @@ class AppTextStyles {
   static TextStyle bodySmallBold = const TextStyle(
     fontWeight: FontWeight.w800,
     fontSize: 12,
-    height: 1,
+   // height: 1,
   );
   static TextStyle bodySmall = const TextStyle(
     fontWeight: FontWeight.normal,
     fontSize: 12,
-    height: 1,
+   // height: 1,
   );
 }

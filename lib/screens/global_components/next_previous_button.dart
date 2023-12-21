@@ -1,3 +1,4 @@
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -17,25 +18,14 @@ class NextPreviousButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
+    return IconButton.filled(
       onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        padding: EdgeInsets.zero,
+      style: IconButton.styleFrom(
+        foregroundColor: Theme.of(context).scaffoldBackgroundColor,
         backgroundColor:
             bgColour ?? Theme.of(context).iconTheme.color!.withOpacity(1),
-        elevation: elevation ?? 0,
-        shape: const CircleBorder(),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(8),
-        child: SvgPicture.asset(
-          isNextButton!
-              ? "assets/svg/chevron_forward_icon.svg"
-              : "assets/svg/chevron_backward_icon.svg",
-          color: iconColour ?? Theme.of(context).scaffoldBackgroundColor,
-          height: 16,
-        ),
-      ),
+      icon: Icon(isNextButton!? FluentIcons.chevron_right_24_regular: FluentIcons.chevron_left_24_regular),
     );
   }
 }

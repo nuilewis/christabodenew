@@ -4,6 +4,7 @@ import 'package:christabodenew/screens/global_components/content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../models/models.dart';
 
@@ -62,6 +63,10 @@ class _DevotionalScreenState extends State<DevotionalScreen>
             itemBuilder: (context, index) {
               Devotional devotional = devotionalData.allDevotionals[index];
               return Content(
+                onShareButtonPressed:() async {
+                  devotionalData.shareDevotional(context, devotional);
+
+                },
                 contentType: ContentType.devotional,
                 title: devotional.title,
                 content: devotional.content,

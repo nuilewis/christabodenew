@@ -1,12 +1,11 @@
 import 'package:christabodenew/models/models.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../core/core.dart';
 import 'featured_image.dart';
 import 'next_previous_button.dart';
-
-
 
 class Content extends StatefulWidget {
   final String title;
@@ -21,26 +20,28 @@ class Content extends StatefulWidget {
   final String? confessionOfFaith;
   final VoidCallback onLikeButtonPressed;
   final VoidCallback onNextButtonPressed;
+  final VoidCallback onShareButtonPressed;
   final VoidCallback onPreviousButtonPressed;
   final bool isLiked;
 
-  const Content(
-      {super.key,
-      required this.contentType,
-      required this.title,
-      required this.content,
-      required this.featuredImage,
-      required this.onLikeButtonPressed,
-      required this.onNextButtonPressed,
-      required this.onPreviousButtonPressed,
-   this.startDate,
-        required this.isLiked,
-      this.endDate,
-      this.author,
-      this.scripture,
-      this.scriptureReference,
-      this.confessionOfFaith,
-      });
+  const Content({
+    super.key,
+    required this.contentType,
+    required this.title,
+    required this.content,
+    required this.featuredImage,
+    required this.onLikeButtonPressed,
+    required this.onNextButtonPressed,
+    required this.onPreviousButtonPressed,
+    required this.onShareButtonPressed,
+    required this.isLiked,
+    this.startDate,
+    this.endDate,
+    this.author,
+    this.scripture,
+    this.scriptureReference,
+    this.confessionOfFaith,
+  });
 
   @override
   State<Content> createState() => _ContentState();
@@ -49,7 +50,6 @@ class Content extends StatefulWidget {
 class _ContentState extends State<Content> with SingleTickerProviderStateMixin {
   late final AnimationController scrollAnimationController;
   late final Animation<Color?> colorAnimation;
-
 
   @override
   void initState() {
@@ -110,7 +110,10 @@ class _ContentState extends State<Content> with SingleTickerProviderStateMixin {
                   child: Text(
                     widget.title.toTitleCase(),
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headlineMedium,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headlineMedium!
+                        .copyWith(color: AppColours.white),
                   ),
                 ),
               ),
@@ -125,8 +128,8 @@ class _ContentState extends State<Content> with SingleTickerProviderStateMixin {
                       decoration: BoxDecoration(
                           color: Theme.of(context).scaffoldBackgroundColor,
                           borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(kDefaultPadding2x),
-                            topRight: Radius.circular(kDefaultPadding2x),
+                            topLeft: Radius.circular(24),
+                            topRight: Radius.circular(24),
                           )),
                     ),
                   )
@@ -138,13 +141,6 @@ class _ContentState extends State<Content> with SingleTickerProviderStateMixin {
         }),
         SliverToBoxAdapter(
           child: Container(
-            decoration: const BoxDecoration(
-                //color: Colors.trans,
-                // borderRadius: BorderRadius.only(
-                //   topLeft: Radius.circular(kDefaultPadding2x),
-                //   topRight: Radius.circular(kDefaultPadding2x),
-                // )
-                ),
             padding: const EdgeInsets.only(
               left: kDefaultPadding,
               right: kDefaultPadding,
@@ -155,17 +151,19 @@ class _ContentState extends State<Content> with SingleTickerProviderStateMixin {
 
                 Row(
                   children: [
-
                     Visibility(
-                      visible: widget.contentType !=ContentType.hymn,
+                      visible: widget.contentType != ContentType.hymn,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Visibility(
                             //Only show if the author is available
                             visible: widget.author != null,
-                            child: Text(widget.author!,
-                                style: Theme.of(context).textTheme.bodyLarge),
+                            child: Text("${widget.author}",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(fontWeight: FontWeight.w800)),
                           ),
                           Text(
                             "${dateTimeFormatter(context, widget.startDate!)} to ",
@@ -174,7 +172,7 @@ class _ContentState extends State<Content> with SingleTickerProviderStateMixin {
                           Visibility(
                             visible: widget.endDate != null,
                             child: Text(
-                                dateTimeFormatter(context, widget.endDate!),
+                                dateTimeFormatter(context, widget.endDate??DateTime.now()),
                                 style: Theme.of(context).textTheme.bodyMedium),
                           ),
                         ],
@@ -182,23 +180,14 @@ class _ContentState extends State<Content> with SingleTickerProviderStateMixin {
                     ),
                     const Spacer(),
 
-                    ///Todo: add share button later
-                    // IconButton(
-                    //   onPressed: onShareButtonPressed,
-                    //   icon: SvgPicture.asset(
-                    //     "assets/svg/share_icon.svg",
-                    //     color: Theme.of(context).iconTheme.color,
-                    //   ),
-                    // ),
+                    IconButton(
+                        onPressed: widget.onShareButtonPressed,
+                        icon: Icon(FluentIcons.share_android_24_regular)),
                     IconButton(
                       onPressed: widget.onLikeButtonPressed,
-                      icon: SvgPicture.asset(
-                        widget.isLiked
-                            ? "assets/svg/heart_icon_filled.svg"
-                            : "assets/svg/heart_icon.svg",
-                        color:
-                            Theme.of(context).iconTheme.color!.withOpacity(.9),
-                      ),
+                      icon: Icon(widget.isLiked
+                          ? FluentIcons.heart_24_filled
+                          : FluentIcons.heart_24_regular),
                     ),
                   ],
                 ),
@@ -209,7 +198,7 @@ class _ContentState extends State<Content> with SingleTickerProviderStateMixin {
                   visible: widget.scripture != null,
                   child: Text(widget.scripture!,
                       textAlign: TextAlign.left,
-                      style: Theme.of(context).textTheme.bodyLarge),
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold)),
                 ),
                 const SizedBox(
                   height: kDefaultPadding,
@@ -246,7 +235,7 @@ class _ContentState extends State<Content> with SingleTickerProviderStateMixin {
                         height: kDefaultPadding,
                       ),
                       Text(
-                        widget.confessionOfFaith!,
+                        "${widget.confessionOfFaith}",
                         textAlign: TextAlign.left,
                       ),
                     ],
