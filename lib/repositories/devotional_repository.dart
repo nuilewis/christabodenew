@@ -21,34 +21,41 @@ class DevotionalRepository {
   final DateTime _today = DateTime(DateTime.now().year, DateTime.now().month,
       DateTime.now().day, 0, 0, 0, 0, 0);
 
-  Future<Either<Failure, List<Devotional>>> getDevotionals() async {
-    Devotional devotional = Devotional.empty;
+  Future<Either<Failure, List<Devotional>>> getDevotionals(
+      {String? year}) async {
     final Box devotionalBox = await devotionalHiveService.openBox();
     _devotionalList = await devotionalHiveService.getData(devotionalBox);
-    try {
-      QuerySnapshot querySnapshot =
-          await devotionalFirestoreService.getDevotionals();
-
-      if (querySnapshot.docs.isNotEmpty) {
-        for (DocumentSnapshot element in querySnapshot.docs) {
-          Map<String, dynamic> documentData =
-              element.data() as Map<String, dynamic>;
-          devotional = Devotional.fromMap(data: documentData);
-          _devotionalList.add(devotional);
-        }
-      }
-
-      ///Sorting the list in order according to their star dates before adding to the database
-      _devotionalList.sort((a, b) => a.startDate.compareTo(b.startDate));
-
-      ///Now add the list of devotionals to the hive database
-      await devotionalHiveService.addDevotional(devotionalBox, _devotionalList);
-
+    if (_devotionalList.isNotEmpty) {
+      print("Not getting devotionals from remote because data already exist");
       return Right(_devotionalList);
-    } on FirebaseException catch (e) {
-      return Left(Failure(errorMessage: e.message, code: e.code));
-    } catch (e) {
-      return const Left(Failure(errorMessage: "An error has occurred"));
+    } else {
+      try {
+        QuerySnapshot querySnapshot =
+            await devotionalFirestoreService.getDevotionals(year: year);
+
+        if (querySnapshot.docs.isNotEmpty) {
+          for (DocumentSnapshot monthlyDocs in querySnapshot.docs) {
+            List<dynamic> monthlyList =
+                monthlyDocs["devotional"] as List<dynamic>;
+
+            for (Map<String, dynamic> element in monthlyList) {
+              _devotionalList.add(Devotional.fromMap(data: element));
+            }
+          }
+        }
+
+        ///Sorting the list in order according to their star dates before adding to the database
+        _devotionalList.sort((a, b) => a.startDate.compareTo(b.startDate));
+
+        ///Now add the list of devotionals to the hive database
+        await devotionalHiveService.addDevotional(
+            devotionalBox, _devotionalList);
+        return Right(_devotionalList);
+      } on FirebaseException catch (e) {
+        return Left(Failure(errorMessage: e.message, code: e.code));
+      } catch (e) {
+        return const Left(Failure(errorMessage: "An error has occurred"));
+      }
     }
   }
 

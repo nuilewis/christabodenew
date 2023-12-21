@@ -5,12 +5,13 @@ class DevotionalFirestoreService extends FirestoreService {
   Future<QuerySnapshot> getDevotionals({String? year}) async {
     ///To ensure the app will auto update when the year changes
     final String currentYear = DateTime.now().year.toString();
-
-    QuerySnapshot<Map<String, dynamic>> result = await firestore
+    final devotionalDocumentReference = firestore
         .collection(year ?? currentYear)
         .doc("devotional")
-        .collection("devotional")
-        .get();
+        .collection("devotional");
+
+    QuerySnapshot<Map<String, dynamic>> result =
+        await devotionalDocumentReference.get();
     return result;
   }
 }

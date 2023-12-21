@@ -24,22 +24,23 @@ class EventsRepository {
   final DateTime _today = DateTime(DateTime.now().year, DateTime.now().month,
       DateTime.now().day, 0, 0, 0, 0, 0);
 
-  Future<Either<Failure, List<Event>>> getEvents() async {
+  Future<Either<Failure, List<Event>>> getEvents({String? year}) async {
     final Box eventBox = await eventsHiveService.openBox();
     _eventsList = await eventsHiveService.getData(eventBox);
 
-    if (_eventsList.isEmpty) {
+    if (_eventsList.isNotEmpty) {
+      print("Not getting devotionals from remote because data already exist");
+      return Right(_eventsList);
+    } else {
 
         try {
-          QuerySnapshot querySnapshot =
-              await eventsFirestoreService.getEvents();
+          DocumentSnapshot docSnapshot =
+              await eventsFirestoreService.getEvents(year: year);
 
-          if (querySnapshot.docs.isNotEmpty) {
-            for (DocumentSnapshot element in querySnapshot.docs) {
-              Map<String, dynamic> documentData =
-                  element.data() as Map<String, dynamic>;
-              Event event = Event.fromMap(data: documentData);
-              _eventsList.add(event);
+          if(docSnapshot.exists){
+            Map<String, dynamic> documentData = docSnapshot.data() as Map<String, dynamic>;
+            for(Map<String, dynamic> element in documentData["events"]){
+              _eventsList.add(Event.fromMap(data: element));
             }
           }
 
@@ -51,9 +52,9 @@ class EventsRepository {
           return Right(_eventsList);
         } on FirebaseException catch (e) {
           return Left(Failure(errorMessage: e.message, code: e.code));
+        } catch (e){
+          return const Left(Failure(errorMessage: "An error has occurred"));
         }
-      } else {
-        return const Left(Failure(errorMessage: "An error has occurred"));
       }
 
   }

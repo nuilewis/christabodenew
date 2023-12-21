@@ -12,61 +12,55 @@ class HymnRepository {
   HymnRepository({
     required this.hymnHiveService,
     required this.hymnFirestoreService,
-
   });
 
   List<Hymn> _hymnList = [];
   List<Hymn> _likedHymnList = [];
-  final DateTime _today = DateTime(DateTime.now().year, DateTime.now().month,
-      DateTime.now().day, 0, 0, 0, 0, 0);
-
 
   Future<Either<Failure, List<Hymn>>> getHymn() async {
-  Hymn hymn = Hymn.empty;
+    print("getting hymns");
 
     /// try to get from offline
     /// if offline is empty, then check for network connectivity, if network is not there, throw a network error
     /// if network is there, then try to get from offline.
     final Box hymnBox = await hymnHiveService.openBox();
     _hymnList = await hymnHiveService.getData(hymnBox);
-    if (_hymnList.isEmpty) {
+    if(_hymnList.isNotEmpty){
+      print("Not getting hymn list from remote because data already exist");
+      return Right(_hymnList);
+    } else
+    {
       ///If the prayer list from local storage is empty, then try to get
       ///a new list from firestore;
-
       ///If there is a network connection, then make request to firebase to
       ///get the data.
       try {
-        QuerySnapshot querySnapshot =
+        DocumentSnapshot docSnapshot =
         await hymnFirestoreService.getHymns();
 
-        if (querySnapshot.docs.isNotEmpty) {
-          for (DocumentSnapshot element in querySnapshot.docs) {
-            Map<String, dynamic> documentData =
-            element.data() as Map<String, dynamic>;
-
-      hymn = Hymn.fromMap(data: documentData);
-
-
-
-            _hymnList.add(hymn);
+        if(docSnapshot.exists){
+          Map<String, dynamic> documentData = docSnapshot.data() as Map<String, dynamic>;
+          print("Hymn document Data");
+          print(documentData);
+          for(Map<String, dynamic> element in documentData["hymn"]){
+            _hymnList.add(Hymn.fromMap(data: element));
           }
         }
 
         ///Sorting the list in order before saving to the database
-
         _hymnList.sort((a, b) => a.number.compareTo(b.number));
 
-        ///Now add the list of prayers to local storage
-
+        ///Now add the list of Hymns to local storage
         await hymnHiveService.addHymn(hymnBox, _hymnList);
+        print(_hymnList);
+
         return Right(_hymnList);
       } on FirebaseException catch (e) {
         ///If a Firebase error has occurred, then return a [FirebaseFailure]
         return Left(Failure(errorMessage: e.message, code: e.code));
+      } catch (e){
+        return Left(Failure(errorMessage: "An error has occured"));
       }
-    } else {
-      ///If there is no connection, then return a [NetworkFailure]
-      return const Left(Failure.generic());
     }
 
   }

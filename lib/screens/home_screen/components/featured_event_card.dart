@@ -1,4 +1,7 @@
+import 'dart:ui';
+
 import 'package:christabodenew/core/extensions/string_extension.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
 
@@ -10,8 +13,9 @@ import '../../../models/unsplash_image.dart';
 class FeaturedEventCard extends StatelessWidget {
   final Event event;
   final UnsplashImage featuredImage;
+  final onSharePressed;
   const FeaturedEventCard(
-      {super.key, required this.event, required this.featuredImage});
+      {super.key, required this.event, required this.featuredImage, required this.onSharePressed});
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +66,22 @@ class FeaturedEventCard extends StatelessWidget {
                                   .bodyMedium!
                                   .copyWith(color: Colors.white))
                           : const SizedBox(),
+
+                      Spacer(),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(32),
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                          child: IconButton(
+                              style: IconButton.styleFrom(
+                                backgroundColor: Colors.white.withOpacity(.1),
+                                fixedSize: const Size(48, 48),
+                              ),
+                              onPressed: onSharePressed,
+                              icon: Icon(FluentIcons.share_android_24_regular, color: AppColours.white,)
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                   const Spacer(),
@@ -69,7 +89,7 @@ class FeaturedEventCard extends StatelessWidget {
                       style: Theme.of(context)
                           .textTheme
                           .headlineSmall!
-                          .copyWith(color: Colors.white)),
+                          .copyWith(color: Colors.white),),
                 ],
               ),
             ),

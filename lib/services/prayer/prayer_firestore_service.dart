@@ -3,12 +3,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class PrayerFireStoreService extends FirestoreService {
   Future<QuerySnapshot> getPrayers() async {
-    try {
+
       QuerySnapshot<Map<String, dynamic>> result =
           await firestore.collection("prayer").get();
       return result;
-    } on FirebaseException {
-      rethrow;
-    }
+
   }
 }

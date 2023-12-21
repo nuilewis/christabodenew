@@ -13,7 +13,6 @@ class PrayerRepository {
   PrayerRepository({
     required this.prayerHiveService,
     required this.prayerFirestoreService,
-
   });
 
   List<Prayer> _prayerList = [];
@@ -21,53 +20,43 @@ class PrayerRepository {
   final DateTime _today = DateTime(DateTime.now().year, DateTime.now().month,
       DateTime.now().day, 0, 0, 0, 0, 0);
 
-
   Future<Either<Failure, List<Prayer>>> getPrayers() async {
-    Prayer prayer = Prayer.empty;
-
     /// try to get from offline
     /// if offline is empty, then check for network connectivity, if network is not there, throw a network error
     /// if network is there, then try to get from offline.
     final Box prayerBox = await prayerHiveService.openBox();
     _prayerList = await prayerHiveService.getData(prayerBox);
-    if (_prayerList.isEmpty) {
-      ///If the prayer list from local storage is empty, then try to get
-      ///a new list from firestore;
 
-        ///If there is a network connection, then make request to firebase to
-        ///get the data.
-        try {
-          QuerySnapshot querySnapshot =
-              await prayerFirestoreService.getPrayers();
+    if (_prayerList.isNotEmpty) {
+      print("Not getting prayers from remote because data already exist");
+      return Right(_prayerList);
+    } else {
+      try {
+        QuerySnapshot querySnapshot = await prayerFirestoreService.getPrayers();
 
-          if (querySnapshot.docs.isNotEmpty) {
-            for (DocumentSnapshot element in querySnapshot.docs) {
-              Map<String, dynamic> documentData =
-                  element.data() as Map<String, dynamic>;
+        if (querySnapshot.docs.isNotEmpty) {
+          for (DocumentSnapshot monthlyDocs in querySnapshot.docs) {
+            List<dynamic> monthlyList = monthlyDocs["prayer"] as List<dynamic>;
 
-              prayer = Prayer.fromMap(data: documentData);
-
-              _prayerList.add(prayer);
+            for (Map<String, dynamic> element in monthlyList) {
+              _prayerList.add(Prayer.fromMap(data: element));
             }
           }
-
-          ///Sorting the list in order before saving to the database
-
-          _prayerList.sort((a, b) => a.date.compareTo(b.date));
-
-          ///Now add the list of prayers to local storage
-
-          await prayerHiveService.addPrayers(prayerBox, _prayerList);
-          return Right(_prayerList);
-        } on FirebaseException catch (e) {
-          ///If a Firebase error has occurred, then return a [FirebaseFailure]
-          return Left(Failure(errorMessage: e.message, code: e.code));
         }
-      } else {
-        ///If there is no connection, then return a [NetworkFailure]
-        return const Left(Failure.generic());
-      }
 
+        ///Sorting the list in order before saving to the database
+        _prayerList.sort((a, b) => a.date.compareTo(b.date));
+
+        ///Now add the list of prayers to local storage
+        await prayerHiveService.addPrayers(prayerBox, _prayerList);
+        return Right(_prayerList);
+      } on FirebaseException catch (e) {
+        ///If a Firebase error has occurred, then return a [FirebaseFailure]
+        return Left(Failure(errorMessage: e.message, code: e.code));
+      } catch (e) {
+        return Left(Failure(errorMessage: "An error has occurred"));
+      }
+    }
   }
 
   Future<Either<Failure, Prayer>> getCurrentPrayer() async {
@@ -96,12 +85,12 @@ class PrayerRepository {
 
   Future<Either<Failure, int>> getCurrentPrayerIndex() async {
     if (_prayerList.isNotEmpty) {
-      int todaysDevotionalIndex = _prayerList.indexWhere(
+      int todaysPrayerIndex = _prayerList.indexWhere(
         (element) =>
             _today.month == element.date.month &&
             _today.day == element.date.day,
 
-        ///There is only one case here, since there are atlas 1 prayer each day
+        ///There is only one case here, since there is at least 1 prayer each day
         ///therefore no prayer repeats, or spans for multiple days, meaning
         ///we can check the prayer whose date matches the day of today
         ///
@@ -110,12 +99,11 @@ class PrayerRepository {
         /// will mean that the prayers will only be valid for 1 year.
       );
 
-      if (todaysDevotionalIndex == -1) {
+      if (todaysPrayerIndex == -1) {
         ///Index being -1 means it did not get the prayer, or the prayer was not found
-
         return const Left(Failure(errorMessage: "No Prayers"));
       } else {
-        return Right(todaysDevotionalIndex);
+        return Right(todaysPrayerIndex);
       }
     } else {
       return const Left(Failure(errorMessage: "No Prayers found"));
@@ -123,7 +111,6 @@ class PrayerRepository {
   }
 
   ///-------Liked Prayer Methods--------///
-
   Future<Either<Failure, List<Prayer>>> getLikedPrayers() async {
     try {
       _likedPrayerList =

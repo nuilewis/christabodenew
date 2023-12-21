@@ -62,6 +62,9 @@ super.dispose();
             itemBuilder: (context, index) {
               Prayer prayer = prayerData.allPrayers[index];
               return Content(
+                onShareButtonPressed:(){
+                 prayerData.sharePrayer(context, prayer);
+                },
                 contentType: ContentType.prayer,
                 title: prayer.title,
                 content: prayer.content,
