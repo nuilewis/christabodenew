@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../core/core.dart';
 import '../models/event_model.dart';
@@ -12,25 +13,27 @@ class EventsProvider extends ChangeNotifier {
   EventsProvider({required this.eventsRepository});
 
   AppState state = AppState.initial;
-  String errorMessage = "";
-  List<Event> _allEvents = [];
+  String? errorMessage;
+  List<Event> allEvents = [];
   List<Event> monthlyEvents = [];
   List<Event> pastEvents = [];
   List<Event> upcomingEvents = [];
 
-  Future<void> getEvents() async {
+  Future<void> getEvents({String? year}) async {
     if (state == AppState.submitting) return;
     state = AppState.submitting;
     notifyListeners();
 
-    Either<Failure, List<Event>> response = await eventsRepository.getEvents();
+    Either<Failure, List<Event>> response = await eventsRepository.getEvents(year: year);
 
     response.fold((failure) {
       errorMessage =
           failure.errorMessage ?? "An error occurred while getting the events";
       state = AppState.error;
     }, (eventsList) {
-      _allEvents = eventsList;
+      allEvents = eventsList;
+      print("Gotten all events");
+      print(allEvents);
       state = AppState.success;
     });
 
@@ -96,10 +99,28 @@ class EventsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> initStuff() async {
-    await getEvents();
-    await getMonthlyEvents();
-    await getUpcomingEvents();
-    await getPastEvents();
+  Future<void> initialise({String? eventsYear}) async {
+    await getEvents(year: eventsYear).whenComplete(() async {
+      await getMonthlyEvents();
+      await getUpcomingEvents();
+      await getPastEvents();
+    });
+
+  }
+
+  void shareEvent(BuildContext context, Event event) async{
+
+
+
+    String constructedText ="""    
+Join us for a Spirit filled encounter during our *${event.name.trim()}* on *${dateTimeFormatter(context, event.startDate)}.*
+
+*Christ Abode Ministries.*
+
+www.christabodeministries.org
+Shared from the Christ Abode Ministries App
+Available on the Google Play Store""";
+
+    await Share.share(constructedText);
   }
 }

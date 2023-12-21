@@ -1,6 +1,7 @@
 import 'package:christabodenew/repositories/hymn_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../core/core.dart';
 import '../models/models.dart';
@@ -9,9 +10,7 @@ import '../models/models.dart';
 class HymnProvider extends ChangeNotifier {
   final HymnRepository hymnRepository;
   AppState state = AppState.initial;
-  String errorMessage = "";
-
-
+  String? errorMessage;
   List<Hymn> allHymns = [];
   List<Hymn> likedHymns = [];
 
@@ -19,6 +18,11 @@ class HymnProvider extends ChangeNotifier {
 
   HymnProvider({required this.hymnRepository});
 
+
+  void setHymnIndex(int index){
+    currentHymnIndex = index;
+    notifyListeners();
+  }
 
   
 
@@ -30,12 +34,16 @@ class HymnProvider extends ChangeNotifier {
 
     Either<Failure, List<Hymn>> response =
     await hymnRepository.getHymn();
+
     response.fold((failure) {
-      errorMessage = failure.errorMessage ??
-          "An error occurred while getting today's Hymn";
+      errorMessage = failure.errorMessage;
+      print("an error occurred while making hymns");
+      print(errorMessage);
       state = AppState.error;
     }, (hymns) {
       allHymns = hymns;
+      print("gotten hymns");
+      print(allHymns);
       state = AppState.success;
     });
     notifyListeners();
@@ -106,10 +114,24 @@ class HymnProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> initStuff() async {
-    await getHymns();
+  Future<void> initialise() async {
+    await getHymns().whenComplete(() async{await getLikedHymn();});
 
-    await getLikedHymn();
+  }
 
+  void shareHymn(Hymn hymn) async{
+
+    String constructedText ="""
+*${hymn.title.trim()}*
+
+${hymn.content.trim()}
+
+*Christ Abode Ministries*
+
+www.christabodeministries.org
+Shared from the Christ Abode Ministries App
+Available on the Google Play Store""";
+
+    await Share.share(constructedText);
   }
 }

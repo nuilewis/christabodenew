@@ -60,6 +60,12 @@ class EventsScreen extends StatelessWidget {
                       messageIfEmpty: "There are no past events",
                     ),
                     const SizedBox(height: kDefaultPadding2x),
+
+                    Text("Showing all events for test"),
+                    BuildEventsList(
+                      events: eventData.allEvents,
+                      messageIfEmpty: "There are no past events",
+                    ),
                   ],
                 ),
               ),

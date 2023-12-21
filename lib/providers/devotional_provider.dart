@@ -3,15 +3,14 @@ import 'package:christabodenew/repositories/devotional_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 
-
 import 'package:christabodenew/core/core.dart';
+import 'package:share_plus/share_plus.dart';
 
 class DevotionalProvider extends ChangeNotifier {
   final DevotionalRepository devotionalRepository;
   AppState state = AppState.initial;
   String errorMessage = "";
   Devotional? todaysDevotional;
-  //late final int todaysDevotionalIndex;
   int currentDevotionalIndex = 0;
 
   List<Devotional> allDevotionals = [];
@@ -22,7 +21,6 @@ class DevotionalProvider extends ChangeNotifier {
   Future<void> getCurrentDevotional() async {
     if (state == AppState.submitting) return;
     state = AppState.submitting;
-    //notifyListeners();
     Either<Failure, Devotional> response =
         await devotionalRepository.getCurrentDevotional();
 
@@ -39,10 +37,6 @@ class DevotionalProvider extends ChangeNotifier {
   }
 
   Future<void> getTodaysDevotionalIndex() async {
-    // if (state == DevotionalState.submitting) return;
-    // state = DevotionalState.submitting;
-    // //notifyListeners();
-
     Either<Failure, int> response =
         await devotionalRepository.getCurrentDevotionalIndex();
 
@@ -73,12 +67,14 @@ class DevotionalProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getDevotionals() async {
+
+
+  Future<void> getDevotionals({String? year}) async {
     if (state == AppState.submitting) return;
     state = AppState.submitting;
     notifyListeners();
     Either<Failure, List<Devotional>> response =
-        await devotionalRepository.getDevotionals();
+        await devotionalRepository.getDevotionals(year: year);
 
     response.fold((failure) {
       errorMessage = failure.errorMessage ??
@@ -87,6 +83,8 @@ class DevotionalProvider extends ChangeNotifier {
       state = AppState.error;
     }, (devotional) {
       allDevotionals = devotional;
+      print("gotten devotionals");
+      print(allDevotionals);
 
       state = AppState.success;
     });
@@ -164,10 +162,41 @@ class DevotionalProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> initStuff() async {
-    await getDevotionals();
-    await getCurrentDevotional();
-    await getLikedDevotionals();
-    await getTodaysDevotionalIndex();
+
+  Future<void> initialise({String? devotionalYear}) async {
+    await getDevotionals(year: devotionalYear).whenComplete(() async {
+      await getCurrentDevotional();
+      await getLikedDevotionals();
+      await getTodaysDevotionalIndex();
+    });
+  }
+
+
+  void shareDevotional(BuildContext context, Devotional devotional) async{
+
+
+    String constructedText ="""
+${dateTimeFormatter(context, devotional.startDate)}
+
+*${devotional.title.trim()}*
+
+${devotional.author.trim()}
+
+${devotional.scripture.trim()}
+*${devotional.scriptureReference.trim()}*
+
+${devotional.content.trim()}
+
+*Confession of Faith*
+${devotional.confessionOfFaith.trim()}
+
+*Huios Epistolary Devotional*
+Christ Abode Ministries.
+
+www.christabodeministries.org
+Shared from the Christ Abode Ministries App
+Available on the Google Play Store""";
+
+    await Share.share(constructedText);
   }
 }

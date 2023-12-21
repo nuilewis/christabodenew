@@ -1,10 +1,10 @@
 import 'package:christabodenew/repositories/prayer_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../core/core.dart';
 import '../models/prayer_model.dart';
-
 
 class PrayerProvider extends ChangeNotifier {
   final PrayerRepository prayerRepository;
@@ -84,6 +84,8 @@ class PrayerProvider extends ChangeNotifier {
       state = AppState.error;
     }, (prayer) {
       allPrayers = prayer;
+      print("gotten prayers");
+      print(allPrayers);
       state = AppState.success;
     });
     notifyListeners();
@@ -154,10 +156,32 @@ class PrayerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> initStuff() async {
-    await getPrayers();
-    await getCurrentPrayer();
-    await getLikedPrayers();
-    await getTodaysPrayerIndex();
+  Future<void> initialise() async {
+    await getPrayers().whenComplete(() async {
+      await getCurrentPrayer();
+      await getLikedPrayers();
+      await getTodaysPrayerIndex();
+    });
+  }
+
+  void sharePrayer(BuildContext context, Prayer prayer) async {
+    String constructedText = """
+${dateTimeFormatter(context, prayer.date)}
+
+*${prayer.title.trim()}*
+
+${prayer.scripture.trim()}
+*${prayer.scriptureReference.trim()}*
+
+${prayer.content.trim()}
+
+*Daily Prayer Fragrance*
+Christ Abode Ministries.
+
+www.christabodeministries.org
+Shared from the Christ Abode Ministries App
+Available on the Google Play Store""";
+
+    await Share.share(constructedText);
   }
 }

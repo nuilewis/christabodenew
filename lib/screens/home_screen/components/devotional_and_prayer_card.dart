@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:christabodenew/core/extensions/string_extension.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -49,21 +50,17 @@ class DevotionalAndPrayerCard extends StatelessWidget {
     }
 
     Size screenSize = MediaQuery.sizeOf(context);
-    return ClipRRect(
+    return InkWell(
       borderRadius: BorderRadius.circular(24),
-      child: InkWell(
-        onTap: onPressed,
-        child: Ink(
-          width: screenSize.width * .65,
-          height: screenSize.width * .8,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(24),
-            // color: Theme.of(context).primaryColor,
-            image: const DecorationImage(
-              fit: BoxFit.cover,
-              image: AssetImage("assets/images/foam_image.jpg"),
-            ),
-          ),
+      onTap: onPressed,
+      child: Ink(
+        width: screenSize.width * .65,
+        height: screenSize.width * .8,
+        decoration: BoxDecoration(
+    borderRadius: BorderRadius.circular(24),
+        color: Theme.of(context).cardColor,),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(24),
           child: Stack(
             children: [
               featuredImage.isNotEmpty
@@ -73,10 +70,10 @@ class DevotionalAndPrayerCard extends StatelessWidget {
                       hash: featuredImage.blurHash,
                     )
                   : const SizedBox(),
-              Container(
-                decoration:
-                    BoxDecoration(color: AppColours.black.withOpacity(.4)),
-              ),
+Container(
+  width: screenSize.width * .65,
+  height: screenSize.width * .8,
+  color: AppColours.black.withOpacity(.3),),
               Padding(
                 padding: const EdgeInsets.all(kDefaultPadding),
                 child: Column(
@@ -92,8 +89,8 @@ class DevotionalAndPrayerCard extends StatelessWidget {
                             children: [
                               Text(
                                 devotional != null
-                                    ? "Today's Huios Devotional"
-                                    : "Today's Prayer Fragrance",
+                                    ? "Huios Devotional"
+                                    : "Prayer Fragrance",
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium!
@@ -112,20 +109,17 @@ class DevotionalAndPrayerCard extends StatelessWidget {
                             ],
                           ),
                         ),
-                        ClipRect(
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(32),
                           child: BackdropFilter(
-                            filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+                            filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
                             child: IconButton(
                               style: IconButton.styleFrom(
-                                backgroundColor: Colors.white.withOpacity(.1),
+                               backgroundColor: Colors.white.withOpacity(.1),
                                 fixedSize: const Size(48, 48),
                               ),
                               onPressed: onPressed,
-                              icon: SvgPicture.asset(
-                                "assets/svg/heart_icon.svg",
-                                colorFilter: const ColorFilter.mode(
-                                    AppColours.white, BlendMode.srcIn),
-                              ),
+                              icon: Icon(FluentIcons.heart_24_regular, color: AppColours.white,)
                             ),
                           ),
                         ),
@@ -147,10 +141,8 @@ class DevotionalAndPrayerCard extends StatelessWidget {
                           height: kDefaultPadding,
                         ),
                         const SizedBox(width: kDefaultPadding),
-                        SvgPicture.asset(
-                          "assets/svg/forward_icon.svg",
-                          color: Colors.white,
-                        )
+                        Icon(FluentIcons.arrow_right_24_regular, color: AppColours.white,),
+
                       ],
                     ),
                   ],
