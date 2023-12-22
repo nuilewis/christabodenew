@@ -1,12 +1,23 @@
 import 'package:equatable/equatable.dart';
+import 'package:hive/hive.dart';
 
+part 'unsplash_image.g.dart';
+
+@HiveType(typeId: 6)
 class UnsplashImage extends Equatable {
+  @HiveField(0)
   final String? id;
+  @HiveField(1)
   final String imgUrl;
+  @HiveField(2)
   final String blurHash;
+  @HiveField(3)
   final String? colour;
+  @HiveField(4)
   final String? uploaderName;
+  @HiveField(5)
   final String? uploaderUrl;
+  @HiveField(6)
   final DateTime? date;
 
   const UnsplashImage({
@@ -19,14 +30,14 @@ class UnsplashImage extends Equatable {
     this.date,
   });
 
-  factory UnsplashImage.fromJson(Map<String, dynamic> json) {
+  factory UnsplashImage.fromMap(Map<String, dynamic> data) {
     return UnsplashImage(
-      id: json["id"],
-      imgUrl: json["urls"]["regular"],
-      blurHash: json["blur_hash"],
-      uploaderName: json["user"]["name"],
-      uploaderUrl: json["user"]["portfolio_url"],
-      colour: json["color"],
+      id: data["id"],
+      imgUrl: data["urls"]["regular"],
+      blurHash: data["blur_hash"],
+      uploaderName: data["user"]["name"],
+      uploaderUrl: data["user"]["portfolio_url"],
+      colour: data["color"],
       date: DateTime.now(),
     );
   }

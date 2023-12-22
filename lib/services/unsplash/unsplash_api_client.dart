@@ -21,17 +21,22 @@ class UnsplashAPIClient {
       },
     ),
   );
-  Future<UnsplashImage> getRandomImage() async {
+  Future<List<UnsplashImage>> getRandomImage() async {
     final response = await _dio.get(_randomImageEndpoint, queryParameters: {
-      "query": " ${photoCategories[Random().nextInt(18)]}"
+      "query": " ${photoCategories[Random().nextInt(18)]}",
+      "count": 4,
     });
 
     ///Randomly picks from any of the categories each time
     if (response.statusCode == 200) {
-      final Map<String, dynamic> responseJson = response.data;
+      List<UnsplashImage> images = [];
+      final List<dynamic> responseJson = response.data as List<dynamic>;
 
-      final UnsplashImage image = UnsplashImage.fromJson(responseJson);
-      return image;
+      for(Map<String, dynamic> image in responseJson){
+        images.add(UnsplashImage.fromMap(image));
+      }
+
+      return images;
     } else {
       DioException dioException = DioException(
           requestOptions:
@@ -49,7 +54,7 @@ class UnsplashAPIClient {
     if (response.statusCode == 200) {
       final Map<String, dynamic> responseJson = response.data;
 
-      final UnsplashImage image = UnsplashImage.fromJson(responseJson);
+      final UnsplashImage image = UnsplashImage.fromMap(responseJson);
       return image;
     } else {
       DioException dioException = DioException(
