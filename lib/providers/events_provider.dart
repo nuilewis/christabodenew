@@ -32,8 +32,6 @@ class EventsProvider extends ChangeNotifier {
       state = AppState.error;
     }, (eventsList) {
       allEvents = eventsList;
-      print("Gotten all events");
-      print(allEvents);
       state = AppState.success;
     });
 

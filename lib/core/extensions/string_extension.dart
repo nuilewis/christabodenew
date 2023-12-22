@@ -1,3 +1,4 @@
+
 ///An extension to the String type which creates a [Title Case] capitalisation
 ///on all string, by first splitting each string into the constituent words, then capitalising the
 ///the first letter of the word, then joining the string again.

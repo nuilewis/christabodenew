@@ -1,7 +1,7 @@
+
 import 'package:christabodenew/models/models.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../core/core.dart';
 import 'featured_image.dart';
@@ -166,7 +166,7 @@ class _ContentState extends State<Content> with SingleTickerProviderStateMixin {
                                     .copyWith(fontWeight: FontWeight.w800)),
                           ),
                           Text(
-                            "${dateTimeFormatter(context, widget.startDate!)} to ",
+                            "${dateTimeFormatter(context, widget.startDate??DateTime.now())} to ",
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
                           Visibility(
@@ -182,7 +182,7 @@ class _ContentState extends State<Content> with SingleTickerProviderStateMixin {
 
                     IconButton(
                         onPressed: widget.onShareButtonPressed,
-                        icon: Icon(FluentIcons.share_android_24_regular)),
+                        icon: const Icon(FluentIcons.share_android_24_regular)),
                     IconButton(
                       onPressed: widget.onLikeButtonPressed,
                       icon: Icon(widget.isLiked
@@ -196,7 +196,7 @@ class _ContentState extends State<Content> with SingleTickerProviderStateMixin {
                 ),
                 Visibility(
                   visible: widget.scripture != null,
-                  child: Text(widget.scripture!,
+                  child: Text("${widget.scripture}",
                       textAlign: TextAlign.left,
                       style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold)),
                 ),
@@ -207,7 +207,7 @@ class _ContentState extends State<Content> with SingleTickerProviderStateMixin {
                   visible: widget.scriptureReference != null,
                   child: Align(
                       alignment: Alignment.centerRight,
-                      child: Text(widget.scriptureReference!)),
+                      child: Text("${widget.scriptureReference} scripture")),
                 ),
 
                 const SizedBox(
@@ -223,12 +223,15 @@ class _ContentState extends State<Content> with SingleTickerProviderStateMixin {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          "Confession of faith, and Prayer",
-                          textAlign: TextAlign.left,
-                          style: Theme.of(context).textTheme.bodyLarge,
+                      Visibility(
+                        visible: widget.contentType !=ContentType.hymn,
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "Confession of faith, and Prayer",
+                            textAlign: TextAlign.left,
+                            style: Theme.of(context).textTheme.bodyLarge,
+                          ),
                         ),
                       ),
                       const SizedBox(

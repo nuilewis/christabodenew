@@ -1,6 +1,7 @@
 import 'package:christabodenew/services/prayer/prayer_hive_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../core/errors/failure.dart';
@@ -28,7 +29,7 @@ class PrayerRepository {
     _prayerList = await prayerHiveService.getData(prayerBox);
 
     if (_prayerList.isNotEmpty) {
-      print("Not getting prayers from remote because data already exist");
+      debugPrint("Getting Prayers from cache rather, and not from remote");
       return Right(_prayerList);
     } else {
       try {
@@ -50,11 +51,11 @@ class PrayerRepository {
         ///Now add the list of prayers to local storage
         await prayerHiveService.addPrayers(prayerBox, _prayerList);
         return Right(_prayerList);
-      } on FirebaseException catch (e) {
+      } on FirebaseException catch (e){ debugPrint(e.toString());
         ///If a Firebase error has occurred, then return a [FirebaseFailure]
         return Left(Failure(errorMessage: e.message, code: e.code));
-      } catch (e) {
-        return Left(Failure(errorMessage: "An error has occurred"));
+      } catch (e){ debugPrint(e.toString());
+        return const Left(Failure(errorMessage: "An error has occurred"));
       }
     }
   }
@@ -117,7 +118,7 @@ class PrayerRepository {
           _prayerList.where((element) => element.isLiked == true).toList();
 
       return Right(_likedPrayerList);
-    } catch (e) {
+    } catch (e){ debugPrint(e.toString());
       return const Left(
           Failure(errorMessage: "Unable to get your liked prayers"));
     }
@@ -129,7 +130,7 @@ class PrayerRepository {
     try {
       await prayerHiveService.addPrayers(box, updatedList);
       return const Right(null);
-    } catch (e) {
+    } catch (e){ debugPrint(e.toString());
       return const Left(
           Failure(errorMessage: "Unable to add to your favourites"));
     }
@@ -140,7 +141,7 @@ class PrayerRepository {
     try {
       await prayerHiveService.clearPrayers(box);
       return const Right(null);
-    } catch (e) {
+    } catch (e){ debugPrint(e.toString());
       return const Left(
           Failure(errorMessage: "Unable to clear your favourites"));
     }

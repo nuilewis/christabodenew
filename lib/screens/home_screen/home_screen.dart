@@ -3,7 +3,6 @@ import 'package:christabodenew/providers/events_provider.dart';
 import 'package:christabodenew/providers/prayer_provider.dart';
 import 'package:christabodenew/providers/unsplash_image_provider.dart';
 import 'package:christabodenew/screens/hymn_screen/hymn_screen.dart';
-import 'package:christabodenew/screens/messages_screen/messages_screen.dart';
 import 'package:christabodenew/screens/prayer_screen/prayer_screen.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Gap(kDefaultPadding2x),
+                  const Gap(kDefaultPadding2x),
                   Padding(
                     padding:
                         const EdgeInsets.symmetric(horizontal: kDefaultPadding),
@@ -63,41 +62,41 @@ class _HomeScreenState extends State<HomeScreen> {
                   Padding(
                     padding:
                         const EdgeInsets.symmetric(horizontal: kDefaultPadding),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Upcoming Services",
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyLarge!
-                              .copyWith(fontFamily: 'Gloock'),
+                    child: Visibility(
+                        //visible: eventData.upcomingEvents.isNotEmpty,
+                      visible: true,
+                      replacement: Center(
+                        child: Text(
+                          "There are no upcoming events scheduled for now.",
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
-                        Gap(kDefaultPadding),
-                        Visibility(
-                            //visible: eventData.upcomingEvents.isNotEmpty,
-                          visible: true,
-                            child: FeaturedEventCard(
+                      ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Upcoming Services",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .copyWith(fontFamily: 'Gloock'),
+                            ),
+                            const Gap(kDefaultPadding),
+                            FeaturedEventCard(
+                              ///Todo, replace the event here with Upcmoing events only
                             onSharePressed: (){
                               eventData.shareEvent(context, eventData.allEvents.first);
                             },
                             event: eventData.allEvents.first,
                             featuredImage: unsplashData.eventFeaturedImage),
-                          replacement: Center(
-                            child: Text(
-                              "There are no upcoming events scheduled for now.",
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                          ),
+                          ],
+                        ),
 
-                        )
-
-                      ],
                     ),
                   ),
-                  Gap(kDefaultPadding2x),
+                  const Gap(kDefaultPadding2x),
                   Padding(
                     padding: const EdgeInsets.only(left: kDefaultPadding),
                     child: Text(
@@ -108,12 +107,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           .copyWith(fontFamily: 'Gloock'),
                     ),
                   ),
-                  Gap(kDefaultPadding),
+                  const Gap(kDefaultPadding),
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: [
-                        Gap(kDefaultPadding),
+                        const Gap(kDefaultPadding),
                         DevotionalAndPrayerCard(
                             onPressed: () async {
                               await devotionalData
@@ -130,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             featuredImage: unsplashData.devotionalFeaturedImage,
                             devotional: devotionalData.todaysDevotional ??
                                 Devotional.empty),
-                        Gap(kDefaultPadding),
+                        const Gap(kDefaultPadding),
                         DevotionalAndPrayerCard(
                             onPressed: () async {
                               await prayerData
@@ -145,11 +144,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             },
                             featuredImage: unsplashData.prayerFeaturedImage,
                             prayer: prayerData.todaysPrayer ?? Prayer.empty),
-                        Gap(kDefaultPadding),
+                        const Gap(kDefaultPadding),
                       ],
                     ),
                   ),
-                  Gap(kDefaultPadding2x),
+                  const Gap(kDefaultPadding2x),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: InkWell(
@@ -161,7 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                       child: Ink(
                         width: double.infinity,
-                        padding: EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(24),
                           color: Theme.of(context).cardColor,
@@ -181,51 +180,28 @@ class _HomeScreenState extends State<HomeScreen> {
                                     )),
                             Align(
                               alignment: Alignment.centerRight,
-                              child: IconButton(
-                                onPressed: () {},
-                                icon: Icon(
+                              child:
+                              Icon(
                                   FluentIcons.arrow_right_24_regular,
-                                ),
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onPrimaryContainer,
+
                               ),
-                            )
+                            ),
+
                           ],
                         ),
                       ),
                     ),
                   ),
+                  const Gap(kDefaultPadding2x)
                 ],
               ),
             ),
           ),
         );
       }),
-    );
-  }
-}
-
-class MessagesCategoryItem extends StatelessWidget {
-  const MessagesCategoryItem({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(kDefaultPadding + 8),
-      onTap: () {
-        Navigator.pushNamed(context, MessagesScreen.id);
-      },
-      child: Container(
-        padding: const EdgeInsets.symmetric(
-            horizontal: kDefaultPadding2x + 8, vertical: kDefaultPadding + 8),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(kDefaultPadding + 8),
-            color: AppColours.blue70),
-        child: Text(
-          "Category",
-          style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 18),
-        ),
-      ),
     );
   }
 }

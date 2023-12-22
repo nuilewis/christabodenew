@@ -10,6 +10,7 @@ import 'package:christabodenew/screens/messages_screen/messages_screen.dart';
 import 'package:christabodenew/screens/prayer_screen/prayer_screen.dart';
 import 'package:christabodenew/services/events/event_hive_service.dart';
 import 'package:christabodenew/services/events/events_firestore_service.dart';
+import 'package:christabodenew/services/unsplash/unsplash_hive_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -63,6 +64,7 @@ class _MyAppState extends State<MyApp> {
   ///Creating and Injecting Unsplash Image Dependencies
   late UnsplashImageRepository _unsplashImageRepository;
   final UnsplashAPIClient _unsplashAPIClient = UnsplashAPIClient();
+  final UnsplashHiveService _unsplashHiveService = UnsplashHiveService();
 
   ///Creating and Injecting Settings Dependencies
   late SettingsRepository _settingsRepository;
@@ -92,6 +94,7 @@ class _MyAppState extends State<MyApp> {
     );
 
     _unsplashImageRepository = UnsplashImageRepository(
+      unsplashHiveService: _unsplashHiveService,
       apiClient: _unsplashAPIClient,
     );
 
@@ -123,7 +126,7 @@ class _MyAppState extends State<MyApp> {
                   ..initialise(eventsYear: "2024")),
         ChangeNotifierProvider<UnsplashImageProvider>(
             create: (context) => UnsplashImageProvider(
-                unsplashImageRepository: _unsplashImageRepository)
+                unsplashImageRepository: _unsplashImageRepository)..getFeaturedImages()
               ),
         ChangeNotifierProvider<HymnProvider>(
             create: (context) =>

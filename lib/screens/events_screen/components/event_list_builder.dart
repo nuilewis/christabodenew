@@ -1,3 +1,4 @@
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/constants.dart';
@@ -26,7 +27,7 @@ class BuildEventsList extends StatelessWidget {
           children: [
             //  Spacer(),
             Icon(
-              Icons.notifications_off_outlined,
+              FluentIcons.alert_off_24_regular,
               size: MediaQuery.of(context).size.width * .3,
               color: Theme.of(context).primaryColor.withOpacity(.3),
             ),

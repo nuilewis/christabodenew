@@ -1,5 +1,6 @@
 import 'package:christabodenew/providers/events_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/constants.dart';
@@ -45,27 +46,36 @@ class EventsScreen extends StatelessWidget {
                           .textTheme
                           .bodyLarge!.copyWith(fontFamily: "Gloock")
                     ),
-                    const SizedBox(height: kDefaultPadding),
+                    const Gap( kDefaultPadding),
                     BuildEventsList(events: eventData.upcomingEvents),
-                    const SizedBox(height: kDefaultPadding2x),
-                    Text(
-                      "Past Events",
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyLarge!.copyWith(fontFamily: "Gloock")
-                    ),
-                    const SizedBox(height: kDefaultPadding),
-                    BuildEventsList(
-                      events: eventData.pastEvents,
-                      messageIfEmpty: "There are no past events",
-                    ),
-                    const SizedBox(height: kDefaultPadding2x),
+                    const Gap( kDefaultPadding2x),
+                    Visibility(
+                        visible: eventData.pastEvents.isNotEmpty,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                                "Past Events",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!.copyWith(fontFamily: "Gloock")
+                            ),
+                            const Gap( kDefaultPadding),
+                            BuildEventsList(
+                              events: eventData.pastEvents,
+                              messageIfEmpty: "There are no past events",
+                            ),
+                          ],
+                        )),
 
-                    Text("Showing all events for test"),
-                    BuildEventsList(
-                      events: eventData.allEvents,
-                      messageIfEmpty: "There are no past events",
-                    ),
+                    const Gap( kDefaultPadding2x),
+
+                    // Text("Showing all events for test"),
+                    // BuildEventsList(
+                    //   events: eventData.allEvents,
+                    //   messageIfEmpty: "There are no past events",
+                    // ),
                   ],
                 ),
               ),

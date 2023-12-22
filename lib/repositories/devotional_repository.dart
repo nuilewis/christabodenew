@@ -3,6 +3,7 @@ import 'package:christabodenew/services/devotional/devotional_firestore_service.
 import 'package:christabodenew/services/devotional/devotional_hive_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../core/errors/failure.dart';
@@ -26,7 +27,7 @@ class DevotionalRepository {
     final Box devotionalBox = await devotionalHiveService.openBox();
     _devotionalList = await devotionalHiveService.getData(devotionalBox);
     if (_devotionalList.isNotEmpty) {
-      print("Not getting devotionals from remote because data already exist");
+      debugPrint("Getting Devotionals from cache rather, and not from remote");
       return Right(_devotionalList);
     } else {
       try {
@@ -51,9 +52,9 @@ class DevotionalRepository {
         await devotionalHiveService.addDevotional(
             devotionalBox, _devotionalList);
         return Right(_devotionalList);
-      } on FirebaseException catch (e) {
+      } on FirebaseException catch (e){ debugPrint(e.toString());
         return Left(Failure(errorMessage: e.message, code: e.code));
-      } catch (e) {
+      } catch (e){ debugPrint(e.toString());
         return const Left(Failure(errorMessage: "An error has occurred"));
       }
     }
@@ -94,24 +95,32 @@ class DevotionalRepository {
 
   Future<Either<Failure, int>> getCurrentDevotionalIndex() async {
     if (_devotionalList.isNotEmpty) {
-      int todaysDevotionalIndex = _devotionalList.indexWhere((element) =>
-              _today == element.startDate ||
-              _today == element.endDate ||
-              _today.isAfter(element.startDate) &&
-                  _today.isBefore(element.endDate)
+      int todaysDevotionalIndex = _devotionalList.indexWhere(
+              (element) =>
+              _today.year == element.startDate.year &&
+          _today.month == element.startDate.month &&
+              _today.day == element.startDate.day,
 
-          ///There are 3 cases here for which a devotional message is returned.
-          ///
-          ///1. Either today is equal to the start date of the devotional message
-          ///2. Or Today is equal to the end date of the devotional message
-          ///
-          ///These 2 cases cover all messages that are 2 days long.
-          ///
-          /// 3. And finally Today falls between the start date of the devotional message and the
-          /// the end date of the devotional message.
-          /// This case covers messages where it runs for 3 or more days.
+      ///Just check if the devotional is for today
 
-          );
+      // int todaysDevotionalIndex = _devotionalList.indexWhere((element) =>
+      //         _today == element.startDate ||
+      //         _today == element.endDate ||
+      //         _today.isAfter(element.startDate) &&
+      //             _today.isBefore(element.endDate)
+      //
+      //     ///There are 3 cases here for which a devotional message is returned.
+      //     ///
+      //     ///1. Either today is equal to the start date of the devotional message
+      //     ///2. Or Today is equal to the end date of the devotional message
+      //     ///
+      //     ///These 2 cases cover all messages that are 2 days long.
+      //     ///
+      //     /// 3. And finally Today falls between the start date of the devotional message and the
+      //     /// the end date of the devotional message.
+      //     /// This case covers messages where it runs for 3 or more days.
+      //
+         );
 
       if (todaysDevotionalIndex == -1) {
         ///Index being -1 means it did not get the devotional, or the devotional was not found
@@ -132,7 +141,7 @@ class DevotionalRepository {
       _likedDevotionalsList =
           _devotionalList.where((element) => element.isLiked == true).toList();
       return Right(_likedDevotionalsList);
-    } catch (e) {
+    } catch (e){ debugPrint(e.toString());
       return const Left(Failure(
           errorMessage: "Unable to get your favourite devotional messages"));
     }
@@ -144,7 +153,7 @@ class DevotionalRepository {
     try {
       await devotionalHiveService.addDevotional(box, updatedList);
       return const Right(null);
-    } catch (e) {
+    } catch (e){ debugPrint(e.toString());
       return const Left(
           Failure(errorMessage: "Unable to add to your favourites"));
     }
@@ -155,7 +164,7 @@ class DevotionalRepository {
     try {
       await devotionalHiveService.clearDevotional(box);
       return const Right(null);
-    } catch (e) {
+    } catch (e){ debugPrint(e.toString());
       return const Left(
           Failure(errorMessage: "Unable to clear your favourites"));
     }

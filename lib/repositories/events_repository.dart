@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
 import '../core/errors/failure.dart';
@@ -29,7 +30,7 @@ class EventsRepository {
     _eventsList = await eventsHiveService.getData(eventBox);
 
     if (_eventsList.isNotEmpty) {
-      print("Not getting devotionals from remote because data already exist");
+      debugPrint("NGetting Events from cache rather, and not from remote");
       return Right(_eventsList);
     } else {
 
@@ -50,9 +51,9 @@ class EventsRepository {
           ///Add the events to the local database.
           await eventsHiveService.addEvents(eventBox, _eventsList);
           return Right(_eventsList);
-        } on FirebaseException catch (e) {
+        } on FirebaseException catch (e){ debugPrint(e.toString()); debugPrint(e.toString());
           return Left(Failure(errorMessage: e.message, code: e.code));
-        } catch (e){
+        } catch (e){ debugPrint(e.toString());
           return const Left(Failure(errorMessage: "An error has occurred"));
         }
       }

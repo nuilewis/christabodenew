@@ -83,8 +83,6 @@ class DevotionalProvider extends ChangeNotifier {
       state = AppState.error;
     }, (devotional) {
       allDevotionals = devotional;
-      print("gotten devotionals");
-      print(allDevotionals);
 
       state = AppState.success;
     });

@@ -84,8 +84,7 @@ class PrayerProvider extends ChangeNotifier {
       state = AppState.error;
     }, (prayer) {
       allPrayers = prayer;
-      print("gotten prayers");
-      print(allPrayers);
+
       state = AppState.success;
     });
     notifyListeners();

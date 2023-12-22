@@ -4,7 +4,6 @@ import 'package:christabodenew/core/extensions/string_extension.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../core/constants.dart';
 import '../../../core/date_time_formatter.dart';
@@ -119,7 +118,7 @@ Container(
                                 fixedSize: const Size(48, 48),
                               ),
                               onPressed: onPressed,
-                              icon: Icon(FluentIcons.heart_24_regular, color: AppColours.white,)
+                              icon: const Icon(FluentIcons.heart_24_regular, color: AppColours.white,)
                             ),
                           ),
                         ),
@@ -141,7 +140,7 @@ Container(
                           height: kDefaultPadding,
                         ),
                         const SizedBox(width: kDefaultPadding),
-                        Icon(FluentIcons.arrow_right_24_regular, color: AppColours.white,),
+                        const Icon(FluentIcons.arrow_right_24_regular, color: AppColours.white,),
 
                       ],
                     ),

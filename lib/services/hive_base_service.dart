@@ -1,10 +1,6 @@
-import 'package:christabodenew/models/devotional_model.dart';
-import 'package:christabodenew/models/prayer_model.dart';
+import 'package:christabodenew/models/models.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import '../models/event_model.dart';
-import '../models/message_model.dart';
-import '../models/settings_model.dart';
 
 class HiveService {
   Future<void> initHive() async {
@@ -15,5 +11,7 @@ class HiveService {
     Hive.registerAdapter(PrayerAdapter());
     Hive.registerAdapter(EventAdapter());
     Hive.registerAdapter(SettingsAdapter());
+    Hive.registerAdapter(HymnAdapter());
+    Hive.registerAdapter(UnsplashImageAdapter());
   }
 }

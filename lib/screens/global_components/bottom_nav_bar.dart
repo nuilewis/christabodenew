@@ -32,6 +32,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
       key: PageStorageKey(PrayerScreen.id),
     ),
     const EventsScreen(
+
       key: PageStorageKey(EventsScreen.id),
     ),
    const HymnScreen(
@@ -61,13 +62,13 @@ class _BottomNavBarState extends State<BottomNavBar> {
       destinations: [
         NavigationDestination(
           label: "Home",
-          icon: Icon(FluentIcons.home_24_regular, color: AppColours.neutral50),
+          icon: const Icon(FluentIcons.home_24_regular, color: AppColours.neutral50),
           selectedIcon: Icon(FluentIcons.home_24_filled, color: Theme.of(context).iconTheme.color,),
         ),
         NavigationDestination(
           label: "Devotional",
           selectedIcon: Icon(FluentIcons.reading_mode_mobile_24_filled, color: Theme.of(context).iconTheme.color),
-          icon: Icon(FluentIcons.reading_mode_mobile_24_regular,color: AppColours.neutral50),
+          icon: const Icon(FluentIcons.reading_mode_mobile_24_regular,color: AppColours.neutral50),
         ),
         NavigationDestination(
           label: "Prayer",
@@ -79,19 +80,19 @@ class _BottomNavBarState extends State<BottomNavBar> {
           icon: SvgPicture.asset(
             "assets/svg/prayer.svg",
             height: 24,
-            colorFilter: ColorFilter.mode(AppColours.neutral50, BlendMode.srcIn),
+            colorFilter: const ColorFilter.mode(AppColours.neutral50, BlendMode.srcIn),
           ),
 
         ),
         NavigationDestination(
           label: "Events",
-          icon: Icon(FluentIcons.alert_24_regular, color: AppColours.neutral50),
+          icon: const Icon(FluentIcons.alert_24_regular, color: AppColours.neutral50),
           selectedIcon: Icon(FluentIcons.alert_24_filled, color: Theme.of(context).iconTheme.color ),
 
         ),
         NavigationDestination(
           label: "Hymns",
-          icon: Icon(FluentIcons.music_note_1_24_regular, color: AppColours.neutral50),
+          icon: const Icon(FluentIcons.music_note_1_24_regular, color: AppColours.neutral50),
           selectedIcon: Icon(FluentIcons.music_note_1_24_filled, color: Theme.of(context).iconTheme.color),
 
 

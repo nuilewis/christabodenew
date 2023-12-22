@@ -13,7 +13,7 @@ import '../../../models/unsplash_image.dart';
 class FeaturedEventCard extends StatelessWidget {
   final Event event;
   final UnsplashImage featuredImage;
-  final onSharePressed;
+  final VoidCallback onSharePressed;
   const FeaturedEventCard(
       {super.key, required this.event, required this.featuredImage, required this.onSharePressed});
 
@@ -67,7 +67,7 @@ class FeaturedEventCard extends StatelessWidget {
                                   .copyWith(color: Colors.white))
                           : const SizedBox(),
 
-                      Spacer(),
+                      const Spacer(),
                       ClipRRect(
                         borderRadius: BorderRadius.circular(32),
                         child: BackdropFilter(
@@ -78,7 +78,7 @@ class FeaturedEventCard extends StatelessWidget {
                                 fixedSize: const Size(48, 48),
                               ),
                               onPressed: onSharePressed,
-                              icon: Icon(FluentIcons.share_android_24_regular, color: AppColours.white,)
+                              icon: const Icon(FluentIcons.share_android_24_regular, color: AppColours.white,)
                           ),
                         ),
                       ),
