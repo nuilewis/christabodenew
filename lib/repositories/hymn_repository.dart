@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../core/errors/failure.dart';
@@ -17,8 +18,9 @@ class HymnRepository {
   List<Hymn> _hymnList = [];
   List<Hymn> _likedHymnList = [];
 
+
   Future<Either<Failure, List<Hymn>>> getHymn() async {
-    print("getting hymns");
+
 
     /// try to get from offline
     /// if offline is empty, then check for network connectivity, if network is not there, throw a network error
@@ -26,7 +28,7 @@ class HymnRepository {
     final Box hymnBox = await hymnHiveService.openBox();
     _hymnList = await hymnHiveService.getData(hymnBox);
     if(_hymnList.isNotEmpty){
-      print("Not getting hymn list from remote because data already exist");
+      debugPrint("Getting Hymns from cache rather, and not from remote");
       return Right(_hymnList);
     } else
     {
@@ -40,8 +42,6 @@ class HymnRepository {
 
         if(docSnapshot.exists){
           Map<String, dynamic> documentData = docSnapshot.data() as Map<String, dynamic>;
-          print("Hymn document Data");
-          print(documentData);
           for(Map<String, dynamic> element in documentData["hymn"]){
             _hymnList.add(Hymn.fromMap(data: element));
           }
@@ -52,14 +52,16 @@ class HymnRepository {
 
         ///Now add the list of Hymns to local storage
         await hymnHiveService.addHymn(hymnBox, _hymnList);
-        print(_hymnList);
+
 
         return Right(_hymnList);
-      } on FirebaseException catch (e) {
+      } on FirebaseException catch (e){ debugPrint(e.toString());
+        debugPrint(e.message);
         ///If a Firebase error has occurred, then return a [FirebaseFailure]
         return Left(Failure(errorMessage: e.message, code: e.code));
       } catch (e){
-        return Left(Failure(errorMessage: "An error has occured"));
+        debugPrint(e.toString());
+        return const Left(Failure(errorMessage: "An error has occurred"));
       }
     }
 
@@ -76,7 +78,7 @@ class HymnRepository {
           _hymnList.where((element) => element.isLiked == true).toList();
 
       return Right(_likedHymnList);
-    } catch (e) {
+    } catch (e){ debugPrint(e.toString());
       return const Left(
           Failure(errorMessage: "Unable to get your liked Hymns"));
     }
@@ -88,7 +90,7 @@ class HymnRepository {
     try {
       await hymnHiveService.addHymn(box, updatedList);
       return const Right(null);
-    } catch (e) {
+    } catch (e){ debugPrint(e.toString());
       return const Left(
           Failure(errorMessage: "Unable to add to your favourites"));
     }
@@ -99,7 +101,7 @@ class HymnRepository {
     try {
       await hymnHiveService.clearHymn(box);
       return const Right(null);
-    } catch (e) {
+    } catch (e){ debugPrint(e.toString());
       return const Left(
           Failure(errorMessage: "Unable to clear your favourites"));
     }

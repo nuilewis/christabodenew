@@ -40,13 +40,13 @@ class HymnScreen extends StatelessWidget {
                       "Hymns",
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
-                    const SizedBox(
-                      height: kDefaultPadding2x,
-                    ),
-                    Gap(kDefaultPadding),
+
+                    const Gap(kDefaultPadding),
                     Visibility(
                       visible: hymnData.allHymns.isNotEmpty,
+                      replacement: const Center(child: Text("There are no hymns"),),
                       child: ListView.builder(
+                        padding: EdgeInsets.zero,
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: hymnData.allHymns.length,
                           //  itemCount: 2,
@@ -60,9 +60,8 @@ class HymnScreen extends StatelessWidget {
                               },
                             );
                           }),
-                      replacement: Center(child: Text("There are no hymns"),),
                     ),
-                    Gap(kDefaultPadding2x),
+                    const Gap(kDefaultPadding2x),
                   ],
                 ),
               ),

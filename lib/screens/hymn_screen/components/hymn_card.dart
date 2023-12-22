@@ -1,6 +1,7 @@
 import 'package:christabodenew/core/extensions/string_extension.dart';
 import 'package:christabodenew/models/hymn_model.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 import '../../../core/constants.dart';
 
@@ -18,20 +19,24 @@ class HymnCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: InkWell(
+        borderRadius: BorderRadius.circular(8),
+        splashFactory: InkSparkle.splashFactory,
+        splashColor: Theme.of(context).colorScheme.primary.withOpacity(.2),
         onTap: onPressed,
-        child: Container(
+        child: Ink(
           padding: const EdgeInsets.symmetric(
-              horizontal: kDefaultPadding, vertical: kDefaultPadding / 2),
+              horizontal: kDefaultPadding, vertical: kDefaultPadding),
           decoration: BoxDecoration(
             color: Theme.of(context).cardColor,
-            borderRadius: BorderRadius.circular(kDefaultPadding + 8),
+            borderRadius: BorderRadius.circular(8),
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(hymn.number.toString(),
+              Text("Hymn ${hymn.number.toString()}",
                   style: Theme.of(context).textTheme.bodyLarge),
+              const Gap(16),
               Text(hymn.title.toTitleCase(),
                   style: Theme.of(context).textTheme.bodyLarge),
 

@@ -8,14 +8,12 @@ const int _contentHiveIndex = 1;
 const int _numberHiveIndex = 2;
 const int _isLikedHiveIndex = 3;
 
-@HiveType(typeId: 0)
+@HiveType(typeId: 5)
 class Hymn extends Equatable {
   @HiveField(_titleHiveIndex)
   final String title;
-
   @HiveField(_contentHiveIndex)
   final String content;
-
   @HiveField(_numberHiveIndex)
   final int number;
   @HiveField(_isLikedHiveIndex)

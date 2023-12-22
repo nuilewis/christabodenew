@@ -8,7 +8,7 @@ part of 'hymn_model.dart';
 
 class HymnAdapter extends TypeAdapter<Hymn> {
   @override
-  final int typeId = 0;
+  final int typeId = 5;
 
   @override
   Hymn read(BinaryReader reader) {

@@ -1,4 +1,3 @@
-import 'package:christabodenew/providers/devotional_provider.dart';
 import 'package:christabodenew/providers/hymn_provider.dart';
 import 'package:christabodenew/providers/unsplash_image_provider.dart';
 import 'package:christabodenew/screens/global_components/content.dart';
@@ -66,7 +65,7 @@ _hymnPageController.dispose();
                 onShareButtonPressed:(){
                   hymnData.shareHymn(hymn);
                 },
-                contentType: ContentType.devotional,
+                contentType: ContentType.hymn,
                 title: hymn.title,
                 content: hymn.content,
                 isLiked: hymn.isLiked,

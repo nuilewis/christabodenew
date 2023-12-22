@@ -37,13 +37,10 @@ class HymnProvider extends ChangeNotifier {
 
     response.fold((failure) {
       errorMessage = failure.errorMessage;
-      print("an error occurred while making hymns");
-      print(errorMessage);
       state = AppState.error;
     }, (hymns) {
       allHymns = hymns;
-      print("gotten hymns");
-      print(allHymns);
+
       state = AppState.success;
     });
     notifyListeners();
