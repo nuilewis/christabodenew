@@ -1,3 +1,4 @@
+import 'package:christabodenew/screens/global_components/app_bar.dart';
 import 'package:christabodenew/screens/hymn_screen/hymn_screen_details.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -33,6 +34,9 @@ class HymnScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
+                    Visibility(
+                        visible: !isCalledFromNavBar,
+                        child: CustomAppBar(isCalledFromNavBar:isCalledFromNavBar)),
                     const SizedBox(
                       height: kDefaultPadding2x,
                     ),

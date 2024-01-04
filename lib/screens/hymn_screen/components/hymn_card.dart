@@ -34,11 +34,13 @@ class HymnCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text("Hymn ${hymn.number.toString()}",
-                  style: Theme.of(context).textTheme.bodyLarge),
+              Text(hymn.number.toString(),
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold)),
               const Gap(16),
-              Text(hymn.title.toTitleCase(),
-                  style: Theme.of(context).textTheme.bodyLarge),
+              Expanded(
+                child: Text(hymn.title.toTitleCase(),
+                    style: Theme.of(context).textTheme.bodyMedium),
+              ),
 
             ],
           ),
