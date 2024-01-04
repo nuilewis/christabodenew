@@ -12,7 +12,6 @@ import 'package:provider/provider.dart';
 import '../../core/constants.dart';
 import '../../models/prayer_model.dart';
 import '../../providers/devotional_provider.dart';
-import '../../providers/hymn_provider.dart';
 import '../devotional_screen/devotional_screen.dart';
 import 'components/devotional_and_prayer_card.dart';
 import 'components/featured_event_card.dart';
@@ -31,13 +30,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
-  void didChangeDependencies() {
-    Provider.of<DevotionalProvider>(context).getCurrentDevotional();
-    Provider.of<PrayerProvider>(context).getCurrentPrayer();
-    Provider.of<EventsProvider>(context).getUpcomingEvents();
-   // Provider.of<HymnProvider>(context).getHymns();
-    super.didChangeDependencies();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,20 +69,30 @@ class _HomeScreenState extends State<HomeScreen> {
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              "Upcoming Services",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge!
-                                  .copyWith(fontFamily: 'Gloock'),
-                            ),
-                            const Gap(kDefaultPadding),
-                            FeaturedEventCard(
-                            onSharePressed: (){
-                              eventData.shareEvent(context, eventData.upcomingEvents.first);
-                            },
-                            event: eventData.upcomingEvents.first,
-                            featuredImage: unsplashData.eventFeaturedImage),
+
+                            Visibility(
+
+                                visible: eventData.upcomingEvents.isNotEmpty,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start  ,
+                              children: [
+                                Text(
+                                  "Upcoming Services",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .copyWith(fontFamily: 'Gloock'),
+                                ),
+                                const Gap(kDefaultPadding),
+                                FeaturedEventCard(
+                                    onSharePressed: (){
+                                      eventData.shareEvent(context, eventData.upcomingEvents.first);
+                                    },
+                                    event: eventData.upcomingEvents.first,
+                                    featuredImage: unsplashData.eventFeaturedImage),
+                              ],
+                            ))
+
                           ],
                         ),
 
@@ -114,6 +116,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         const Gap(kDefaultPadding),
                         DevotionalAndPrayerCard(
+
+
                             onPressed: () async {
                               await devotionalData
                                   .getTodaysDevotionalIndex()

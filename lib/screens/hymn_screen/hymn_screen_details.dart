@@ -2,8 +2,6 @@ import 'dart:ui';
 
 import 'package:christabodenew/providers/hymn_provider.dart';
 import 'package:christabodenew/providers/unsplash_image_provider.dart';
-import 'package:christabodenew/screens/global_components/content.dart';
-import 'package:christabodenew/screens/global_components/featured_image.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -156,15 +154,15 @@ class HymnContent extends StatelessWidget {
         SingleChildScrollView(
           child: Center(
               child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Gap(64),
+                const Gap(64),
                 Row(
                   children: [
-                    IconButton(onPressed: (){Navigator.pop(context);}, icon: Icon(FluentIcons.arrow_left_24_regular)),
+                    IconButton(onPressed: (){Navigator.pop(context);}, icon: const Icon(FluentIcons.arrow_left_24_regular)),
                     const Spacer(),
 
                     ClipRRect(
@@ -173,7 +171,7 @@ class HymnContent extends StatelessWidget {
                         filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
                         child: IconButton.filled(
                             style: IconButton.styleFrom(
-                              fixedSize: Size(48, 48),
+                              fixedSize: const Size(48, 48),
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                               backgroundColor: AppColours.white.withOpacity(.3)
                               ,
@@ -183,14 +181,14 @@ class HymnContent extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Gap(12),
+                    const Gap(12),
                     ClipRRect(
                       borderRadius: BorderRadius.circular(16),
                       child: BackdropFilter(
                         filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
                         child: IconButton.filled(
                           style: IconButton.styleFrom(
-                            fixedSize: Size(48, 48),
+                            fixedSize: const Size(48, 48),
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                             backgroundColor: AppColours.white.withOpacity(.3)
                             ,
@@ -204,22 +202,22 @@ class HymnContent extends StatelessWidget {
                     ),
                   ],
                 ),
-                Gap(32),
+                const Gap(32),
 
                 Text(hymn.number.toString(), style: Theme.of(context).textTheme.displayMedium,),
-                Gap(32),
+                const Gap(32),
                 Text(
                   hymn.title,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headlineSmall!.copyWith(height: 1.5),
                 ),
-                Gap(32),
+                const Gap(32),
                 Text(
                   hymn.content,
                   textAlign: TextAlign.center,
                 ),
 
-                Gap(64),
+                const Gap(64),
               ],
             ),
           )),
