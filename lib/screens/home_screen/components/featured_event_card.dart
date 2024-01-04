@@ -45,7 +45,7 @@ class FeaturedEventCard extends StatelessWidget {
               decoration: BoxDecoration(color: Colors.black.withOpacity(.4)),
             ),
             Padding(
-              padding: const EdgeInsets.all(kDefaultPadding),
+              padding: const EdgeInsets.only(left: 16, right: 8,  top: 8, bottom: 16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -53,19 +53,21 @@ class FeaturedEventCard extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Text(dateTimeFormatter(context, DateTime.now()),
+                      Text(dateTimeFormatter(context, event.startDate),
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium!
                               .copyWith(color: Colors.white)),
-                      event.endDate != null
-                          ? Text(
-                              "to ${dateTimeFormatter(context, event.endDate!)}",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .copyWith(color: Colors.white))
-                          : const SizedBox(),
+                    Visibility(
+                        visible: event.endDate !=null,
+                            child: Text(
+                                "to ${dateTimeFormatter(context, event.endDate!)}",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(color: Colors.white)),
+                          ),
+
 
                       const Spacer(),
                       ClipRRect(

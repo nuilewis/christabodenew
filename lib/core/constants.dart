@@ -336,21 +336,23 @@ class AppTextStyles {
   static TextStyle bodyLargeBold = const TextStyle(
     fontWeight: FontWeight.w800,
     fontSize: 16,
-   // height: 1,
+   height: 1.5,
   );
   static TextStyle bodyLarge = const TextStyle(
     fontWeight: FontWeight.normal,
     fontSize: 16,
-   // height: 1,
+    height: 1.5,
   );
 
   static TextStyle bodyMediumBold = const TextStyle(
     fontWeight: FontWeight.w800,
     fontSize: 14,
+    height: 1.5,
   );
   static TextStyle bodyMedium = const TextStyle(
     fontWeight: FontWeight.normal,
     fontSize: 14,
+    height: 1.5,
   );
 
   static TextStyle bodySmallBold = const TextStyle(

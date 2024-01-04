@@ -1,7 +1,7 @@
-
 import 'package:christabodenew/models/models.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 import '../../core/core.dart';
 import 'featured_image.dart';
@@ -166,24 +166,35 @@ class _ContentState extends State<Content> with SingleTickerProviderStateMixin {
                                     .copyWith(fontWeight: FontWeight.w800)),
                           ),
                           Text(
-                            "${dateTimeFormatter(context, widget.startDate??DateTime.now())} to ",
+                            dateTimeFormatter(context, widget.startDate ?? DateTime.now()),
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
-                          Visibility(
-                            visible: widget.endDate != null,
-                            child: Text(
-                                dateTimeFormatter(context, widget.endDate??DateTime.now()),
-                                style: Theme.of(context).textTheme.bodyMedium),
-                          ),
+                          // Visibility(
+                          //   visible: widget.endDate != null,
+                          //   child: Text(
+                          //       dateTimeFormatter(
+                          //           context, widget.endDate ?? DateTime.now()),
+                          //       style: Theme.of(context).textTheme.bodyMedium),
+                          // ),
                         ],
                       ),
                     ),
                     const Spacer(),
-
-                    IconButton(
+                    IconButton.filled(
+                        style: IconButton.styleFrom(
+                            backgroundColor: Theme.of(context).cardColor,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16)),
+                            fixedSize: Size(48, 48)),
                         onPressed: widget.onShareButtonPressed,
                         icon: const Icon(FluentIcons.share_android_24_regular)),
-                    IconButton(
+                    Gap(16),
+                    IconButton.filled(
+                      style: IconButton.styleFrom(
+                          backgroundColor: Theme.of(context).cardColor,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16)),
+                          fixedSize: Size(48, 48)),
                       onPressed: widget.onLikeButtonPressed,
                       icon: Icon(widget.isLiked
                           ? FluentIcons.heart_24_filled
@@ -196,18 +207,29 @@ class _ContentState extends State<Content> with SingleTickerProviderStateMixin {
                 ),
                 Visibility(
                   visible: widget.scripture != null,
-                  child: Text("${widget.scripture}",
-                      textAlign: TextAlign.left,
-                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold)),
-                ),
-                const SizedBox(
-                  height: kDefaultPadding,
-                ),
-                Visibility(
-                  visible: widget.scriptureReference != null,
-                  child: Align(
-                      alignment: Alignment.centerRight,
-                      child: Text("${widget.scriptureReference} scripture")),
+                  child: Container(
+                    padding: EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        color: Theme.of(context).cardColor),
+                    child: Column(
+                      children: [
+                        Text("${widget.scripture}",
+                            textAlign: TextAlign.left,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(fontWeight: FontWeight.bold)),
+                        Gap(8),
+                        Visibility(
+                          visible: widget.scriptureReference != null,
+                          child: Align(
+                              alignment: Alignment.centerRight,
+                              child: Text("${widget.scriptureReference}")),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
 
                 const SizedBox(
@@ -224,7 +246,7 @@ class _ContentState extends State<Content> with SingleTickerProviderStateMixin {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Visibility(
-                        visible: widget.contentType !=ContentType.hymn,
+                        visible: widget.contentType != ContentType.hymn,
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text(

@@ -16,15 +16,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       surfaceTintColor: Colors.transparent,
       backgroundColor: Colors.transparent,
       foregroundColor: Colors.transparent,
-      leading: isCalledFromNavBar
-          ? const SizedBox()
-          : IconButton(
+      leading:  IconButton(
               onPressed: () {
                 HapticFeedback.lightImpact;
                 Feedback.forTap(context);
                 Navigator.pop(context);
               },
-              icon: const Icon(FluentIcons.arrow_left_24_regular, color: AppColours.white,)),
+              icon: Icon(FluentIcons.arrow_left_24_regular, color: Theme.of(context).iconTheme.color, )),
     );
   }
 }

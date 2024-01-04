@@ -20,9 +20,9 @@ class NextPreviousButton extends StatelessWidget {
     return IconButton.filled(
       onPressed: onPressed,
       style: IconButton.styleFrom(
-        foregroundColor: Theme.of(context).scaffoldBackgroundColor,
-        backgroundColor:
-            bgColour ?? Theme.of(context).iconTheme.color!.withOpacity(1),
+    //    foregroundColor: Theme.of(context).scaffoldBackgroundColor,
+        backgroundColor: Theme.of(context).cardColor,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16))
       ),
       icon: Icon(isNextButton!? FluentIcons.chevron_right_24_regular: FluentIcons.chevron_left_24_regular),
     );

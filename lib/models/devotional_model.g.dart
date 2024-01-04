@@ -24,7 +24,7 @@ class DevotionalAdapter extends TypeAdapter<Devotional> {
       author: fields[5] as String,
       content: fields[3] as String,
       startDate: fields[6] as DateTime,
-      endDate: fields[7] as DateTime,
+      endDate: fields[7] as DateTime?,
       isLiked: fields[8] as bool,
     );
   }

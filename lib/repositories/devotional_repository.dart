@@ -64,10 +64,9 @@ class DevotionalRepository {
     if (_devotionalList.isNotEmpty) {
       List<Devotional> todaysDevotional = _devotionalList
           .where((element) =>
-                  _today == element.startDate ||
-                  _today == element.endDate ||
-                  _today.isAfter(element.startDate) &&
-                      _today.isBefore(element.endDate)
+      _today.year == element.startDate.year &&
+          _today.month == element.startDate.month &&
+          _today.day == element.startDate.day,
 
               ///There are 3 cases here for which a devotional message is returned.
               ///

@@ -31,7 +31,7 @@ class Devotional extends Equatable {
   @HiveField(_startDateHiveIndex)
   final DateTime startDate;
   @HiveField(_endDateHiveIndex)
-  final DateTime endDate;
+  final DateTime? endDate;
   @HiveField(_isLikedHiveIndex)
   final bool isLiked;
 
@@ -43,7 +43,7 @@ class Devotional extends Equatable {
     required this.author,
     required this.content,
     required this.startDate,
-    required this.endDate,
+    this.endDate,
     this.isLiked = false,
   });
 
@@ -89,14 +89,14 @@ class Devotional extends Equatable {
 
   factory Devotional.fromMap({required Map<String, dynamic> data}) {
     Timestamp startDate = data["start"];
-    Timestamp endDate = data["end"];
+    Timestamp? endDate = data["end"];
     return Devotional(
       title: data["title"],
       scripture: data["scripture"],
       scriptureReference: data["scriptureRef"],
       content: data["content"],
       startDate: startDate.toDate(),
-      endDate: endDate.toDate(),
+      endDate: endDate?.toDate(),
       confessionOfFaith: data["confession"],
       author: data["author"],
     );
@@ -115,7 +115,7 @@ class Devotional extends Equatable {
   bool get isEmpty => this == Devotional.empty;
   bool get isNotEmpty => this != Devotional.empty;
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         title,
         scripture,
         scriptureReference,

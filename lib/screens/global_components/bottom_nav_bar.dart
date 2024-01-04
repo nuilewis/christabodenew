@@ -32,11 +32,12 @@ class _BottomNavBarState extends State<BottomNavBar> {
       key: PageStorageKey(PrayerScreen.id),
     ),
     const EventsScreen(
-
       key: PageStorageKey(EventsScreen.id),
     ),
    const HymnScreen(
+     isCalledFromNavBar: true,
       key: PageStorageKey(HymnScreen.id),
+
     ),
   ];
 

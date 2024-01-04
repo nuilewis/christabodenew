@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 import '../../core/constants.dart';
 import '../../models/prayer_model.dart';
 import '../../providers/devotional_provider.dart';
+import '../../providers/hymn_provider.dart';
 import '../devotional_screen/devotional_screen.dart';
 import 'components/devotional_and_prayer_card.dart';
 import 'components/featured_event_card.dart';
@@ -34,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Provider.of<DevotionalProvider>(context).getCurrentDevotional();
     Provider.of<PrayerProvider>(context).getCurrentPrayer();
     Provider.of<EventsProvider>(context).getUpcomingEvents();
-    // Provider.of<HymnProvider>(context).getHymns();
+   // Provider.of<HymnProvider>(context).getHymns();
     super.didChangeDependencies();
   }
 
@@ -85,11 +86,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             const Gap(kDefaultPadding),
                             FeaturedEventCard(
-                              ///Todo, replace the event here with Upcmoing events only
                             onSharePressed: (){
-                              eventData.shareEvent(context, eventData.allEvents.first);
+                              eventData.shareEvent(context, eventData.upcomingEvents.first);
                             },
-                            event: eventData.allEvents.first,
+                            event: eventData.upcomingEvents.first,
                             featuredImage: unsplashData.eventFeaturedImage),
                           ],
                         ),
