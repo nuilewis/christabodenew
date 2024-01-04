@@ -51,6 +51,7 @@ dependencies:
   fluentui_system_icons: ^1.1.223
   gap: ^3.0.1
   share_plus: ^7.2.1
+  url_launcher: ^6.2.2
   
 
 dev_dependencies:
