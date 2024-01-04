@@ -2,6 +2,7 @@ import 'package:christabodenew/models/models.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/core.dart';
 import 'featured_image.dart';
@@ -185,16 +186,16 @@ class _ContentState extends State<Content> with SingleTickerProviderStateMixin {
                             backgroundColor: Theme.of(context).cardColor,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(16)),
-                            fixedSize: Size(48, 48)),
+                            fixedSize: const Size(48, 48)),
                         onPressed: widget.onShareButtonPressed,
                         icon: const Icon(FluentIcons.share_android_24_regular)),
-                    Gap(16),
+                    const Gap(16),
                     IconButton.filled(
                       style: IconButton.styleFrom(
                           backgroundColor: Theme.of(context).cardColor,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(16)),
-                          fixedSize: Size(48, 48)),
+                          fixedSize: const Size(48, 48)),
                       onPressed: widget.onLikeButtonPressed,
                       icon: Icon(widget.isLiked
                           ? FluentIcons.heart_24_filled
@@ -208,7 +209,7 @@ class _ContentState extends State<Content> with SingleTickerProviderStateMixin {
                 Visibility(
                   visible: widget.scripture != null,
                   child: Container(
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
                         color: Theme.of(context).cardColor),
@@ -220,7 +221,7 @@ class _ContentState extends State<Content> with SingleTickerProviderStateMixin {
                                 .textTheme
                                 .bodyMedium!
                                 .copyWith(fontWeight: FontWeight.bold)),
-                        Gap(8),
+                        const Gap(8),
                         Visibility(
                           visible: widget.scriptureReference != null,
                           child: Align(
@@ -284,6 +285,23 @@ class _ContentState extends State<Content> with SingleTickerProviderStateMixin {
                       fontSize: 12,
                       color:
                           Theme.of(context).iconTheme.color!.withOpacity(.4)),
+                ),
+                TextButton(
+                  onPressed: () async{
+                    if(!await launchUrl(Uri(
+                        scheme: "https",
+                        host: "christabodeministries.org",
+                        ), mode: LaunchMode.externalApplication ) ) {
+                      throw "Could Not Launch url";
+                    }
+
+                  },
+                  child: Text(
+                    "Privacy Policy",
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        color:
+                        Theme.of(context).colorScheme.primary),
+                  ),
                 ),
                 const SizedBox(height: kDefaultPadding2x),
               ],
