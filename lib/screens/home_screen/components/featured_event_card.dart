@@ -61,7 +61,7 @@ class FeaturedEventCard extends StatelessWidget {
                     Visibility(
                         visible: event.endDate !=null,
                             child: Text(
-                                "to ${dateTimeFormatter(context, event.endDate!)}",
+                                "to ${dateTimeFormatter(context, event.endDate??DateTime.now())}",
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium!
@@ -71,13 +71,14 @@ class FeaturedEventCard extends StatelessWidget {
 
                       const Spacer(),
                       ClipRRect(
-                        borderRadius: BorderRadius.circular(32),
+                        borderRadius: BorderRadius.circular(16),
                         child: BackdropFilter(
                           filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                          child: IconButton(
+                          child: IconButton.filled(
                               style: IconButton.styleFrom(
                                 backgroundColor: Colors.white.withOpacity(.1),
                                 fixedSize: const Size(48, 48),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16))
                               ),
                               onPressed: onSharePressed,
                               icon: const Icon(FluentIcons.share_android_24_regular, color: AppColours.white,)

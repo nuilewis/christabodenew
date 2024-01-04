@@ -49,6 +49,15 @@ class DevotionalAndPrayerCard extends StatelessWidget {
     }
 
     Size screenSize = MediaQuery.sizeOf(context);
+    bool isLiked = false;
+
+    if(devotional!=null){
+      isLiked = devotional!.isLiked;
+    }else if(
+    prayer!=null
+    ){
+      isLiked = prayer!.isLiked;
+    }
     return InkWell(
       borderRadius: BorderRadius.circular(24),
       onTap: onPressed,
@@ -74,7 +83,7 @@ Container(
   height: screenSize.width * .8,
   color: AppColours.black.withOpacity(.3),),
               Padding(
-                padding: const EdgeInsets.all(kDefaultPadding),
+                padding: const EdgeInsets.only(left: 16, right: 8, top: 8, bottom: 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -109,18 +118,22 @@ Container(
                           ),
                         ),
                         ClipRRect(
-                          borderRadius: BorderRadius.circular(32),
+                          borderRadius: BorderRadius.circular(16),
                           child: BackdropFilter(
                             filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                            child: IconButton(
-                              style: IconButton.styleFrom(
-                               backgroundColor: Colors.white.withOpacity(.1),
-                                fixedSize: const Size(48, 48),
-                              ),
-                              onPressed: onPressed,
-                              icon: const Icon(FluentIcons.heart_24_regular, color: AppColours.white,)
+                            child:
+
+                               Container(
+                                height: 48,
+                                width: 48,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(16),
+                                  color: Colors.white.withOpacity(.1),
+                                ),
+
+                                  child: Icon( isLiked? FluentIcons.heart_24_filled: FluentIcons.heart_24_regular, color: AppColours.white,))
                             ),
-                          ),
+
                         ),
                       ],
                     ),
