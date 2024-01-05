@@ -66,26 +66,26 @@ class _HymnScreenDetailsState extends State<HymnScreenDetails>
             itemBuilder: (context, index) {
               Hymn hymn = hymnData.allHymns[index];
               return HymnContent(
-                  onShareButtonPressed:(){
-                    hymnData.shareHymn(hymn);
-                  },
-                  onNextButtonPressed: () {
-                    HapticFeedback.lightImpact();
-                    Feedback.forTap(context);
-                    _hymnPageController.nextPage(
-                        duration: const Duration(milliseconds: 250),
-                        curve: Curves.easeInOut);
-                  },
-                  onPreviousButtonPressed: () {
-                    HapticFeedback.lightImpact();
-                    Feedback.forTap(context);
-                    _hymnPageController.previousPage(
-                        duration: const Duration(milliseconds: 250),
-                        curve: Curves.easeInOut);
-                  },
-                  onLikeButtonPressed: () {
-                hymnData.toggleLikedHymn(index);
-                  },
+                onShareButtonPressed: () {
+                  hymnData.shareHymn(hymn);
+                },
+                onNextButtonPressed: () {
+                  HapticFeedback.lightImpact();
+                  Feedback.forTap(context);
+                  _hymnPageController.nextPage(
+                      duration: const Duration(milliseconds: 250),
+                      curve: Curves.easeInOut);
+                },
+                onPreviousButtonPressed: () {
+                  HapticFeedback.lightImpact();
+                  Feedback.forTap(context);
+                  _hymnPageController.previousPage(
+                      duration: const Duration(milliseconds: 250),
+                      curve: Curves.easeInOut);
+                },
+                onLikeButtonPressed: () {
+                  hymnData.toggleLikedHymn(index);
+                },
                 hymn: hymn,
                 featuredImage: featuredImage,
               );
@@ -132,7 +132,13 @@ class HymnContent extends StatelessWidget {
   final VoidCallback onShareButtonPressed;
   final VoidCallback onPreviousButtonPressed;
   const HymnContent(
-      {super.key, required this.hymn, required this.featuredImage, required this.onLikeButtonPressed, required this.onNextButtonPressed, required this.onShareButtonPressed, required this.onPreviousButtonPressed});
+      {super.key,
+      required this.hymn,
+      required this.featuredImage,
+      required this.onLikeButtonPressed,
+      required this.onNextButtonPressed,
+      required this.onShareButtonPressed,
+      required this.onPreviousButtonPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -148,7 +154,9 @@ class HymnContent extends StatelessWidget {
           child: Container(
             height: MediaQuery.sizeOf(context).height,
             width: MediaQuery.sizeOf(context).width,
-            decoration: BoxDecoration(color: AppColours.blue10.withOpacity(.4)),
+            decoration: BoxDecoration(
+              color: Color(0xFF07062C).withOpacity(.45),
+            ),
           ),
         ),
         SingleChildScrollView(
@@ -162,9 +170,12 @@ class HymnContent extends StatelessWidget {
                 const Gap(64),
                 Row(
                   children: [
-                    IconButton(onPressed: (){Navigator.pop(context);}, icon: const Icon(FluentIcons.arrow_left_24_regular)),
+                    IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: const Icon(FluentIcons.arrow_left_24_regular)),
                     const Spacer(),
-
                     ClipRRect(
                       borderRadius: BorderRadius.circular(16),
                       child: BackdropFilter(
@@ -172,13 +183,13 @@ class HymnContent extends StatelessWidget {
                         child: IconButton.filled(
                             style: IconButton.styleFrom(
                               fixedSize: const Size(48, 48),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                              backgroundColor: AppColours.white.withOpacity(.3)
-                              ,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16)),
+                              backgroundColor: AppColours.white.withOpacity(.3),
                             ),
                             onPressed: onShareButtonPressed,
-                            icon: const Icon(FluentIcons.share_android_24_regular)
-                        ),
+                            icon: const Icon(
+                                FluentIcons.share_android_24_regular)),
                       ),
                     ),
                     const Gap(12),
@@ -189,9 +200,9 @@ class HymnContent extends StatelessWidget {
                         child: IconButton.filled(
                           style: IconButton.styleFrom(
                             fixedSize: const Size(48, 48),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                            backgroundColor: AppColours.white.withOpacity(.3)
-                            ,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16)),
+                            backgroundColor: AppColours.white.withOpacity(.3),
                           ),
                           onPressed: onLikeButtonPressed,
                           icon: Icon(hymn.isLiked
@@ -203,20 +214,24 @@ class HymnContent extends StatelessWidget {
                   ],
                 ),
                 const Gap(32),
-
-                Text(hymn.number.toString(), style: Theme.of(context).textTheme.displayMedium,),
+                Text(
+                  hymn.number.toString(),
+                  style: Theme.of(context).textTheme.displayMedium,
+                ),
                 const Gap(32),
                 Text(
                   hymn.title,
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(height: 1.5),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineSmall!
+                      .copyWith(height: 1.5),
                 ),
                 const Gap(32),
                 Text(
                   hymn.content,
                   textAlign: TextAlign.center,
                 ),
-
                 const Gap(64),
               ],
             ),

@@ -6,7 +6,6 @@ import '../core/core.dart';
 import '../models/event_model.dart';
 import '../repositories/events_repository.dart';
 
-
 class EventsProvider extends ChangeNotifier {
   final EventsRepository eventsRepository;
 
@@ -24,7 +23,8 @@ class EventsProvider extends ChangeNotifier {
     state = AppState.submitting;
     notifyListeners();
 
-    Either<Failure, List<Event>> response = await eventsRepository.getEvents(year: year);
+    Either<Failure, List<Event>> response =
+        await eventsRepository.getEvents(year: year);
 
     response.fold((failure) {
       errorMessage =
@@ -103,21 +103,18 @@ class EventsProvider extends ChangeNotifier {
       await getUpcomingEvents();
       await getPastEvents();
     });
-
   }
 
-  void shareEvent(BuildContext context, Event event) async{
-
-
-
-    String constructedText ="""    
+  void shareEvent(BuildContext context, Event event) async {
+    String constructedText = """    
 Join us for a Spirit filled encounter during our *${event.name.trim()}* on *${dateTimeFormatter(context, event.startDate)}.*
 
 *Christ Abode Ministries.*
 
 www.christabodeministries.org
 Shared from the Christ Abode Ministries App
-Available on the Google Play Store""";
+Available on the Google Play Store
+https://play.google.com/store/apps/details?id=com.christabodeministries.cam""";
 
     await Share.share(constructedText);
   }

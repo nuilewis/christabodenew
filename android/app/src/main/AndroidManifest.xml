@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.christabodeministries.christabodenew">
+    package="com.christabodeministries.cam">
    <application
         android:label="Christ Abode Ministries"
         android:name="${applicationName}"

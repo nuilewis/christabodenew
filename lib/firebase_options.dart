@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBT4Ayf_Z0j_uYr3Y0zRzJSIDZuzs1D1n4',
-    appId: '1:749895402114:android:06ecfe2a3af6f151f7aa9b',
+    appId: '1:749895402114:android:31d69295d0ea33b4f7aa9b',
     messagingSenderId: '749895402114',
     projectId: 'christabode',
     storageBucket: 'christabode.appspot.com',
@@ -59,11 +59,10 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyBiNp2F33OI-03vwvGAsCyQDhV2PaPPHFU',
-    appId: '1:749895402114:ios:174aa711ee79fd39f7aa9b',
+    appId: '1:749895402114:ios:9f68490539969b9bf7aa9b',
     messagingSenderId: '749895402114',
     projectId: 'christabode',
     storageBucket: 'christabode.appspot.com',
-    iosClientId: '749895402114-dl1ts5jvgev2kik3c3k9rgk41mjg4gv3.apps.googleusercontent.com',
-    iosBundleId: 'com.christabodeministries.christabodenew',
+    iosBundleId: 'com.christabodeministries.cam',
   );
 }

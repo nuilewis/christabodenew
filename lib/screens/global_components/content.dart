@@ -67,6 +67,14 @@ class _ContentState extends State<Content> with SingleTickerProviderStateMixin {
     super.initState();
   }
 
+  String parseAuthor(String? author) {
+    if (author == "Pst. Leonard") {
+      return "Pst. Leo";
+    } else {
+      return author ?? "Author";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
@@ -160,14 +168,16 @@ class _ContentState extends State<Content> with SingleTickerProviderStateMixin {
                           Visibility(
                             //Only show if the author is available
                             visible: widget.author != null,
-                            child: Text("${widget.author}",
+
+                            child: Text(parseAuthor(widget.author),
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium!
                                     .copyWith(fontWeight: FontWeight.w800)),
                           ),
                           Text(
-                            dateTimeFormatter(context, widget.startDate ?? DateTime.now()),
+                            dateTimeFormatter(
+                                context, widget.startDate ?? DateTime.now()),
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
                           // Visibility(
@@ -287,20 +297,22 @@ class _ContentState extends State<Content> with SingleTickerProviderStateMixin {
                           Theme.of(context).iconTheme.color!.withOpacity(.4)),
                 ),
                 TextButton(
-                  onPressed: () async{
-                    if(!await launchUrl(Uri(
-                        scheme: "https",
-                        host: "christabodeministries.org",
-                        ), mode: LaunchMode.externalApplication ) ) {
+                  onPressed: () async {
+                    if (!await launchUrl(
+                        Uri(
+                          scheme: "https",
+                          host: "christabodeministries.org",
+                        ),
+                        mode: LaunchMode.externalApplication)) {
                       throw "Could Not Launch url";
                     }
-
                   },
                   child: Text(
                     "Privacy Policy",
-                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        color:
-                        Theme.of(context).colorScheme.primary),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodySmall!
+                        .copyWith(color: Theme.of(context).colorScheme.primary),
                   ),
                 ),
                 const SizedBox(height: kDefaultPadding2x),

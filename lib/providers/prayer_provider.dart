@@ -179,7 +179,8 @@ Christ Abode Ministries.
 
 www.christabodeministries.org
 Shared from the Christ Abode Ministries App
-Available on the Google Play Store""";
+Available on the Google Play Store
+https://play.google.com/store/apps/details?id=com.christabodeministries.cam""";
 
     await Share.share(constructedText);
   }

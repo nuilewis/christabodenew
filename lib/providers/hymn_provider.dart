@@ -6,7 +6,6 @@ import 'package:share_plus/share_plus.dart';
 import '../core/core.dart';
 import '../models/models.dart';
 
-
 class HymnProvider extends ChangeNotifier {
   final HymnRepository hymnRepository;
   AppState state = AppState.initial;
@@ -18,22 +17,17 @@ class HymnProvider extends ChangeNotifier {
 
   HymnProvider({required this.hymnRepository});
 
-
-  void setHymnIndex(int index){
+  void setHymnIndex(int index) {
     currentHymnIndex = index;
     notifyListeners();
   }
-
-  
-
 
   Future<void> getHymns() async {
     if (state == AppState.submitting) return;
     state = AppState.submitting;
     //notifyListeners();
 
-    Either<Failure, List<Hymn>> response =
-    await hymnRepository.getHymn();
+    Either<Failure, List<Hymn>> response = await hymnRepository.getHymn();
 
     response.fold((failure) {
       errorMessage = failure.errorMessage;
@@ -50,8 +44,7 @@ class HymnProvider extends ChangeNotifier {
     if (state == AppState.submitting) return;
     state = AppState.submitting;
     notifyListeners();
-    Either<Failure, List<Hymn>> response =
-    await hymnRepository.getLikedHymns();
+    Either<Failure, List<Hymn>> response = await hymnRepository.getLikedHymns();
 
     response.fold((failure) {
       errorMessage = failure.errorMessage ??
@@ -70,7 +63,7 @@ class HymnProvider extends ChangeNotifier {
   ///other updates to the devotional list that is necessary
   Future<void> updateHymnList(List<Hymn> updatedList) async {
     Either<Failure, void> response =
-    await hymnRepository.updateHymnSavedList(updatedList);
+        await hymnRepository.updateHymnSavedList(updatedList);
     response.fold((failure) {
       errorMessage = failure.errorMessage ??
           "An error occurred while getting today's Hymn";
@@ -97,7 +90,7 @@ class HymnProvider extends ChangeNotifier {
     if (allHymns.isNotEmpty) {
       ///This sets [isLiked] to be the opposite of what is the current value
       Hymn updatedHymn =
-      allHymns[index].copyWith(isLiked: !allHymns[index].isLiked);
+          allHymns[index].copyWith(isLiked: !allHymns[index].isLiked);
       List<Hymn> updatedList = allHymns;
       updatedList.removeAt(index);
       updatedList.insert(index, updatedHymn);
@@ -112,13 +105,13 @@ class HymnProvider extends ChangeNotifier {
   }
 
   Future<void> initialise() async {
-    await getHymns().whenComplete(() async{await getLikedHymn();});
-
+    await getHymns().whenComplete(() async {
+      await getLikedHymn();
+    });
   }
 
-  void shareHymn(Hymn hymn) async{
-
-    String constructedText ="""
+  void shareHymn(Hymn hymn) async {
+    String constructedText = """
 *${hymn.title.trim()}*
 
 ${hymn.content.trim()}
@@ -127,7 +120,8 @@ ${hymn.content.trim()}
 
 www.christabodeministries.org
 Shared from the Christ Abode Ministries App
-Available on the Google Play Store""";
+Available on the Google Play Store
+https://play.google.com/store/apps/details?id=com.christabodeministries.cam""";
 
     await Share.share(constructedText);
   }

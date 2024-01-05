@@ -67,8 +67,6 @@ class DevotionalProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
-
   Future<void> getDevotionals({String? year}) async {
     if (state == AppState.submitting) return;
     state = AppState.submitting;
@@ -160,7 +158,6 @@ class DevotionalProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
   Future<void> initialise({String? devotionalYear}) async {
     await getDevotionals(year: devotionalYear).whenComplete(() async {
       await getCurrentDevotional();
@@ -169,11 +166,8 @@ class DevotionalProvider extends ChangeNotifier {
     });
   }
 
-
-  void shareDevotional(BuildContext context, Devotional devotional) async{
-
-
-    String constructedText ="""
+  void shareDevotional(BuildContext context, Devotional devotional) async {
+    String constructedText = """
 ${dateTimeFormatter(context, devotional.startDate)}
 
 *${devotional.title.trim()}*
@@ -193,7 +187,8 @@ Christ Abode Ministries.
 
 www.christabodeministries.org
 Shared from the Christ Abode Ministries App
-Available on the Google Play Store""";
+Available on the Google Play Store
+https://play.google.com/store/apps/details?id=com.christabodeministries.cam""";
 
     await Share.share(constructedText);
   }
