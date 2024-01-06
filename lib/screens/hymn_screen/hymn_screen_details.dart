@@ -155,7 +155,7 @@ class HymnContent extends StatelessWidget {
             height: MediaQuery.sizeOf(context).height,
             width: MediaQuery.sizeOf(context).width,
             decoration: BoxDecoration(
-              color: Color(0xFF07062C).withOpacity(.45),
+              color: const Color(0xFF07062C).withOpacity(.45),
             ),
           ),
         ),
