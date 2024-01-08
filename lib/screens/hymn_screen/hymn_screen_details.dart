@@ -174,7 +174,10 @@ class HymnContent extends StatelessWidget {
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        icon: const Icon(FluentIcons.arrow_left_24_regular)),
+                        icon: const Icon(
+                          FluentIcons.arrow_left_24_regular,
+                          color: AppColours.white,
+                        )),
                     const Spacer(),
                     ClipRRect(
                       borderRadius: BorderRadius.circular(16),
@@ -189,7 +192,9 @@ class HymnContent extends StatelessWidget {
                             ),
                             onPressed: onShareButtonPressed,
                             icon: const Icon(
-                                FluentIcons.share_android_24_regular)),
+                              FluentIcons.share_android_24_regular,
+                              color: AppColours.white,
+                            )),
                       ),
                     ),
                     const Gap(12),
@@ -205,9 +210,11 @@ class HymnContent extends StatelessWidget {
                             backgroundColor: AppColours.white.withOpacity(.3),
                           ),
                           onPressed: onLikeButtonPressed,
-                          icon: Icon(hymn.isLiked
-                              ? FluentIcons.heart_24_filled
-                              : FluentIcons.heart_24_regular),
+                          icon: Icon(
+                              hymn.isLiked
+                                  ? FluentIcons.heart_24_filled
+                                  : FluentIcons.heart_24_regular,
+                              color: AppColours.white),
                         ),
                       ),
                     ),
@@ -216,7 +223,10 @@ class HymnContent extends StatelessWidget {
                 const Gap(32),
                 Text(
                   hymn.number.toString(),
-                  style: Theme.of(context).textTheme.displayMedium,
+                  style: Theme.of(context)
+                      .textTheme
+                      .displayMedium!
+                      .copyWith(color: AppColours.white),
                 ),
                 const Gap(32),
                 Text(
@@ -225,12 +235,16 @@ class HymnContent extends StatelessWidget {
                   style: Theme.of(context)
                       .textTheme
                       .headlineSmall!
-                      .copyWith(height: 1.5),
+                      .copyWith(height: 1.5, color: AppColours.white),
                 ),
                 const Gap(32),
                 Text(
                   hymn.content,
                   textAlign: TextAlign.center,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(color: AppColours.white),
                 ),
                 const Gap(64),
               ],

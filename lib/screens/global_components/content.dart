@@ -300,9 +300,9 @@ class _ContentState extends State<Content> with SingleTickerProviderStateMixin {
                   onPressed: () async {
                     if (!await launchUrl(
                         Uri(
-                          scheme: "https",
-                          host: "christabodeministries.org",
-                        ),
+                            scheme: "https",
+                            host: "christabodeministries.org",
+                            path: "privacy-policy"),
                         mode: LaunchMode.externalApplication)) {
                       throw "Could Not Launch url";
                     }
