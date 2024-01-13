@@ -30,7 +30,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
-
   @override
   Widget build(BuildContext context) {
     return Consumer4<DevotionalProvider, PrayerProvider, EventsProvider,
@@ -55,48 +54,35 @@ class _HomeScreenState extends State<HomeScreen> {
                   Padding(
                     padding:
                         const EdgeInsets.symmetric(horizontal: kDefaultPadding),
-                    child: Visibility(
-                        //visible: eventData.upcomingEvents.isNotEmpty,
-                      visible: true,
-                      replacement: Center(
-                        child: Text(
-                          "There are no upcoming events scheduled for now.",
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                      ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-
-                            Visibility(
-
-                                visible: eventData.upcomingEvents.isNotEmpty,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start  ,
-                              children: [
-                                Text(
-                                  "Upcoming Services",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge!
-                                      .copyWith(fontFamily: 'Gloock'),
-                                ),
-                                const Gap(kDefaultPadding),
-                                FeaturedEventCard(
-                                    onSharePressed: (){
-                                      eventData.shareEvent(context, eventData.upcomingEvents.first);
-                                    },
-                                    event: eventData.upcomingEvents.first,
-                                    featuredImage: unsplashData.eventFeaturedImage),
-                              ],
-                            ))
-
-                          ],
-                        ),
-
-                    ),
+                    child: eventData.upcomingEvents.isEmpty
+                        ? Center(
+                            child: Text(
+                              "There are no upcoming events scheduled for now.",
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                          )
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Upcoming Services",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .copyWith(fontFamily: 'Gloock'),
+                              ),
+                              const Gap(kDefaultPadding),
+                              FeaturedEventCard(
+                                  onSharePressed: () {
+                                    eventData.shareEvent(context,
+                                        eventData.upcomingEvents.first);
+                                  },
+                                  event: eventData.upcomingEvents.first,
+                                  featuredImage:
+                                      unsplashData.eventFeaturedImage),
+                            ],
+                          ),
                   ),
                   const Gap(kDefaultPadding2x),
                   Padding(
@@ -116,8 +102,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         const Gap(kDefaultPadding),
                         DevotionalAndPrayerCard(
-
-
                             onPressed: () async {
                               await devotionalData
                                   .getTodaysDevotionalIndex()
@@ -159,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       splashFactory: InkSparkle.splashFactory,
                       splashColor: AppColours.blue90,
                       borderRadius: BorderRadius.circular(24),
-                      onTap: (){
+                      onTap: () {
                         Navigator.pushNamed(context, HymnScreen.id);
                       },
                       child: Ink(
@@ -177,23 +161,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                     .textTheme
                                     .headlineSmall!
                                     .copyWith(
-                                  height: 1.2,
+                                      height: 1.2,
                                       color: Theme.of(context)
                                           .colorScheme
                                           .onPrimaryContainer,
                                     )),
                             Align(
                               alignment: Alignment.centerRight,
-                              child:
-                              Icon(
-                                  FluentIcons.arrow_right_24_regular,
+                              child: Icon(
+                                FluentIcons.arrow_right_24_regular,
                                 color: Theme.of(context)
                                     .colorScheme
                                     .onPrimaryContainer,
-
                               ),
                             ),
-
                           ],
                         ),
                       ),
